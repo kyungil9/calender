@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/ic_baseline_analytics_24.xml" value="0.4905" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.4905" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/ic_launcher_background.xml" value="0.4905" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/viewedge.xml" value="0.4905" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_lobby.xml" value="0.5390625" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_loddy.xml" value="0.5" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_main2.xml" value="0.5390625" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_main_login.xml" value="0.5" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/custom_dialog.xml" value="0.13148148148148148" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/fragment_analysis.xml" value="0.3233695652173913" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/fragment_calender.xml" value="0.5390625" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/fragment_memo.xml" value="0.5390625" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/fragment_to_do.xml" value="0.3233695652173913" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/list_item_day.xml" value="0.5380208333333333" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/list_item_month.xml" value="0.5380208333333333" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/toolbar.xml" value="0.5390625" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/menu/bottom_nav.xml" value="0.5536458333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="jbr-11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

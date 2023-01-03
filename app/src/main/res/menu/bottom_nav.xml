@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/CalenderFragment"
+            android:title="Calender"
+            android:icon="@drawable/ic_baseline_dashboard_24"
+            app:showAsAction="always"/>
+    <item
+            android:id="@+id/ToDoFragment"
+            android:title="ToDo"
+            android:icon="@drawable/ic_baseline_dashboard_24"
+            app:showAsAction="always"/>
+    <item
+            android:id="@+id/HomeFragment"
+            android:title="Home"
+            android:icon="@drawable/ic_baseline_dashboard_24"
+            app:showAsAction="always"/>
+    <item
+            android:id="@+id/MemoFragment"
+            android:title="Memo"
+            android:icon="@drawable/ic_baseline_dashboard_24"
+            app:showAsAction="always"/>
+    <item
+            android:id="@+id/AnalysisFragment"
+            android:title="Analysis"
+            android:icon="@drawable/ic_baseline_analytics_24"
+            app:showAsAction="always"/>
+</menu>
