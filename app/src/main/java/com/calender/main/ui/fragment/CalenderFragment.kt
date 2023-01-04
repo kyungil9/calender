@@ -23,13 +23,12 @@ class CalenderFragment : BindFragment<FragmentCalenderBinding>(R.layout.fragment
         super.onViewCreated(view, savedInstanceState)
 
         val monthManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-        monthManager.isAutoMeasureEnabled = false
         binding.customCalender.apply {
             layoutManager = monthManager
             adapter = MonthAdapter()
             addItemDecoration(HorizonItemDecorator(10))
             scrollToPosition(Int.MAX_VALUE/2)
-            setHasFixedSize(true)
+            //setHasFixedSize(true)
         }
         val sanp = PagerSnapHelper()
         sanp.attachToRecyclerView(binding.customCalender)//달별로 페이지 넘기기

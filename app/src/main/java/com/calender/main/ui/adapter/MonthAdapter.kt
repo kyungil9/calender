@@ -1,32 +1,41 @@
 package com.calender.main.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.main.databinding.ListItemMonthBinding
+import java.time.LocalDate
 
 import java.util.*
 
 class MonthAdapter : RecyclerView.Adapter<MonthAdapter.MonthView>() {
     val center = Int.MAX_VALUE / 2
-    private var calendar = Calendar.getInstance()
 
     inner class MonthView(private val binding: ListItemMonthBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int){
-            calendar.time = Date()
-            calendar.set(Calendar.DAY_OF_MONTH, 1)
-            calendar.add(Calendar.MONTH, position - center)
-            binding.itemMonthText.text = "${calendar.get(Calendar.YEAR)}년 ${calendar.get(Calendar.MONTH) + 1}월"
-            val tempMonth = calendar.get(Calendar.MONTH)
+            var date = LocalDate.now()
+            date = date.plusMonths((position - center).toLong())
+            date = date.withDayOfMonth(1)
+            binding.itemMonthText.text = "${date.year}년 ${date.monthValue}월"
+            val tempMonth = date.monthValue
 
-            var dayList: MutableList<Date> = MutableList(6 * 7) { Date() }
-            for(i in 0..5) {
-                for(k in 0..6) {
-                    calendar.add(Calendar.DAY_OF_MONTH, (1-calendar.get(Calendar.DAY_OF_WEEK)) + k)
-                    dayList[i * 7 + k] = calendar.time
+            var dayList = mutableListOf<LocalDate>()
+            var size = 33
+            if (date.monthValue == 2 && !date.isLeapYear && date.dayOfWeek.value == 7){//윤년이 없는 2월일 경우 4개가 나옴
+                size = 26
+            } else if (date.dayOfWeek.value == 5){
+                when (date.monthValue){
+                    1,3,5,7,8,10,12-> size = 40
                 }
-                calendar.add(Calendar.WEEK_OF_MONTH, 1)
+            }else if (date.dayOfWeek.value == 6 && date.monthValue != 2)
+                size = 40
+            date = date.plusDays((-(date.dayOfWeek.value%7)).toLong())
+            dayList.add(date)
+            for(i in 0..size) {
+                date = date.plusDays(1)
+                dayList.add(date)
             }
 
             val dayListManager = GridLayoutManager(binding.itemMonthDayList.context, 7)
