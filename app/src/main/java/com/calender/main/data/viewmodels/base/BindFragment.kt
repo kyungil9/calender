@@ -1,4 +1,4 @@
-package com.calender.main.ui.base
+package com.calender.main.data.viewmodels.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

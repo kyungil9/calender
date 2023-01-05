@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.calender.main.R
 import com.calender.main.databinding.FragmentCalenderBinding
 import com.calender.main.ui.adapter.MonthAdapter
-import com.calender.main.ui.base.BindFragment
-import com.calender.main.ui.base.HorizonItemDecorator
+import com.calender.main.data.viewmodels.base.BindFragment
+import com.calender.main.data.viewmodels.base.HorizonItemDecorator
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.Month
 import javax.inject.Inject
@@ -28,12 +28,10 @@ class CalenderFragment : BindFragment<FragmentCalenderBinding>(R.layout.fragment
             adapter = MonthAdapter()
             addItemDecoration(HorizonItemDecorator(10))
             scrollToPosition(Int.MAX_VALUE/2)
-            //setHasFixedSize(true)
+            setHasFixedSize(true)
         }
         val sanp = PagerSnapHelper()
         sanp.attachToRecyclerView(binding.customCalender)//달별로 페이지 넘기기
+
     }
-
-
-
 }

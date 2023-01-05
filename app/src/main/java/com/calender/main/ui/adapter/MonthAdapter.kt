@@ -1,27 +1,42 @@
 package com.calender.main.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.calender.main.data.entity.Calender
+import com.calender.main.data.entity.Daily
 import com.calender.main.databinding.ListItemMonthBinding
 import java.time.LocalDate
 
-import java.util.*
 
-class MonthAdapter : RecyclerView.Adapter<MonthAdapter.MonthView>() {
+
+class MonthAdapter :  RecyclerView.Adapter<MonthAdapter.MonthView>() {
     val center = Int.MAX_VALUE / 2
 
     inner class MonthView(private val binding: ListItemMonthBinding): RecyclerView.ViewHolder(binding.root){
+        var dayListAdapter : DayAdapter? = null
+
         fun bind(position: Int){
+            val dailyList = createCalender(position)
+            val dayListManager = GridLayoutManager(binding.itemMonthDayList.context, 7)
+
+            binding.itemMonthDayList.apply {
+                layoutManager = dayListManager
+                adapter = dayListAdapter
+            }
+            dayListAdapter?.submitList(dailyList) //데이터 삽입
+        }
+        fun createCalender(position: Int):ArrayList<Daily>{
+            var dailyList = arrayListOf<Daily>()
             var date = LocalDate.now()
             date = date.plusMonths((position - center).toLong())
             date = date.withDayOfMonth(1)
             binding.itemMonthText.text = "${date.year}년 ${date.monthValue}월"
             val tempMonth = date.monthValue
 
-            var dayList = mutableListOf<LocalDate>()
             var size = 33
             if (date.monthValue == 2 && !date.isLeapYear && date.dayOfWeek.value == 7){//윤년이 없는 2월일 경우 4개가 나옴
                 size = 26
@@ -32,20 +47,17 @@ class MonthAdapter : RecyclerView.Adapter<MonthAdapter.MonthView>() {
             }else if (date.dayOfWeek.value == 6 && date.monthValue != 2)
                 size = 40
             date = date.plusDays((-(date.dayOfWeek.value%7)).toLong())
-            dayList.add(date)
+            val daily = Daily(date,"")
+            dailyList.add(daily)
             for(i in 0..size) {
                 date = date.plusDays(1)
-                dayList.add(date)
+                val daily = Daily(date,"")
+                dailyList.add(daily)
             }
-
-            val dayListManager = GridLayoutManager(binding.itemMonthDayList.context, 7)
-            val dayListAdapter = DayAdapter(tempMonth, dayList)
-
-            binding.itemMonthDayList.apply {
-                layoutManager = dayListManager
-                adapter = dayListAdapter
-            }
+            dayListAdapter = DayAdapter(tempMonth,size+2)
+            return dailyList
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthView {
@@ -59,4 +71,5 @@ class MonthAdapter : RecyclerView.Adapter<MonthAdapter.MonthView>() {
     override fun getItemCount(): Int {
         return Int.MAX_VALUE
     }
+
 }
