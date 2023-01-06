@@ -1,23 +1,18 @@
 package com.calender.main.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.calender.main.R
 import com.calender.main.databinding.FragmentCalenderBinding
-import com.calender.main.ui.adapter.MonthAdapter
-import com.calender.main.data.viewmodels.base.BindFragment
-import com.calender.main.data.viewmodels.base.HorizonItemDecorator
+import com.calender.main.ui.adapter.CalenderAdapter
+import com.calender.main.ui.base.BaseFragment
+import com.calender.main.ui.base.HorizonItemDecorator
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.Month
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class CalenderFragment : BindFragment<FragmentCalenderBinding>(R.layout.fragment_calender) {
+class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment_calender) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,7 +20,7 @@ class CalenderFragment : BindFragment<FragmentCalenderBinding>(R.layout.fragment
         val monthManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         binding.customCalender.apply {
             layoutManager = monthManager
-            adapter = MonthAdapter()
+            adapter = CalenderAdapter()
             addItemDecoration(HorizonItemDecorator(10))
             scrollToPosition(Int.MAX_VALUE/2)
             setHasFixedSize(true)

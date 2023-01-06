@@ -1,4 +1,4 @@
-package com.calender.main.data.viewmodels.base
+package com.calender.main.ui.base
 
 import android.graphics.Rect
 import android.view.View

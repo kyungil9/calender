@@ -2,21 +2,18 @@ package com.calender.main.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.calender.main.data.entity.Calender
 import com.calender.main.data.entity.Daily
-import com.calender.main.databinding.ListItemMonthBinding
+import com.calender.main.databinding.ListCalenderBinding
 import java.time.LocalDate
 
 
 
-class MonthAdapter :  RecyclerView.Adapter<MonthAdapter.MonthView>() {
+class CalenderAdapter :  RecyclerView.Adapter<CalenderAdapter.MonthView>() {
     val center = Int.MAX_VALUE / 2
 
-    inner class MonthView(private val binding: ListItemMonthBinding): RecyclerView.ViewHolder(binding.root){
+    inner class MonthView(private val binding: ListCalenderBinding): RecyclerView.ViewHolder(binding.root){
         var dayListAdapter : DayAdapter? = null
 
         fun bind(position: Int){
@@ -61,7 +58,7 @@ class MonthAdapter :  RecyclerView.Adapter<MonthAdapter.MonthView>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthView {
-        return MonthView(ListItemMonthBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        return MonthView(ListCalenderBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
     override fun onBindViewHolder(holder: MonthView, position: Int) {

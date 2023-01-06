@@ -8,6 +8,7 @@ import com.calender.main.R
 import com.calender.main.custom_toast
 import com.calender.main.databinding.ActivityMainLoginBinding
 import com.calender.main.security
+import com.calender.main.ui.base.BaseActivity
 import com.calender.main.ui.services.ForceService
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -20,16 +21,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.startActivity
 
 @AndroidEntryPoint
-class MainLogin : AppCompatActivity() {
-    private lateinit var binding : ActivityMainLoginBinding
+class MainLogin : BaseActivity<ActivityMainLoginBinding>(R.layout.activity_main_login) {
     private var googleSignInClient : GoogleSignInClient? = null
     private var GOOGLE_LOGIN_CODE = 9001
     private lateinit var auth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         startService(Intent(this, ForceService::class.java))
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(resources.getString(R.string.google_client_id))
@@ -57,14 +55,6 @@ class MainLogin : AppCompatActivity() {
                         startActivity<MainActivity>()
                     }
                 }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if(security.isRooting()){
-            custom_toast.shortToast(this, "루팅된 os는 실행이 불가합니다.")
-            finish()
         }
     }
 
