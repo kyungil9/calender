@@ -6,6 +6,6 @@ import java.time.LocalDate
 
 @Entity(tableName = "daily")
 data class Daily(
-    @PrimaryKey val  date : LocalDate,
+    @PrimaryKey val date : LocalDate = LocalDate.now(),
     var record : String
 )

@@ -3,17 +3,28 @@ package com.calender.main.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.main.data.entity.Daily
 import com.calender.main.data.entity.ToDo
 import com.calender.main.databinding.ListTodoBinding
+import com.calender.main.ui.base.HorizonItemDecorator
+import com.calender.main.ui.base.VerticalItemDecorator
 
 class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.DoView>(diffUtil){
 
     inner class DoView(private val binding: ListTodoBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(item:ToDo,position: Int){
-
+            val todoChecklistAdapter = ToDoCheckAdapter()
+            val checkManager = LinearLayoutManager(binding.itemTodoList.context, LinearLayoutManager.VERTICAL,false)
+            binding.itemTodoList.apply {
+                adapter = todoChecklistAdapter
+                layoutManager = checkManager
+                addItemDecoration(HorizonItemDecorator(15))
+            }
+            binding.todoListName.text = "할일(${item.date})"
+            todoChecklistAdapter.submitList(item.list)
         }
     }
 

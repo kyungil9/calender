@@ -2,9 +2,11 @@ package com.calender.main.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.calender.main.R
+import com.calender.main.data.viewmodels.CalenderViewModel
 import com.calender.main.databinding.FragmentCalenderBinding
 import com.calender.main.ui.adapter.CalenderAdapter
 import com.calender.main.ui.base.BaseFragment
@@ -13,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment_calender) {
+    private val calenderViewModel : CalenderViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

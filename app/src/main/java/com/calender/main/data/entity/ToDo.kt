@@ -4,5 +4,5 @@ import java.time.LocalDate
 
 data class ToDo(
     val date :LocalDate,
-    var doing : String
+    var list : ArrayList<ToDoCheck>
 )
