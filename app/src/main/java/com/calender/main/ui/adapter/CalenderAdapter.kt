@@ -25,6 +25,10 @@ class CalenderAdapter :  RecyclerView.Adapter<CalenderAdapter.MonthView>() {
                 adapter = dayListAdapter
             }
             dayListAdapter?.submitList(dailyList) //데이터 삽입
+
+
+
+
         }
         fun createCalender(position: Int):ArrayList<Daily>{
             var dailyList = arrayListOf<Daily>()

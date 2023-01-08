@@ -26,6 +26,7 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
             layoutManager = toDoManager
             setHasFixedSize(true)
             addItemDecoration(VerticalItemDecorator(10))
+            addItemDecoration(HorizonItemDecorator(10))
         }
         //dumydata
         val todoList = ArrayList<ToDo>()//추후 번경

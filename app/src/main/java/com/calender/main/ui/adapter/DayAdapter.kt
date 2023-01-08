@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.main.data.entity.Daily
 import com.calender.main.databinding.ListCalenderItemBinding
+import java.time.LocalDate
 
 
 class DayAdapter (val tempMonth:Int,val size:Int): ListAdapter<Daily,DayAdapter.DayView>(diffUtil) {
@@ -23,6 +24,10 @@ class DayAdapter (val tempMonth:Int,val size:Int): ListAdapter<Daily,DayAdapter.
                 val params = binding.itemDayLayout.layoutParams
                 params.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,75F,binding.itemDayLayout.context.resources.displayMetrics).toInt()
                 binding.itemDayLayout.layoutParams = params
+            }else if (size == 7){
+                val params = binding.itemDayLayout.layoutParams
+                params.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,70F,binding.itemDayLayout.context.resources.displayMetrics).toInt()
+                binding.itemDayLayout.layoutParams = params
             }
         }
         fun bind(item : Daily,position: Int){
@@ -31,11 +36,31 @@ class DayAdapter (val tempMonth:Int,val size:Int): ListAdapter<Daily,DayAdapter.
             }
             binding.itemDayText.text = item.date.dayOfMonth.toString()
 
-            binding.itemDayText.setTextColor(when(position % 7) {
-                0 -> Color.RED
-                6 -> Color.BLUE
-                else -> Color.BLACK
-            })
+            if (size == 7){
+                binding.itemDayText.setTextColor(
+                    when (position % 7) {
+                        5 -> Color.BLUE
+                        6 -> Color.RED
+                        else -> Color.BLACK
+                    }
+                )
+                if(item.date == LocalDate.now()){
+                    //오늘날짜 색상바꾸기
+                    binding.itemDayText.apply {
+                        setBackgroundColor(Color.GREEN)
+                        setTextColor(Color.WHITE)
+                    }
+
+                }
+            }else {
+                binding.itemDayText.setTextColor(
+                    when (position % 7) {
+                        0 -> Color.RED
+                        6 -> Color.BLUE
+                        else -> Color.BLACK
+                    }
+                )
+            }
             if(tempMonth != item.date.monthValue) {
                 binding.itemDayText.alpha = 0.4f
             }
