@@ -9,11 +9,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.main.data.entity.Daily
+import com.calender.main.databinding.FragmentCalenderBinding
+import com.calender.main.databinding.FragmentHomeBinding
 import com.calender.main.databinding.ListCalenderItemBinding
 import java.time.LocalDate
 
 
-class DayAdapter (val tempMonth:Int,val size:Int): ListAdapter<Daily,DayAdapter.DayView>(diffUtil) {
+class DayAdapter(
+    val tempMonth:Int, val size:Int
+): ListAdapter<Daily,DayAdapter.DayView>(diffUtil) {
     inner class DayView(private val binding: ListCalenderItemBinding): RecyclerView.ViewHolder(binding.root){
         init {
             if (size == 42) {
@@ -33,6 +37,8 @@ class DayAdapter (val tempMonth:Int,val size:Int): ListAdapter<Daily,DayAdapter.
         fun bind(item : Daily,position: Int){
             binding.itemDayLayout.setOnClickListener {
                 Toast.makeText(binding.itemDayLayout.context, "${item.date}", Toast.LENGTH_SHORT).show()
+                //특정 날짜 데이터를 viewmodel에 삽입 size로 구분
+
             }
             binding.itemDayText.text = item.date.dayOfMonth.toString()
 
@@ -50,8 +56,8 @@ class DayAdapter (val tempMonth:Int,val size:Int): ListAdapter<Daily,DayAdapter.
                         setBackgroundColor(Color.GREEN)
                         setTextColor(Color.WHITE)
                     }
-
                 }
+
             }else {
                 binding.itemDayText.setTextColor(
                     when (position % 7) {
@@ -64,6 +70,7 @@ class DayAdapter (val tempMonth:Int,val size:Int): ListAdapter<Daily,DayAdapter.
             if(tempMonth != item.date.monthValue) {
                 binding.itemDayText.alpha = 0.4f
             }
+
         }
     }
 

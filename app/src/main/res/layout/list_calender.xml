@@ -90,32 +90,10 @@
     <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-
             android:layout_marginVertical="3dp"
             android:padding="5dp"
             android:background="#bbb"/>
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
-        <TextView
-                android:text="@string/calender_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/calender_list_name"
-                android:textSize="15sp"
-                android:padding="3dp"
-                android:textColor="@color/black"
-                android:textStyle="bold" android:layout_marginStart="5dp"/>
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginVertical="3dp"
-                android:background="#bbb"/>
-        <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" android:id="@+id/schedule_list"/>
 
-    </LinearLayout>
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

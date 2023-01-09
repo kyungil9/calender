@@ -6,15 +6,18 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calender.main.R
 import com.calender.main.data.entity.Daily
+import com.calender.main.data.entity.Schedule
 import com.calender.main.data.entity.ToDo
 import com.calender.main.data.entity.ToDoCheck
 import com.calender.main.databinding.FragmentHomeBinding
 import com.calender.main.ui.adapter.DayAdapter
+import com.calender.main.ui.adapter.ScheduleAdapter
 import com.calender.main.ui.adapter.ToDoAdapter
 import com.calender.main.ui.base.BaseFragment
 import com.calender.main.ui.base.HorizonItemDecorator
 import com.google.android.material.chip.Chip
 import java.time.LocalDate
+import java.time.LocalTime
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
@@ -54,6 +57,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         checkList.add(ToDoCheck(LocalDate.now(),"12",true))
         todoList.add(ToDo(LocalDate.now(),checkList))
         toDoAdapter.submitList(todoList)
+
+        //일정부분
+        val dumy = ArrayList<Schedule>()
+        dumy.add(Schedule(LocalDate.now(), LocalTime.now(),"test1"))
+        dumy.add(Schedule(LocalDate.now(), LocalTime.now(),"test2"))
+        val scheduleAdapter = ScheduleAdapter()
+        val scheduleManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+        binding.homeScheduleList.apply {
+            layoutManager = scheduleManager
+            adapter = scheduleAdapter
+            setHasFixedSize(true)
+        }
+        scheduleAdapter.setItems(dumy)
     }
 
     fun createWeek():ArrayList<Daily>{
@@ -78,7 +94,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             isCheckable = true
             setOnCheckedChangeListener { value, checked ->
                 if (checked) {
-
+                    //추후 서버에 기록 저장부분 처리추가
                 } else {
 
                 }

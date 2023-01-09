@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.main.data.entity.Daily
+import com.calender.main.databinding.FragmentCalenderBinding
 import com.calender.main.databinding.ListCalenderBinding
 import java.time.LocalDate
 
 
 
-class CalenderAdapter :  RecyclerView.Adapter<CalenderAdapter.MonthView>() {
+class CalenderAdapter() : RecyclerView.Adapter<CalenderAdapter.MonthView>() {
     val center = Int.MAX_VALUE / 2
 
     inner class MonthView(private val binding: ListCalenderBinding): RecyclerView.ViewHolder(binding.root){
