@@ -3,7 +3,7 @@ package com.calender.main.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.calender.main.data.entity.Schedule
+import com.calender.data.model.Schedule
 import com.calender.main.databinding.ListScheduleItemBinding
 
 class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.ScheduleView>(){

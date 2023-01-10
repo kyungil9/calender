@@ -5,10 +5,10 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calender.main.R
-import com.calender.main.data.entity.Daily
-import com.calender.main.data.entity.Schedule
-import com.calender.main.data.entity.ToDo
-import com.calender.main.data.entity.ToDoCheck
+import com.calender.data.model.Daily
+import com.calender.data.model.Schedule
+import com.calender.data.model.ToDo
+import com.calender.data.model.ToDoCheck
 import com.calender.main.databinding.FragmentHomeBinding
 import com.calender.main.ui.adapter.DayAdapter
 import com.calender.main.ui.adapter.ScheduleAdapter
@@ -39,8 +39,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         for(key in keys){
             binding.recordChipGroup.addView(createChip(key))
         }
-
-
 
         //todo부분
         val toDoAdapter = ToDoAdapter()

@@ -1,4 +1,4 @@
-package com.calender.main.ui.base
+package com.calender.data.database.converters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

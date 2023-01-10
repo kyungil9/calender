@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calender.main.R
-import com.calender.main.data.entity.ToDo
-import com.calender.main.data.entity.ToDoCheck
+import com.calender.data.model.ToDo
+import com.calender.data.model.ToDoCheck
 import com.calender.main.databinding.FragmentToDoBinding
 import com.calender.main.ui.adapter.ToDoAdapter
 import com.calender.main.ui.base.BaseFragment

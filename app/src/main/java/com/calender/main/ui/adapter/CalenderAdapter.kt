@@ -4,16 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.calender.main.data.entity.Daily
-import com.calender.main.databinding.FragmentCalenderBinding
+import com.calender.data.model.Daily
 import com.calender.main.databinding.ListCalenderBinding
+import com.calender.main.ui.listener.RecyclerViewItemClickListener
 import java.time.LocalDate
 
 
 
-class CalenderAdapter() : RecyclerView.Adapter<CalenderAdapter.MonthView>() {
+class CalenderAdapter : RecyclerView.Adapter<CalenderAdapter.MonthView>(),RecyclerViewItemClickListener {
     val center = Int.MAX_VALUE / 2
-
+    private var listener:RecyclerViewItemClickListener ?= null
     inner class MonthView(private val binding: ListCalenderBinding): RecyclerView.ViewHolder(binding.root){
         var dayListAdapter : DayAdapter? = null
 
@@ -26,7 +26,7 @@ class CalenderAdapter() : RecyclerView.Adapter<CalenderAdapter.MonthView>() {
                 adapter = dayListAdapter
             }
             dayListAdapter?.submitList(dailyList) //데이터 삽입
-
+            dayListAdapter?.setOnItemClickListener(listener!!)
 
 
 
@@ -74,4 +74,10 @@ class CalenderAdapter() : RecyclerView.Adapter<CalenderAdapter.MonthView>() {
         return Int.MAX_VALUE
     }
 
+    override fun onItemClickListener(date: LocalDate) {
+        listener?.onItemClickListener(date)
+    }
+    fun setOnItemClickListener(listener : RecyclerViewItemClickListener){
+        this.listener=listener
+    }
 }

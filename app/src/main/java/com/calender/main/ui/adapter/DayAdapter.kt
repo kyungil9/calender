@@ -8,16 +8,16 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.calender.main.data.entity.Daily
-import com.calender.main.databinding.FragmentCalenderBinding
-import com.calender.main.databinding.FragmentHomeBinding
+import com.calender.data.model.Daily
 import com.calender.main.databinding.ListCalenderItemBinding
+import com.calender.main.ui.listener.RecyclerViewItemClickListener
 import java.time.LocalDate
 
 
 class DayAdapter(
     val tempMonth:Int, val size:Int
-): ListAdapter<Daily,DayAdapter.DayView>(diffUtil) {
+): ListAdapter<Daily,DayAdapter.DayView>(diffUtil),RecyclerViewItemClickListener{
+    private var listener:RecyclerViewItemClickListener ?= null
     inner class DayView(private val binding: ListCalenderItemBinding): RecyclerView.ViewHolder(binding.root){
         init {
             if (size == 42) {
@@ -34,12 +34,14 @@ class DayAdapter(
                 binding.itemDayLayout.layoutParams = params
             }
         }
-        fun bind(item : Daily,position: Int){
+        fun bind(item : Daily, position: Int){
             binding.itemDayLayout.setOnClickListener {
                 Toast.makeText(binding.itemDayLayout.context, "${item.date}", Toast.LENGTH_SHORT).show()
                 //특정 날짜 데이터를 viewmodel에 삽입 size로 구분
-
+                onItemClickListener(item.date)
             }
+
+
             binding.itemDayText.text = item.date.dayOfMonth.toString()
 
             if (size == 7){
@@ -85,6 +87,14 @@ class DayAdapter(
     override fun getItemCount(): Int {
         return currentList.size
     }
+
+    override fun onItemClickListener(date: LocalDate) {
+        listener?.onItemClickListener(date)
+    }
+    fun setOnItemClickListener(listener : RecyclerViewItemClickListener){
+        this.listener=listener
+    }
+
 
     companion object {
         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.

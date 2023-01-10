@@ -1,4 +1,4 @@
-package com.calender.main.data.entity
+package com.calender.data.model
 
 import java.time.LocalDate
 

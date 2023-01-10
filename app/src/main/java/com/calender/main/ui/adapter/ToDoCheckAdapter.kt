@@ -1,15 +1,13 @@
 package com.calender.main.ui.adapter
 
 import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.calender.main.data.entity.ToDoCheck
+import com.calender.data.model.ToDoCheck
 import com.calender.main.databinding.ListTodoItemBinding
-import org.jetbrains.anko.sdk25.coroutines.onCheckedChange
 
 class ToDoCheckAdapter:ListAdapter<ToDoCheck,ToDoCheckAdapter.CheckView>(diffUtil) {
     inner class CheckView(private val binding: ListTodoItemBinding): RecyclerView.ViewHolder(binding.root){

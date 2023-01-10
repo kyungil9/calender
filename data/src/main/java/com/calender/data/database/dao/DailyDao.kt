@@ -1,13 +1,14 @@
-package com.calender.main.data.database
+package com.calender.data.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
-import com.calender.main.data.entity.Daily
+import com.calender.data.model.Daily
+
 
 @Dao
 interface DailyDao {
     @Query("select * from daily")
-    fun getAllDailyInfo():LiveData<List<Daily>>
+    fun getAllDailyInfo():List<Daily>
 
 }

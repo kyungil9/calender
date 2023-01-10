@@ -41,6 +41,10 @@ android {
 
 dependencies {
 
+    // multiModule
+    implementation project(':domain')
+    implementation project(':data')
+
     implementation "org.jetbrains.anko:anko:$anko_version"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -87,10 +91,11 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
-// Room components
+    // Room components
     implementation "androidx.room:room-ktx:2.4.1"
     kapt "androidx.room:room-compiler:2.4.1"
     androidTestImplementation "androidx.room:room-testing:2.4.1"
 
-    implementation 'com.google.code.gson:gson:2.9.0' // gson
+    // gson
+    implementation 'com.google.code.gson:gson:2.9.0'
 }

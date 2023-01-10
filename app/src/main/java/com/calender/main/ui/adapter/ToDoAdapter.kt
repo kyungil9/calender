@@ -6,16 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.calender.main.data.entity.Daily
-import com.calender.main.data.entity.ToDo
+import com.calender.data.model.ToDo
 import com.calender.main.databinding.ListTodoBinding
 import com.calender.main.ui.base.HorizonItemDecorator
-import com.calender.main.ui.base.VerticalItemDecorator
 
 class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.DoView>(diffUtil){
 
     inner class DoView(private val binding: ListTodoBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item:ToDo,position: Int){
+        fun bind(item: ToDo, position: Int){
             val todoChecklistAdapter = ToDoCheckAdapter()
             val checkManager = LinearLayoutManager(binding.itemTodoList.context, LinearLayoutManager.VERTICAL,false)
             binding.itemTodoList.apply {

@@ -16,3 +16,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "calender"
 include ':app'
+include ':data'
+include ':data'
+include ':domain'
