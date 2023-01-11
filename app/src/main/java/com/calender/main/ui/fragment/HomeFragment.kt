@@ -5,12 +5,11 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calender.main.R
-import com.calender.data.model.Daily
-import com.calender.data.model.Schedule
-import com.calender.data.model.ToDo
-import com.calender.data.model.ToDoCheck
+import com.calender.data.model.local.ToDoLocal
+import com.calender.data.model.local.ToDoCheckLocal
+import com.calender.domain.model.Schedule
+import com.calender.main.data.viewmodels.Calender
 import com.calender.main.databinding.FragmentHomeBinding
-import com.calender.main.ui.adapter.DayAdapter
 import com.calender.main.ui.adapter.ScheduleAdapter
 import com.calender.main.ui.adapter.ToDoAdapter
 import com.calender.main.ui.base.BaseFragment
@@ -21,11 +20,12 @@ import java.time.LocalTime
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
-    var dayListAdapter : DayAdapter? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val dailyList = createWeek()
+        val calender = Calender()
+        var dayListAdapter = calender.createHomeWeek()
+        val dailyList = calender.dailyList
         val dayListManager = GridLayoutManager(context,7)
         binding.weekCalender.apply {
             layoutManager = dayListManager
@@ -49,11 +49,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             addItemDecoration(HorizonItemDecorator(20))
         }
 
-        val todoList = ArrayList<ToDo>()//추후 번경
-        var checkList = ArrayList<ToDoCheck>()
-        checkList.add(ToDoCheck(LocalDate.now(),"11",false))
-        checkList.add(ToDoCheck(LocalDate.now(),"12",true))
-        todoList.add(ToDo(LocalDate.now(),checkList))
+        val todoList = ArrayList<ToDoLocal>()//추후 번경
+        var checkList = ArrayList<ToDoCheckLocal>()
+        checkList.add(ToDoCheckLocal(LocalDate.now(),"11",false))
+        checkList.add(ToDoCheckLocal(LocalDate.now(),"12",true))
+        todoList.add(ToDoLocal(LocalDate.now(),checkList))
         toDoAdapter.submitList(todoList)
 
         //일정부분
@@ -70,22 +70,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         scheduleAdapter.setItems(dumy)
     }
 
-    fun createWeek():ArrayList<Daily>{
-        var dailyList = arrayListOf<Daily>()
-        var date = LocalDate.now()
-        val tempMonth = date.monthValue
-
-        date = date.plusDays((-(date.dayOfWeek.value-1)).toLong())
-        val daily = Daily(date,"")
-        dailyList.add(daily)
-        for(i in 0..5) {
-            date = date.plusDays(1)
-            val daily = Daily(date,"")
-            dailyList.add(daily)
-        }
-        dayListAdapter = DayAdapter(tempMonth,7)
-        return dailyList
-    }
     private fun createChip(key:String) : Chip {
         val chip = Chip(requireActivity()).apply {
             text = key

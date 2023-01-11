@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.calender.data.model.Daily
+import com.calender.domain.model.Daily
 import com.calender.main.databinding.ListCalenderItemBinding
 import com.calender.main.ui.listener.RecyclerViewItemClickListener
 import java.time.LocalDate

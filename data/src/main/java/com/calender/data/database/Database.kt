@@ -6,10 +6,11 @@ import androidx.room.TypeConverters
 import com.calender.data.database.converters.Converters
 import com.calender.data.database.dao.DailyDao
 import com.calender.data.database.dao.ScheduleDao
-import com.calender.data.model.Daily
+import com.calender.data.model.local.DailyLocal
+import com.calender.data.model.local.ScheduleLocal
 
 
-@Database(entities = [Daily::class], version = 1, exportSchema = true)
+@Database(entities = [DailyLocal::class, ScheduleLocal::class], version = 1, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class Database :RoomDatabase(){
     abstract fun dailyDao(): DailyDao

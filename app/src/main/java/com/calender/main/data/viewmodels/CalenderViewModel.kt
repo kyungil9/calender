@@ -3,15 +3,18 @@ package com.calender.main.data.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.calender.data.model.Daily
-import com.calender.data.model.Schedule
-import com.calender.data.repository.CalenderRepositoryImpl
+import com.calender.domain.model.Daily
+import com.calender.domain.model.Schedule
+import com.calender.domain.usecase.GetSearchScheduleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
-class CalenderViewModel @Inject constructor(private val calenderRepositoryImpl : CalenderRepositoryImpl) :ViewModel(){
+class CalenderViewModel @Inject constructor(
+    private val getSearchScheduleUseCase: GetSearchScheduleUseCase
+    ) :ViewModel(){
+
     private val mutableCalenderInfo = MutableLiveData<ArrayList<Daily>>()
     private val mutableScheduleInfo = MutableLiveData<ArrayList<Schedule>>()
     val calenderInfo:LiveData<ArrayList<Daily>> get() = mutableCalenderInfo
@@ -19,12 +22,12 @@ class CalenderViewModel @Inject constructor(private val calenderRepositoryImpl :
 
     fun getAllScheduleInfo() {//수정
         mutableCalenderInfo.value?.clear()
-        mutableCalenderInfo.value?.addAll(calenderRepositoryImpl.getAllDailyData())
+        //mutableCalenderInfo.value?.addAll()
     }
 
     fun searchScheduleDate(date: LocalDate){
         mutableScheduleInfo.value?.clear()
-        mutableScheduleInfo.value?.addAll(calenderRepositoryImpl.getSearchSchedule(date))
+        mutableScheduleInfo.value?.addAll(getSearchScheduleUseCase(date))
     }
 
 

@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calender.main.R
-import com.calender.data.model.ToDo
-import com.calender.data.model.ToDoCheck
+import com.calender.data.model.local.ToDoLocal
+import com.calender.data.model.local.ToDoCheckLocal
 import com.calender.main.databinding.FragmentToDoBinding
 import com.calender.main.ui.adapter.ToDoAdapter
 import com.calender.main.ui.base.BaseFragment
@@ -29,14 +29,14 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
             addItemDecoration(HorizonItemDecorator(10))
         }
         //dumydata
-        val todoList = ArrayList<ToDo>()//추후 번경
-        var checkList = ArrayList<ToDoCheck>()
-        checkList.add(ToDoCheck(LocalDate.now(),"11",false))
-        checkList.add(ToDoCheck(LocalDate.now(),"12",true))
-        todoList.add(ToDo(LocalDate.now(),checkList))
-        checkList = ArrayList<ToDoCheck>()
-        checkList.add(ToDoCheck(LocalDate.now(),"12",true))
-        todoList.add(ToDo(LocalDate.now(),checkList))
+        val todoList = ArrayList<ToDoLocal>()//추후 번경
+        var checkList = ArrayList<ToDoCheckLocal>()
+        checkList.add(ToDoCheckLocal(LocalDate.now(),"11",false))
+        checkList.add(ToDoCheckLocal(LocalDate.now(),"12",true))
+        todoList.add(ToDoLocal(LocalDate.now(),checkList))
+        checkList = ArrayList<ToDoCheckLocal>()
+        checkList.add(ToDoCheckLocal(LocalDate.now(),"12",true))
+        todoList.add(ToDoLocal(LocalDate.now(),checkList))
         toDoAdapter.submitList(todoList)
 
     }

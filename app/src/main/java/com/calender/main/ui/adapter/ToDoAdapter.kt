@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.calender.data.model.ToDo
+import com.calender.data.model.local.ToDoLocal
 import com.calender.main.databinding.ListTodoBinding
 import com.calender.main.ui.base.HorizonItemDecorator
 
-class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.DoView>(diffUtil){
+class ToDoAdapter : ListAdapter<ToDoLocal, ToDoAdapter.DoView>(diffUtil){
 
     inner class DoView(private val binding: ListTodoBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: ToDo, position: Int){
+        fun bind(item: ToDoLocal, position: Int){
             val todoChecklistAdapter = ToDoCheckAdapter()
             val checkManager = LinearLayoutManager(binding.itemTodoList.context, LinearLayoutManager.VERTICAL,false)
             binding.itemTodoList.apply {
@@ -40,12 +40,12 @@ class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.DoView>(diffUtil){
 
     companion object {
         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.
-        val diffUtil = object : DiffUtil.ItemCallback<ToDo>() {
-            override fun areItemsTheSame(oldItem: ToDo, newItem: ToDo): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<ToDoLocal>() {
+            override fun areItemsTheSame(oldItem: ToDoLocal, newItem: ToDoLocal): Boolean {
                 return oldItem.date == newItem.date
             }
 
-            override fun areContentsTheSame(oldItem: ToDo, newItem: ToDo): Boolean {
+            override fun areContentsTheSame(oldItem: ToDoLocal, newItem: ToDoLocal): Boolean {
                 return oldItem == newItem
             }
         }

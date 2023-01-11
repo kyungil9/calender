@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.calender.data.model.ToDoCheck
+import com.calender.data.model.local.ToDoCheckLocal
 import com.calender.main.databinding.ListTodoItemBinding
 
-class ToDoCheckAdapter:ListAdapter<ToDoCheck,ToDoCheckAdapter.CheckView>(diffUtil) {
+class ToDoCheckAdapter:ListAdapter<ToDoCheckLocal,ToDoCheckAdapter.CheckView>(diffUtil) {
     inner class CheckView(private val binding: ListTodoItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: ToDoCheck, position: Int){
+        fun bind(item: ToDoCheckLocal, position: Int){
             binding.todoCheckbox.apply {
                 text = item.doIt
                 isChecked = item.check
@@ -42,12 +42,12 @@ class ToDoCheckAdapter:ListAdapter<ToDoCheck,ToDoCheckAdapter.CheckView>(diffUti
 
     companion object {
         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.
-        val diffUtil = object : DiffUtil.ItemCallback<ToDoCheck>() {
-            override fun areItemsTheSame(oldItem: ToDoCheck, newItem: ToDoCheck): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<ToDoCheckLocal>() {
+            override fun areItemsTheSame(oldItem: ToDoCheckLocal, newItem: ToDoCheckLocal): Boolean {
                 return oldItem.date == newItem.date
             }
 
-            override fun areContentsTheSame(oldItem: ToDoCheck, newItem: ToDoCheck): Boolean {
+            override fun areContentsTheSame(oldItem: ToDoCheckLocal, newItem: ToDoCheckLocal): Boolean {
                 return oldItem == newItem
             }
         }
