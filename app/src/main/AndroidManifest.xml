@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.calender.main">
+          package="com.calender.presentation">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-            android:name=".ui.application.CApplication"
+            android:name="com.calender.presentation.hilt.CApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -14,10 +14,10 @@
             android:theme="@style/Theme.Calender"
             android:usesCleartextTraffic="true">
         <activity
-                android:name=".ui.activity.MainActivity"
+                android:name="com.calender.presentation.view.activity.MainActivity"
                 android:exported="true"/>
         <activity
-                android:name=".ui.activity.MainLogin"
+                android:name="com.calender.presentation.view.activity.MainLogin"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -27,10 +27,10 @@
         </activity>
 
         <service
-                android:name=".ui.services.ForceService"
+                android:name="com.calender.presentation.services.ForceService"
                 android:stopWithTask="false"/>
         <service
-                android:name=".data.firebase.MyFCM"
+                android:name="com.calender.presentation.firebase.MyFCM"
                 android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
