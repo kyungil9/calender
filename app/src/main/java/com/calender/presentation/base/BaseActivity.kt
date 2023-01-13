@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.calender.presentation.custom_toast
 import com.calender.presentation.security
-import com.calender.presentation.services.ForceService
+import com.calender.presentation.utils.ForceService
 
 abstract class BaseActivity<T : ViewDataBinding>(@LayoutRes val layoutId : Int) :AppCompatActivity(){
     private var _binding : T ?= null

@@ -57,9 +57,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         toDoAdapter.submitList(todoList)
 
         //일정부분
-        val dumy = ArrayList<Schedule>()
-        dumy.add(Schedule(LocalDate.now(), LocalTime.now(),"test1"))
-        dumy.add(Schedule(LocalDate.now(), LocalTime.now(),"test2"))
+
         val scheduleAdapter = ScheduleAdapter()
         val scheduleManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         binding.homeScheduleList.apply {
@@ -67,7 +65,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             adapter = scheduleAdapter
             setHasFixedSize(true)
         }
-        scheduleAdapter.setItems(dumy)
+        //scheduleAdapter.setItems()
     }
 
     private fun createChip(key:String) : Chip {

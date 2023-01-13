@@ -27,7 +27,7 @@
         </activity>
 
         <service
-                android:name="com.calender.presentation.services.ForceService"
+                android:name="com.calender.presentation.utils.ForceService"
                 android:stopWithTask="false"/>
         <service
                 android:name="com.calender.presentation.firebase.MyFCM"

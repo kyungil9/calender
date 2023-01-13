@@ -2,9 +2,11 @@ package com.calender.presentation.module
 
 import android.content.Context
 import androidx.room.Room
-import com.calender.data.database.dao.DailyDao
 import com.calender.data.database.Database
+import com.calender.data.database.dao.MemoDao
+import com.calender.data.database.dao.RecordDao
 import com.calender.data.database.dao.ScheduleDao
+import com.calender.data.database.dao.TodoDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,16 +17,29 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class DatabaseModule {
-    @Provides
-    @Singleton
-    fun providesDailyDao(database: Database): DailyDao {
-        return database.dailyDao()
-    }
 
     @Provides
     @Singleton
     fun providesScheduleDao(database: Database): ScheduleDao {
         return database.scheduleDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providesTodoDao(database: Database): TodoDao {
+        return database.toDoDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providesMemoDao(database: Database): MemoDao {
+        return database.memoDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providesRecordDao(database: Database): RecordDao {
+        return database.recordDao()
     }
 
     @Provides

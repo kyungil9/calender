@@ -11,7 +11,7 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.ScheduleView>(){
 
     inner class ScheduleView(private val binding: ListScheduleItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(item : Schedule){
-            binding.scheduleTime.text = item.time.toString()
+            binding.scheduleTime.text = item.startTime.toString()
             binding.scheduleDetail.text = item.detail
         }
     }

@@ -1,6 +1,7 @@
 package com.calender.presentation.utils
 
 import com.calender.domain.model.Daily
+import com.calender.domain.model.Schedule
 import com.calender.presentation.view.adapter.DayAdapter
 import java.time.LocalDate
 
@@ -14,11 +15,11 @@ class Calender {
         currentDate = date
         date = date.plusDays((-(date.dayOfWeek.value-1)).toLong())
         val tempMonth = date.monthValue
-        val daily = Daily(date,"")
+        val daily = Daily(date,ArrayList<Schedule>())
         dailyList.add(daily)
         for(i in 0..5) {
             date = date.plusDays(1)
-            val daily = Daily(date,"")
+            val daily = Daily(date,ArrayList<Schedule>())
             dailyList.add(daily)
         }
         return DayAdapter(tempMonth,7)
@@ -42,11 +43,11 @@ class Calender {
         }else if (date.dayOfWeek.value == 6 && date.monthValue != 2)
             size = 40
         date = date.plusDays((-(date.dayOfWeek.value%7)).toLong())
-        val daily = Daily(date,"")
+        val daily = Daily(date,ArrayList<Schedule>())
         dailyList.add(daily)
         for(i in 0..size) {
             date = date.plusDays(1)
-            val daily = Daily(date,"")
+            val daily = Daily(date,ArrayList<Schedule>())
             dailyList.add(daily)
         }
         return DayAdapter(tempMonth,size+2)

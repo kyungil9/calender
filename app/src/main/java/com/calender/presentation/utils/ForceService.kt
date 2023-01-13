@@ -1,4 +1,4 @@
-package com.calender.presentation.services
+package com.calender.presentation.utils
 
 import android.app.Service
 import android.content.Intent

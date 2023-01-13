@@ -5,20 +5,20 @@ import com.calender.data.model.local.ScheduleLocal
 import com.calender.domain.model.Daily
 import com.calender.domain.model.Schedule
 
-fun mapperToDaily(dailyLocals : List<DailyLocal>):List<Daily>{
-    return dailyLocals.toList().map {
-        Daily(
-            it.date,
-            it.record
-        )
-    }
-}
+
 
 fun mapperToSchedule(scheduleLocals : List<ScheduleLocal>) : List<Schedule>{
     return scheduleLocals.toList().map {
         Schedule(
             it.date,
-            it.time,
+            it.timeSelect,
+            it.startTime,
+            it.endTime,
+            it.repeat,
+            it.tag,
+            it.alarm,
+            it.color,
+            it.memoryDay,
             it.detail
         )
     }
