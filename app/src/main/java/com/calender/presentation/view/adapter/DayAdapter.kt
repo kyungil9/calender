@@ -43,15 +43,14 @@ class DayAdapter(
 
 
             binding.itemDayText.text = item.date.dayOfMonth.toString()
-
+            binding.itemDayText.setTextColor(
+                when (position % 7) {
+                    0 -> Color.RED
+                    6 -> Color.BLUE
+                    else -> Color.BLACK
+                }
+            )
             if (size == 7){
-                binding.itemDayText.setTextColor(
-                    when (position % 7) {
-                        5 -> Color.BLUE
-                        6 -> Color.RED
-                        else -> Color.BLACK
-                    }
-                )
                 if(item.date == LocalDate.now()){
                     //오늘날짜 색상바꾸기
                     binding.itemDayText.apply {
@@ -60,14 +59,6 @@ class DayAdapter(
                     }
                 }
 
-            }else {
-                binding.itemDayText.setTextColor(
-                    when (position % 7) {
-                        0 -> Color.RED
-                        6 -> Color.BLUE
-                        else -> Color.BLACK
-                    }
-                )
             }
             if(tempMonth != item.date.monthValue) {
                 binding.itemDayText.alpha = 0.4f

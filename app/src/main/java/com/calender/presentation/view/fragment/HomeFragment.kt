@@ -49,12 +49,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             addItemDecoration(HorizonItemDecorator(20))
         }
 
-        val todoList = ArrayList<ToDo>()//추후 번경
-        var checkList = ArrayList<ToDoCheck>()
-        checkList.add(ToDoCheck(LocalDate.now(),"11",false))
-        checkList.add(ToDoCheck(LocalDate.now(),"12",true))
-        todoList.add(ToDo(LocalDate.now(),checkList))
-        toDoAdapter.submitList(todoList)
+
+        //toDoAdapter.submitList()
 
         //일정부분
 

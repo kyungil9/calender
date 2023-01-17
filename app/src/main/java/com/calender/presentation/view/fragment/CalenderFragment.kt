@@ -1,6 +1,9 @@
 package com.calender.presentation.view.fragment
 
 import android.os.Bundle
+import android.util.Log
+import android.util.TypedValue
+import android.view.MotionEvent
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -14,6 +17,7 @@ import com.calender.presentation.base.BaseFragment
 import com.calender.presentation.databinding.FragmentCalenderBinding
 import com.calender.presentation.utils.HorizonItemDecorator
 import com.calender.presentation.listener.RecyclerViewItemClickListener
+import com.calender.presentation.utils.OnSwipeTouchListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
@@ -56,7 +60,21 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
             scheduleAdapter.setItems(it)//다른 날짜 클릭시 해당날짜에 저장된 데이터 불러와서 업데이트
         })
 
+        binding.calenderFragment.setOnTouchListener(object : OnSwipeTouchListener(requireActivity()){
+            override fun onSwipeTop() {
+                binding.calenderLayout.visibility = View.VISIBLE
+            }
 
+            override fun onSwipeBottom() {
+//                val params = binding.calenderLayout.layoutParams
+//                params.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,5F,binding.calenderLayout.context.resources.displayMetrics).toInt()
+//                binding.calenderLayout.layoutParams
+                binding.calenderLayout.visibility = View.GONE
+                Log.d("swipe","bottom")
+            }
+        })
 
     }
+
+
 }

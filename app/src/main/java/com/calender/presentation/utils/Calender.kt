@@ -13,7 +13,7 @@ class Calender {
         dailyList.clear()
         var date = LocalDate.now()
         currentDate = date
-        date = date.plusDays((-(date.dayOfWeek.value-1)).toLong())
+        date = date.plusDays((-(date.dayOfWeek.value%7)).toLong())
         val tempMonth = date.monthValue
         val daily = Daily(date,ArrayList<Schedule>())
         dailyList.add(daily)

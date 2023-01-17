@@ -15,7 +15,7 @@ class ToDoCheckAdapter:ListAdapter<ToDoCheck,ToDoCheckAdapter.CheckView>(diffUti
         fun bind(item: ToDoCheck, position: Int){
             binding.todoCheckbox.apply {
                 text = item.doIt
-                isChecked = item.check
+                isChecked = item.state == 3
                 if(isChecked){
                     paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 }

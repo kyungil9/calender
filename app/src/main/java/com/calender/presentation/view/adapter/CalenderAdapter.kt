@@ -28,8 +28,6 @@ class CalenderAdapter : RecyclerView.Adapter<CalenderAdapter.MonthView>(), Recyc
             }
             dayListAdapter?.submitList(dailyList) //데이터 삽입
             dayListAdapter?.setOnItemClickListener(listener!!)
-            binding.itemMonthText.text = "${calender.currentDate!!.year}년 ${calender.currentDate!!.monthValue}월"
-
 
         }
 

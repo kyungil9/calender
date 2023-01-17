@@ -28,16 +28,9 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
             addItemDecoration(VerticalItemDecorator(10))
             addItemDecoration(HorizonItemDecorator(10))
         }
-        //dumydata
-        val todoList = ArrayList<ToDo>()//추후 번경
-        var checkList = ArrayList<ToDoCheck>()
-        checkList.add(ToDoCheck(LocalDate.now(),"11",false))
-        checkList.add(ToDoCheck(LocalDate.now(),"12",true))
-        todoList.add(ToDo(LocalDate.now(),checkList))
-        checkList = ArrayList<ToDoCheck>()
-        checkList.add(ToDoCheck(LocalDate.now(),"12",true))
-        todoList.add(ToDo(LocalDate.now(),checkList))
-        toDoAdapter.submitList(todoList)
+
+
+        //toDoAdapter.submitList()
 
     }
 
