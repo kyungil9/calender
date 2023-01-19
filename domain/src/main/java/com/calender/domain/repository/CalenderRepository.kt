@@ -7,8 +7,6 @@ import java.time.LocalDate
 
 interface CalenderRepository {
 
-
-
     fun getSearchSchedule(date : LocalDate):List<Schedule>
 
 }
