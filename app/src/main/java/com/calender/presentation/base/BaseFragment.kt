@@ -9,6 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.calender.presentation.view.activity.MainActivity
 
 abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutRes: Int) : Fragment() {
     private var _binding : T ?= null
@@ -25,6 +26,19 @@ abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutRes
     override fun onDestroyView() {
         _binding=null
         super.onDestroyView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.invalidateOptionsMenu()
+
+    }
+
+    fun setActionBarTitle(title:String){
+        val activity = activity
+        if (activity != null) {
+            (activity as MainActivity).setActionBarTitle(title)
+        }
     }
 
 }

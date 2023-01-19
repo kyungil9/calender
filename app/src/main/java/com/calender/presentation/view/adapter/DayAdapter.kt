@@ -63,7 +63,6 @@ class DayAdapter(
             if(tempMonth != item.date.monthValue) {
                 binding.itemDayText.alpha = 0.4f
             }
-
         }
     }
 

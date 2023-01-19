@@ -10,8 +10,8 @@
             android:layout_height="match_parent"
             tools:context=".view.activity.MainActivity">
         <include
-            layout="@layout/toolbar"
-            android:id="@+id/toolbar"/>
+                layout="@layout/toolbar"
+                android:id="@+id/toolbar"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:layout_width="0dp"
@@ -34,9 +34,7 @@
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:id="@+id/fragmentContainerView"
                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
                 app:layout_constraintBottom_toTopOf="@+id/guideline2"
-                app:navGraph="@navigation/main_nav_graph"
-                app:defaultNavHost="true"/>
+                app:defaultNavHost="true" app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

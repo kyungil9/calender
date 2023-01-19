@@ -1,7 +1,11 @@
 package com.calender.presentation.view.fragment
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calender.domain.model.ToDo
@@ -14,6 +18,7 @@ import com.calender.presentation.view.adapter.ToDoAdapter
 import com.calender.presentation.base.BaseFragment
 import com.calender.presentation.databinding.FragmentHomeBinding
 import com.calender.presentation.utils.HorizonItemDecorator
+import com.calender.presentation.view.activity.MainActivity
 import com.google.android.material.chip.Chip
 import java.time.LocalDate
 import java.time.LocalTime
@@ -23,6 +28,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+
         val calender = Calender()
         var dayListAdapter = calender.createHomeWeek()
         val dailyList = calender.dailyList
@@ -77,5 +84,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             }
         }
         return chip
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        val date = LocalDate.now()
+        setActionBarTitle("${date.year}.${date.monthValue}.${date.dayOfMonth}(${Calender.transDayToKorean(date.dayOfWeek.value)})")
+        inflater.inflate(R.menu.regular_menu,menu)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.setting -> {
+                //view?.findNavController()?.navigate(R.id.action_HomeFragment_to_toDoModeFragment2)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

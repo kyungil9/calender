@@ -21,7 +21,7 @@ class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.DoView>(diffUtil){
                 layoutManager = checkManager
                 addItemDecoration(HorizonItemDecorator(15))
             }
-            binding.todoListName.text = "할일(${item.date})"
+            binding.todoListName.text = "${item.date.monthValue}.${item.date.dayOfMonth}(${item.date.dayOfWeek})"
             todoChecklistAdapter.submitList(item.list)
         }
     }

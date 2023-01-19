@@ -8,6 +8,7 @@ import com.calender.presentation.R
 
 import com.calender.presentation.base.BaseActivity
 import com.calender.presentation.databinding.ActivityMainBinding
+import com.calender.presentation.utils.KeepStateNavigator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,8 +18,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val navMainFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment//바텀네비게이터 설정
+        //val navController = Navigation.findNavController(requireViewById(R.id.HomeFragment))
         val navController = navMainFragment.navController
+        val navigator = KeepStateNavigator(this,navMainFragment.childFragmentManager,R.id.fragmentContainerView)
+        navController.navigatorProvider.addNavigator(navigator)
+        navController.setGraph(R.navigation.main_nav_graph)
         binding.mainBottomNav.setupWithNavController(navController)
+        setSupportActionBar(binding.toolbar.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
 
@@ -30,4 +37,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             finishAffinity()
         }
     }
+
+    fun setActionBarTitle(title: String) {
+        binding.toolbar.toolbarTitle.text = title
+    }
+
 }
