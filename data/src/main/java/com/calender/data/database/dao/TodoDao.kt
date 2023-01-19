@@ -8,5 +8,5 @@ import com.calender.data.model.local.ToDoCheckLocal
 interface TodoDao {
 
     @Query("select * from todo")
-    fun getTodoInfo():List<ToDoCheckLocal>
+    fun getAllTodoInfo():List<ToDoCheckLocal>
 }

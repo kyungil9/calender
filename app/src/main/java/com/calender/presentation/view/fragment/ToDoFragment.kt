@@ -5,10 +5,13 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calender.presentation.R
 import com.calender.presentation.base.BaseFragment
+import com.calender.presentation.data.viewmodels.ToDoViewModel
 import com.calender.presentation.databinding.FragmentToDoBinding
 import com.calender.presentation.utils.HorizonItemDecorator
 import com.calender.presentation.utils.VerticalItemDecorator
@@ -17,6 +20,7 @@ import com.calender.presentation.view.adapter.ToDoAdapter
 
 
 class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) {
+    private val todoViewModel : ToDoViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,6 +38,10 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
 
 
         //toDoAdapter.submitList()
+
+        todoViewModel.toDoInfo.observe(viewLifecycleOwner, Observer {
+            //할일 데이터에 변화가 있으면 업데이트 되도록추가
+        })
 
     }
 
