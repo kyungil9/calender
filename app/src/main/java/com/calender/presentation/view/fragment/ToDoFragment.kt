@@ -39,9 +39,10 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
 
         //toDoAdapter.submitList()
 
-        todoViewModel.toDoInfo.observe(viewLifecycleOwner, Observer {
-            //할일 데이터에 변화가 있으면 업데이트 되도록추가
-        })
+//        todoViewModel.toDoInfo.observe(viewLifecycleOwner, Observer {
+//            //할일 데이터에 변화가 있으면 업데이트 되도록추가
+//            //toDoAdapter.submitList(todoViewModel.toDoInfo.value)
+//        })
 
     }
 

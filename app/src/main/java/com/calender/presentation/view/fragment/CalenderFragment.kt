@@ -60,9 +60,9 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
             }
         })
 
-        calenderViewModel.scheduleInfo.observe(viewLifecycleOwner, Observer {
-            scheduleAdapter.setItems(it)//다른 날짜 클릭시 해당날짜에 저장된 데이터 불러와서 업데이트
-        })
+//        calenderViewModel.scheduleInfo.observe(viewLifecycleOwner, Observer {
+//            scheduleAdapter.setItems(it)//다른 날짜 클릭시 해당날짜에 저장된 데이터 불러와서 업데이트
+//        })
 
         binding.calenderFragment.setOnTouchListener(object : OnSwipeTouchListener(requireActivity()){//플레그먼트 빈공간만 인식되는 문제(터치권한을 전체로 가져와야??)
             override fun onSwipeTop() {

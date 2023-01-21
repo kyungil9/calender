@@ -22,9 +22,9 @@ class ToDoModeFragment : BaseFragment<FragmentToDoModeBinding>(R.layout.fragment
 
 
 
-        todoViewModel.toDoInfo.observe(viewLifecycleOwner, Observer {
-            //할일 데이터에 변화가 있으면 업데이트 되도록추가
-        })
+//        todoViewModel.toDoInfo.observe(viewLifecycleOwner, Observer {
+//            //할일 데이터에 변화가 있으면 업데이트 되도록추가
+//        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
