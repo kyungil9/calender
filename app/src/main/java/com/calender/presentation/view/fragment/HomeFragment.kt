@@ -44,7 +44,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         keys.add("test1")
         keys.add("test2")
         for(key in keys){
-            binding.recordChipGroup.addView(createChip(key))
+            binding.recordChipGroup.addView(createChip(key))//bindingAdapter로 이동
         }
 
         //todo부분
