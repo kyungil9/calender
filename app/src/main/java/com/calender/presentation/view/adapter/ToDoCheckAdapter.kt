@@ -3,38 +3,40 @@ package com.calender.presentation.view.adapter
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.domain.model.ToDoCheck
+import com.calender.presentation.R
 import com.calender.presentation.databinding.ListTodoItemBinding
 
 
 class ToDoCheckAdapter:ListAdapter<ToDoCheck,ToDoCheckAdapter.CheckView>(diffUtil) {
     inner class CheckView(private val binding: ListTodoItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: ToDoCheck, position: Int){
-            binding.todoCheckbox.apply {
-                text = item.doIt
-                isChecked = item.state == 3
-                if(isChecked){
-                    paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                }
-                setOnCheckedChangeListener { compoundButton, isChecked ->
-                    if(isChecked){
-                        paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                    }else{
-                        paintFlags = (paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv())
+        fun bind(item: ToDoCheck){
+            binding.apply {
+                todo = item
+                todoCheckbox.apply {
+                    setOnCheckedChangeListener { compoundButton, isChecked ->
+                        if (isChecked) {
+                            paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                        } else {
+                            paintFlags = (paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv())
+                        }
                     }
                 }
             }
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoCheckAdapter.CheckView {
-        return CheckView(ListTodoItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = DataBindingUtil.inflate<ListTodoItemBinding>(layoutInflater, R.layout.list_todo_item,parent,false)
+        return CheckView(binding)
     }
 
     override fun onBindViewHolder(holder: ToDoCheckAdapter.CheckView, position: Int) {
-        holder.bind(currentList[position],position)
+        holder.bind(currentList[position])
     }
 
     override fun getItemCount(): Int {

@@ -21,29 +21,19 @@ import com.calender.presentation.view.adapter.ToDoAdapter
 
 class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) {
     private val todoViewModel : ToDoViewModel by activityViewModels()
-
+    private val todoAdapter = ToDoAdapter()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-
-        val toDoAdapter = ToDoAdapter()
-        val toDoManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
-        binding.customTodo.apply {
-            adapter = toDoAdapter
-            layoutManager = toDoManager
-            setHasFixedSize(true)
-            addItemDecoration(VerticalItemDecorator(10))
-            addItemDecoration(HorizonItemDecorator(10))
+        binding.apply {
+            vm = todoViewModel
+            adapter = todoAdapter
+            customTodo.apply {
+                setHasFixedSize(true)
+                addItemDecoration(VerticalItemDecorator(10))
+                addItemDecoration(HorizonItemDecorator(10))
+            }
         }
-
-
-        //toDoAdapter.submitList()
-
-//        todoViewModel.toDoInfo.observe(viewLifecycleOwner, Observer {
-//            //할일 데이터에 변화가 있으면 업데이트 되도록추가
-//            //toDoAdapter.submitList(todoViewModel.toDoInfo.value)
-//        })
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

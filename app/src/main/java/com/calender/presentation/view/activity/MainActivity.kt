@@ -18,7 +18,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val navMainFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment//바텀네비게이터 설정
-        //val navController = Navigation.findNavController(requireViewById(R.id.HomeFragment))
         val navController = navMainFragment.navController
         val navigator = KeepStateNavigator(this,navMainFragment.childFragmentManager,R.id.fragmentContainerView)
         navController.navigatorProvider.addNavigator(navigator)

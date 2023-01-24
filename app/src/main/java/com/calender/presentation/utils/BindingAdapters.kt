@@ -1,6 +1,8 @@
 package com.calender.presentation.utils
 
+import android.graphics.Paint
 import android.view.View
+import android.widget.CheckBox
 import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -54,4 +56,11 @@ fun RecyclerView.bindToDoCheckItems(list : List<ToDoCheck>?){
     if(adapter is ToDoCheckAdapter){
         adapter.submitList(list)
     }
+}
+
+@BindingAdapter("toDoChecked")
+fun CheckBox.bindToDoChecked(value : Int){
+    this.isChecked = value == 3
+    if(this.isChecked)
+        this.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 }
