@@ -1,10 +1,14 @@
 package com.calender.presentation.view.fragment
 
+import android.app.ActivityOptions
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -15,6 +19,7 @@ import com.calender.presentation.data.viewmodels.ToDoViewModel
 import com.calender.presentation.databinding.FragmentToDoBinding
 import com.calender.presentation.utils.HorizonItemDecorator
 import com.calender.presentation.utils.VerticalItemDecorator
+import com.calender.presentation.view.activity.AddToDo
 import com.calender.presentation.view.activity.MainActivity
 import com.calender.presentation.view.adapter.ToDoAdapter
 
@@ -28,12 +33,18 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
         binding.apply {
             vm = todoViewModel
             adapter = todoAdapter
+
+            addToDo.setOnClickListener {
+                addToDoCheck()
+            }
             customTodo.apply {
                 setHasFixedSize(true)
                 addItemDecoration(VerticalItemDecorator(10))
                 addItemDecoration(HorizonItemDecorator(10))
             }
         }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -51,5 +62,8 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
         }
         return super.onOptionsItemSelected(item)
     }
-
+    fun addToDoCheck(){
+        val intent = Intent(context,AddToDo::class.java)
+        startActivity(intent)
+    }
 }

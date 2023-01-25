@@ -4,6 +4,7 @@ import android.graphics.Paint
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.domain.model.Result
@@ -63,4 +64,12 @@ fun CheckBox.bindToDoChecked(value : Int){
     this.isChecked = value == 3
     if(this.isChecked)
         this.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+}
+
+@BindingAdapter("toDoMode")
+fun TextView.bindToDoMode(todo : ToDo){
+    if (todo.title.isEmpty())
+        this.text = "${todo.date.monthValue}.${todo.date.dayOfMonth}(${todo.date.dayOfWeek})"
+    else
+        this.text = todo.title
 }

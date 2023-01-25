@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.startActivity
 
 @AndroidEntryPoint
-class MainLogin : BaseActivity<ActivityMainLoginBinding>(R.layout.activity_main_login) {
+class MainLogin : BaseActivity<ActivityMainLoginBinding>(R.layout.activity_main_login,TransitionMode.NONE) {
     private var googleSignInClient : GoogleSignInClient? = null
     private var GOOGLE_LOGIN_CODE = 9001
     private lateinit var auth : FirebaseAuth

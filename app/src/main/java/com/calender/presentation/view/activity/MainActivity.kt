@@ -12,7 +12,7 @@ import com.calender.presentation.utils.KeepStateNavigator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main,TransitionMode.NONE) {
     private var backKeyPressedTime = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
