@@ -12,7 +12,7 @@
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/ic_launcher_background.xml" value="0.4905" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/view_edge2.xml" value="0.494" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/viewedge.xml" value="0.4905" />
-        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_add_to_do.xml" value="0.3962962962962963" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_add_to_do.xml" value="0.43333333333333335" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_lobby.xml" value="0.5390625" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_loddy.xml" value="0.5" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_main.xml" value="0.1962962962962963" />
@@ -34,6 +34,8 @@
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/list_todo.xml" value="0.49074074074074076" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/list_todo_item.xml" value="0.5380208333333333" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/toolbar.xml" value="0.5390625" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/view_item_info.xml" value="0.25787965616045844" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/view_numberpick.xml" value="0.4027538726333907" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/menu/bottom_nav.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/menu/calender_menu.xml" value="0.5526041666666667" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/menu/check_menu.xml" value="0.5526041666666667" />

@@ -1,19 +1,23 @@
 package com.calender.presentation.view.activity
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import com.calender.presentation.R
 import com.calender.presentation.base.BaseActivity
+import com.calender.presentation.data.viewmodels.ToDoAddViewModel
 import com.calender.presentation.databinding.ActivityAddToDoBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do,TransitionMode.VERTICAL) {
+    private val viewModel : ToDoAddViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +30,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
 
         binding.apply {
             todoToolbar.toolbarTitle.text = "할 일"
-
+            vm = viewModel
         }
     }
 

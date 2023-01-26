@@ -1,5 +1,6 @@
 package com.calender.presentation.view.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -8,6 +9,7 @@ import com.calender.presentation.R
 
 import com.calender.presentation.base.BaseActivity
 import com.calender.presentation.databinding.ActivityMainBinding
+import com.calender.presentation.utils.ForceService
 import com.calender.presentation.utils.KeepStateNavigator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +19,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main,Tr
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startService(Intent(this, ForceService::class.java))
         val navMainFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment//바텀네비게이터 설정
         val navController = navMainFragment.navController
         val navigator = KeepStateNavigator(this,navMainFragment.childFragmentManager,R.id.fragmentContainerView)

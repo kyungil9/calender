@@ -24,7 +24,6 @@ abstract class BaseActivity<T : ViewDataBinding>(
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, layoutId)
         binding.lifecycleOwner = this
-        startService(Intent(this, ForceService::class.java))
 
         when(transitionMode){
             TransitionMode.VERTICAL -> overridePendingTransition(R.anim.vertical_enter, R.anim.none)

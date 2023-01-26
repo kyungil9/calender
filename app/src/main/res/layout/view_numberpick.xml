@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="com.calender.domain.model.NpMode"/>
+        <variable name="np" type="com.calender.presentation.utils.NumberPick"/>
+    </data>
+    <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        <NumberPicker
+                app:npMode="@{NpMode.YEAR}"
+                app:np="@{np}"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="150dp" android:id="@+id/npYear"/>
+        <NumberPicker
+                app:npMode="@{NpMode.MONTH}"
+                app:np="@{np}"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="150dp" android:id="@+id/npMonth"/>
+        <NumberPicker
+                app:npMode="@{NpMode.DAY}"
+                app:np="@{np}"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="150dp" android:id="@+id/npDay"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
