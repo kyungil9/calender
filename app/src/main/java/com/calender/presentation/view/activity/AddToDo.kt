@@ -31,6 +31,25 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
         binding.apply {
             todoToolbar.toolbarTitle.text = "할 일"
             vm = viewModel
+            todoCalenderView.npYear.setOnValueChangedListener { numberPicker, i, i2 ->
+                viewModel.np.changeDayInfo(viewModel.np.setYear(i2))
+                todoCalenderView.npDay.apply {
+                    displayedValues = null
+                    maxValue = viewModel.np.getDaySize()
+                    displayedValues = viewModel.np.getDayValue()
+                }
+            }
+            todoCalenderView.npMonth.setOnValueChangedListener { numberPicker, i, i2 ->
+                viewModel.np.changeDayInfo(viewModel.np.setMonth(i2))
+                todoCalenderView.npDay.apply {
+                    displayedValues = null
+                    maxValue = viewModel.np.getDaySize()
+                    displayedValues = viewModel.np.getDayValue()
+                }
+            }
+            todoCalenderView.npDay.setOnValueChangedListener { numberPicker, i, i2 ->
+                viewModel.np.setDay(i2)
+            }
         }
     }
 

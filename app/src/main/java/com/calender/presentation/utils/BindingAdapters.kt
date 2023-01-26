@@ -93,18 +93,12 @@ fun NumberPicker.bindNpMode(mode : NpMode,np : NumberPick){
             this.wrapSelectorWheel = false
             this.displayedValues = np.getYearValue()
             this.value = np.getYearCurrent()
-            this.setOnValueChangedListener { numberPicker, i, i2 ->
-                np.changeDayInfo(np.setYear(numberPicker.value))
-            }
         }
         NpMode.MONTH ->{
             this.maxValue = np.getMonthSize()
             this.wrapSelectorWheel = true
             this.displayedValues = np.getMonthValue()
             this.value = np.getMonthCurrent()
-            this.setOnValueChangedListener { numberPicker, i, i2 ->
-                np.changeDayInfo(np.setMonth(numberPicker.value))
-            }
         }
         NpMode.DAY -> {
             this.maxValue = np.getDaySize()

@@ -1,9 +1,10 @@
 package com.calender.presentation.utils
 
+import android.util.Log
 import java.time.LocalDate
 
 class NumberPick {
-    private val today = LocalDate.now()
+    private var today = LocalDate.now()
 
     private val yearList = (2000..2050).toList()
     private val monthList = (1..12).toList()
@@ -18,20 +19,20 @@ class NumberPick {
     }
 
     fun setYear(year: Int):LocalDate{
-        today.withYear(year+2000)
+        today = today.withYear(year+2000)
         return today
     }
     fun setMonth(month: Int):LocalDate{
-        today.withMonth(month +1)
+        today = today.withMonth(month +1)
         return today
     }
     fun setDay(day: Int):LocalDate{
-        today.withDayOfMonth(day+1)
+        today = today.withDayOfMonth(day+1)
         return today
     }
 
-    fun getSelectDay():LocalDate{
-        return today
+    fun getSelectDay():String{
+        return today.toString()
     }
 
     fun getYearValue():Array<String>{
