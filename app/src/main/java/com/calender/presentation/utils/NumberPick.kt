@@ -31,6 +31,10 @@ class NumberPick {
         return today
     }
 
+    fun getToday():LocalDate{
+        return today
+    }
+
     fun getSelectDay():String{
         return today.toString()
     }

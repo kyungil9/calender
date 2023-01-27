@@ -2,5 +2,10 @@ package com.calender.domain.model
 
 enum class ViewMode {
     TAG,
-    ALARM
+    ALARM,
+    DATE,
+    STATE,
+    EMPTY,
+    REPEAT,
+    END
 }

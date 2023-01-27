@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="java.util.List"/>
+        <variable name="mode" type="com.calender.domain.model.ViewMode"/>
+        <variable name="tags" type="List&lt;String>"/>
+    </data>
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.google.android.material.chip.ChipGroup
+                app:singleSelection="true"
+                app:tags="@{tags}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="8dp" android:id="@+id/selectChipGroup"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"/>
+        <ImageView
+                app:viewMode="@{mode}"
+                android:layout_width="45dp"
+                android:layout_height="45dp" app:srcCompat="@drawable/ic_baseline_check_circle_24"
+                android:id="@+id/imageView2" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

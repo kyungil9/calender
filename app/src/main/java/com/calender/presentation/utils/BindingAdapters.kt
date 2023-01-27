@@ -15,6 +15,7 @@ import com.calender.presentation.view.adapter.ToDoAdapter
 import com.calender.presentation.view.adapter.ToDoCheckAdapter
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import org.jetbrains.anko.custom.style
 import java.time.LocalDate
 
 @BindingAdapter("tags")
@@ -79,8 +80,20 @@ fun TextView.bindToDoMode(todo : ToDo){
 @BindingAdapter("viewMode")
 fun ImageView.bindViewMode(mode : ViewMode){
     when(mode){
-        ViewMode.ALARM -> this.setImageResource(R.drawable.ic_baseline_alarm_24)
+        ViewMode.ALARM -> this.setImageResource(R.drawable.ic_baseline_notifications_24)
         ViewMode.TAG -> this.setImageResource(R.drawable.ic_baseline_folder_24)
+        ViewMode.DATE,ViewMode.END -> this.setImageResource(R.drawable.ic_baseline_alarm_24)
+        ViewMode.STATE -> this.setImageResource(R.drawable.ic_baseline_check_circle_24)
+        ViewMode.REPEAT -> this.setImageResource(R.drawable.ic_baseline_repeat_24)
+        else -> this.visibility = View.INVISIBLE
+    }
+}
+
+@BindingAdapter("viewModeVisibility")
+fun ImageView.bindViewModeVisibility(mode : ViewMode){
+    when(mode){
+        ViewMode.DATE -> this.setImageResource(R.drawable.ic_baseline_arrow_drop_down_24)
+        else -> this.visibility = View.VISIBLE
     }
 }
 

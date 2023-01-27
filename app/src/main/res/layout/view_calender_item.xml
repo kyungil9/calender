@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.calender.domain.model.ViewMode"/>
+        <import type="androidx.lifecycle.LiveData"/>
+        <import type="java.util.List"/>
+        <import type="java.time.LocalDate"/>
+        <import type="kotlin.jvm.functions.Function0" />
+        <import type="kotlin.Unit" />
+        <variable name="liveToggle" type="LiveData&lt;Boolean>"/>
+        <variable name="np" type="com.calender.presentation.utils.NumberPick"/>
+        <variable name="tags" type="List&lt;String>"/>
+        <variable name="liveDate" type="LiveData&lt;LocalDate>"/>
+        <variable name="toggleFunction" type="Function0&lt;Unit>"/>
+        <variable name="command" type="String"/>
+    </data>
+    <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        
+        <include
+                android:id="@+id/date_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/view_item_info"
+                app:mode="@{ViewMode.DATE}"
+                android:onClick="@{() -> toggleFunction.invoke()}"
+                app:command="@{ command +` : `+ liveDate.toString()}"/>
+        <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/calender_view"
+                layout="@layout/view_numberpick"
+                app:np="@{np}" android:visibility="@{liveToggle ? View.VISIBLE : View.GONE}"/>
+        <include
+                android:id="@+id/calender_selectview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/view_chip_item"
+                app:mode="@{ViewMode.EMPTY}"
+                app:tags="@{tags}"/>
+        
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -6,6 +6,7 @@
         tools:context=".view.activity.AddToDo">
 
     <data>
+        <import type="android.view.View"/>
         <import type="com.calender.domain.model.ViewMode"/>
         <variable name="vm" type="com.calender.presentation.data.viewmodels.ToDoAddViewModel"/>
     </data>
@@ -27,7 +28,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline5" app:layout_constraintVertical_bias="0.0">
 
             <EditText
-                    android:text="@{vm.np.selectDay}"
+                    android:text=""
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
@@ -35,11 +36,17 @@
                     android:id="@+id/editToDoIt" android:minHeight="48dp" android:hint="할일을 입력하시오"/>
 
             <include
+                    android:id="@+id/todo_startDate_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/todo_calender_view"
-                    layout="@layout/view_numberpick"
-                    app:np="@{vm.np}"/>
+                    layout="@layout/view_calender_item"
+                    app:np="@{vm.startNp}"
+                    app:command="@{`시작일자`}"
+                    app:tags="@{vm.calenderTags}"
+                    app:liveDate="@{vm.liveStartDate}"
+                    app:toggleFunction="@{vm.calenderStartToggleVisibility}"
+                    app:liveToggle="@{vm.liveStartCalenderToggle}"/>
+
             <include
                     android:id="@+id/todo_tags_view"
                     android:layout_width="match_parent"
@@ -49,12 +56,39 @@
                     app:command="@{`태그등록`}"/>
 
             <include
+                    android:id="@+id/todo_repeat_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/view_chip_item"
+                    app:mode="@{ViewMode.REPEAT}"
+                    app:tags="@{vm.repeatTags}"/>
+            <include
                     android:id="@+id/todo_alarm_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     layout="@layout/view_item_info"
                     app:mode="@{ViewMode.ALARM}"
                     app:command="@{`알림`}"/>
+            <include
+                    android:id="@+id/todo_state_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/view_chip_item"
+                    app:mode="@{ViewMode.STATE}"
+                    app:tags="@{vm.stateTags}"/>
+
+            <include
+                    android:id="@+id/todo_endDate_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/view_calender_item"
+                    app:np="@{vm.endNp}"
+                    app:command="@{`종료일자`}"
+                    app:tags="@{vm.endDateTags}"
+                    app:liveDate="@{vm.liveEndDate}"
+                    app:toggleFunction="@{vm.calenderEndToggleVisibility}"
+                    app:liveToggle="@{vm.liveEndCalenderToggle}"/>
+
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

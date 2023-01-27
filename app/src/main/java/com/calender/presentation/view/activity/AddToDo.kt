@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import com.calender.presentation.R
@@ -31,24 +32,27 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
         binding.apply {
             todoToolbar.toolbarTitle.text = "할 일"
             vm = viewModel
-            todoCalenderView.npYear.setOnValueChangedListener { numberPicker, i, i2 ->
-                viewModel.np.changeDayInfo(viewModel.np.setYear(i2))
-                todoCalenderView.npDay.apply {
+            todoStartDateView.calenderView.npYear.setOnValueChangedListener { numberPicker, i, i2 ->
+                viewModel.startNp.changeDayInfo(viewModel.startNp.setYear(i2))
+                todoStartDateView.calenderView.npDay.apply {
                     displayedValues = null
-                    maxValue = viewModel.np.getDaySize()
-                    displayedValues = viewModel.np.getDayValue()
+                    maxValue = viewModel.startNp.getDaySize()
+                    displayedValues = viewModel.startNp.getDayValue()
                 }
+                viewModel.loadStartData()
             }
-            todoCalenderView.npMonth.setOnValueChangedListener { numberPicker, i, i2 ->
-                viewModel.np.changeDayInfo(viewModel.np.setMonth(i2))
-                todoCalenderView.npDay.apply {
+            todoStartDateView.calenderView.npMonth.setOnValueChangedListener { numberPicker, i, i2 ->
+                viewModel.startNp.changeDayInfo(viewModel.startNp.setMonth(i2))
+                todoStartDateView.calenderView.npDay.apply {
                     displayedValues = null
-                    maxValue = viewModel.np.getDaySize()
-                    displayedValues = viewModel.np.getDayValue()
+                    maxValue = viewModel.startNp.getDaySize()
+                    displayedValues = viewModel.startNp.getDayValue()
                 }
+                viewModel.loadStartData()
             }
-            todoCalenderView.npDay.setOnValueChangedListener { numberPicker, i, i2 ->
-                viewModel.np.setDay(i2)
+            todoStartDateView.calenderView.npDay.setOnValueChangedListener { numberPicker, i, i2 ->
+                viewModel.startNp.setDay(i2)
+                viewModel.loadStartData()
             }
         }
     }
@@ -73,4 +77,5 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
             else -> return super.onOptionsItemSelected(item)
         }
     }
+
 }
