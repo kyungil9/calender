@@ -62,7 +62,9 @@ class ToDoLocalDataSourceImpl @Inject constructor(
         emit(Result.Error(e))
     }
 
-
+    override fun insertToDo(todo: ToDoCheckLocal) {
+        todoDao.insertTodoInfo(todo)
+    }
 
 
 }

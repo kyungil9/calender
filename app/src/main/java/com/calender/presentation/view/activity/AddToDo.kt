@@ -118,7 +118,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
             }
             R.id.register -> {
                 //입력된 데이터를 저장하는 코드와 함께 종료
-
+                viewModel.registerToDo()
                 finish()
                 return true
             }

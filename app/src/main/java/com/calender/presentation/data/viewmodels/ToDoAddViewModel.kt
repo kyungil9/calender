@@ -5,16 +5,20 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.calender.domain.model.ToDoCheck
+import com.calender.domain.usecase.InsertToDoUseCase
 import com.calender.presentation.utils.NumberPick
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class ToDoAddViewModel @Inject constructor(
-
+    private val insertToDoUseCase: InsertToDoUseCase
 ) : ViewModel() {
     private val mutableStartDate = MutableLiveData<LocalDate>()
     private val mutableStartCalenderToggle = MutableLiveData<Boolean>()
@@ -43,8 +47,6 @@ class ToDoAddViewModel @Inject constructor(
         mutableEndDate.value = endNp.getToday()
         mutableEndCalenderToggle.value = false
     }
-
-
 
     fun loadStartData(){
         mutableStartDate.value = startNp.getToday()
@@ -79,6 +81,9 @@ class ToDoAddViewModel @Inject constructor(
             doIt = inputDo.value!!
             tag = ""
             endDate = liveEndDate.value!!
+        }
+        viewModelScope.launch(Dispatchers.IO){
+            insertToDoUseCase(toDoCheck)
         }
     }
 

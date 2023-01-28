@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 @Entity(tableName = "todo")
 data class ToDoCheckLocal(
-    @PrimaryKey(autoGenerate = true) val id : Int,
+    @PrimaryKey(autoGenerate = true) val id : Int = 0,
     var date : LocalDate = LocalDate.now(),
     var doIt : String,
     var tag : String,

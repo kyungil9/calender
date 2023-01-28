@@ -1,6 +1,7 @@
 package com.calender.data.repository
 
 import com.calender.data.mapper.mapperToToDo
+import com.calender.data.mapper.mapperToToDoLocal
 import com.calender.data.repository.local.interfaces.ToDoLocalDataSource
 import com.calender.domain.model.Result
 import com.calender.domain.model.ToDo
@@ -22,5 +23,9 @@ class ToDoRepositoryImpl @Inject constructor(
 
     override fun getProgramToDo(): Flow<Result<List<ToDo>>> {
         return toDoLocalData.getProgramToDo()
+    }
+
+    override fun insertToDo(todo : ToDoCheck) {
+        toDoLocalData.insertToDo(mapperToToDoLocal(todo))
     }
 }

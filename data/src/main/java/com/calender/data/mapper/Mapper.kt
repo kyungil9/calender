@@ -57,3 +57,16 @@ fun mapperToRecord(recordLocals : List<RecordLocal>) : List<Record>{
         )
     }
 }
+
+fun mapperToToDoLocal(todo : ToDoCheck) : ToDoCheckLocal{
+    return ToDoCheckLocal(
+        date = todo.date,
+        doIt = todo.doIt,
+        tag = todo.tag,
+        repeat = todo.repeat,
+        state = todo.state,
+        statePercent = todo.statePercent,
+        endDate = todo.endDate,
+        alarm = todo.alarm
+    )
+}

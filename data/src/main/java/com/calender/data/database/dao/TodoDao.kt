@@ -1,6 +1,7 @@
 package com.calender.data.database.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.calender.data.model.local.ToDoCheckLocal
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +24,9 @@ interface TodoDao {
 
     @Query("select * from todo where date = :date")
     fun getDateTodoInfo(date : LocalDate):List<ToDoCheckLocal>
+
+    @Insert
+    fun insertTodoInfo(todo : ToDoCheckLocal)
 
 
 }

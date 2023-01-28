@@ -11,4 +11,6 @@ interface ToDoRepository {
     fun getProgramToDo(): Flow<Result<List<ToDo>>>
 
     fun getDateToDo():Flow<Result<List<ToDo>>>
+
+    fun insertToDo(todo : ToDoCheck)
 }
