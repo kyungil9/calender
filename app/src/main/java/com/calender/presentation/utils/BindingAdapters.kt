@@ -8,6 +8,7 @@ import android.widget.NumberPicker
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.domain.model.*
 import com.calender.presentation.R
@@ -24,17 +25,11 @@ fun ChipGroup.bindTags(tags : List<String>?){
         val tagView : Chip = Chip(context).apply {
             text = tag
             isCheckable = true
-            setOnCheckedChangeListener{ value,checked ->
-                if(checked){
-                    //추후 서버에 기록 저장부분 처리추가
-                }else{
-
-                }
-            }
         }
         addView(tagView)
     }
 }
+
 
 @BindingAdapter("show")
 fun ProgressBar.bindShow(uiState : Result<*>){

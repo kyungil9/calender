@@ -6,6 +6,7 @@
         <import type="java.util.List"/>
         <variable name="mode" type="com.calender.domain.model.ViewMode"/>
         <variable name="tags" type="List&lt;String>"/>
+
     </data>
     
     <androidx.constraintlayout.widget.ConstraintLayout

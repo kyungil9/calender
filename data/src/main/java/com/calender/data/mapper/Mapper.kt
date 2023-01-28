@@ -30,7 +30,6 @@ fun mapperToToDo(todoLocals : List<ToDoCheckLocal>) : List<ToDoCheck>{
             it.repeat,
             it.state,
             it.statePercent,
-            it.period,
             it.endDate,
             it.alarm
         )

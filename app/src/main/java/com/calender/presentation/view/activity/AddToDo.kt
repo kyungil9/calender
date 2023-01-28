@@ -14,6 +14,7 @@ import com.calender.presentation.R
 import com.calender.presentation.base.BaseActivity
 import com.calender.presentation.data.viewmodels.ToDoAddViewModel
 import com.calender.presentation.databinding.ActivityAddToDoBinding
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +33,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
         binding.apply {
             todoToolbar.toolbarTitle.text = "할 일"
             vm = viewModel
+            //start부분
             todoStartDateView.calenderView.npYear.setOnValueChangedListener { numberPicker, i, i2 ->
                 viewModel.startNp.changeDayInfo(viewModel.startNp.setYear(i2))
                 todoStartDateView.calenderView.npDay.apply {
@@ -54,6 +56,51 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
                 viewModel.startNp.setDay(i2)
                 viewModel.loadStartData()
             }
+
+            //end부분
+            todoEndDateView.calenderView.npYear.setOnValueChangedListener { numberPicker, i, i2 ->
+                viewModel.endNp.changeDayInfo(viewModel.endNp.setYear(i2))
+                todoEndDateView.calenderView.npDay.apply {
+                    displayedValues = null
+                    maxValue = viewModel.endNp.getDaySize()
+                    displayedValues = viewModel.endNp.getDayValue()
+                }
+                viewModel.loadEndData()
+            }
+            todoEndDateView.calenderView.npMonth.setOnValueChangedListener { numberPicker, i, i2 ->
+                viewModel.endNp.changeDayInfo(viewModel.endNp.setMonth(i2))
+                todoEndDateView.calenderView.npDay.apply {
+                    displayedValues = null
+                    maxValue = viewModel.endNp.getDaySize()
+                    displayedValues = viewModel.endNp.getDayValue()
+                }
+                viewModel.loadEndData()
+            }
+            todoEndDateView.calenderView.npDay.setOnValueChangedListener { numberPicker, i, i2 ->
+                viewModel.endNp.setDay(i2)
+                viewModel.loadEndData()
+            }
+
+            todoRepeatView.selectChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+                val id = group.checkedChipId
+                if (id == View.NO_ID){
+                    viewModel.setRepeat("")
+                }else{
+                    val chip = group.findViewById<Chip>(id)
+                    viewModel.setRepeat(chip.text.toString())
+                }
+            }
+
+            todoStateView.selectChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+                val id = group.checkedChipId
+                if (id == View.NO_ID){
+                    viewModel.setState("")
+                }else{
+                    val chip = group.findViewById<Chip>(id)
+                    viewModel.setState(chip.text.toString())
+                }
+            }
+
         }
     }
 
@@ -71,6 +118,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
             }
             R.id.register -> {
                 //입력된 데이터를 저장하는 코드와 함께 종료
+
                 finish()
                 return true
             }

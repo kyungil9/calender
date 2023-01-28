@@ -28,7 +28,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline5" app:layout_constraintVertical_bias="0.0">
 
             <EditText
-                    android:text=""
+                    android:text="@={vm.inputDo}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
@@ -44,7 +44,7 @@
                     app:command="@{`시작일자`}"
                     app:tags="@{vm.calenderTags}"
                     app:liveDate="@{vm.liveStartDate}"
-                    app:toggleFunction="@{vm.calenderStartToggleVisibility}"
+                    app:toggleFunction="@{vm::calenderStartToggleVisibility}"
                     app:liveToggle="@{vm.liveStartCalenderToggle}"/>
 
             <include
