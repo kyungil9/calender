@@ -1,10 +1,12 @@
 package com.calender.data.database.converters
 
+import android.util.Log
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class Converters {
     @TypeConverter
@@ -13,7 +15,9 @@ class Converters {
     }
     @TypeConverter
     fun jsonToLocalDate(value : String) : LocalDate?{
-        return Gson().fromJson(value,LocalDate::class.java)
+        val string = Gson().fromJson(value,String::class.java)
+        val format = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        return LocalDate.parse(string, format)
     }
 
     @TypeConverter

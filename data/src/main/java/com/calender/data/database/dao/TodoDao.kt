@@ -11,16 +11,16 @@ import java.time.LocalDate
 interface TodoDao {
 
     @Query("select * from todo")
-    fun getAllTodoInfo():List<ToDoCheckLocal>
+    fun getAllTodoInfo():Flow<List<ToDoCheckLocal>>
 
     @Query("select tag from todo group by tag")
-    fun getTodoTagListInfo():List<String>
+    fun getTodoTagListInfo():Flow<List<String>>
 
     @Query("select date from todo group by date")
     fun getTodoDateListInfo():List<LocalDate>
 
     @Query("select * from todo where tag = :title")
-    fun getProgramTodoInfo(title : String):List<ToDoCheckLocal>
+    fun getProgramTodoInfo(title : String):Flow<List<ToDoCheckLocal>>
 
     @Query("select * from todo where date = :date")
     fun getDateTodoInfo(date : LocalDate):List<ToDoCheckLocal>

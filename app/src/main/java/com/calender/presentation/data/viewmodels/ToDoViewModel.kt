@@ -1,6 +1,7 @@
 package com.calender.presentation.data.viewmodels
 
 import android.content.Intent
+import android.util.Log
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -30,10 +31,10 @@ class ToDoViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = Result.Empty // 다시 loading으로 변경하기
+            initialValue = Result.Loading // 다시 loading으로 변경하기
         )
 
-    val programInfo : StateFlow<List<ToDo?>> = programResult.mapLatest { state ->
+    val programInfo : StateFlow<List<ToDo>> = programResult.mapLatest { state ->
         state.successOrNull() ?: emptyList<ToDo>()
     }.stateIn(
         scope = viewModelScope,

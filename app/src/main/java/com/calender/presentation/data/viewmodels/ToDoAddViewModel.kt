@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.calender.domain.model.ToDoCheck
+import com.calender.domain.model.successOrNull
 import com.calender.domain.usecase.InsertToDoUseCase
 import com.calender.presentation.utils.NumberPick
 import com.google.android.material.chip.Chip
@@ -79,10 +80,11 @@ class ToDoAddViewModel @Inject constructor(
         toDoCheck.apply {
             date = liveStartDate.value!!
             doIt = inputDo.value!!
-            tag = ""
+            tag = "1"
             endDate = liveEndDate.value!!
         }
         viewModelScope.launch(Dispatchers.IO){
+            Log.d("test",toDoCheck.toString())
             insertToDoUseCase(toDoCheck)
         }
     }
