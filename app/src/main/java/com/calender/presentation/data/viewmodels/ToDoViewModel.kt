@@ -31,7 +31,7 @@ class ToDoViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = Result.Loading // 다시 loading으로 변경하기
+            initialValue = Result.Loading
         )
 
     val programInfo : StateFlow<List<ToDo>> = programResult.mapLatest { state ->

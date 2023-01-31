@@ -1,5 +1,6 @@
 package com.calender.presentation.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -16,7 +17,7 @@ class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.DoView>(diffUtil){
 
     inner class DoView(private val binding: ListTodoBinding): RecyclerView.ViewHolder(binding.root){
         private val todoChecklistAdapter = ToDoCheckAdapter()
-        fun bind(item: ToDo, position: Int){
+        fun bind(item: ToDo){
             binding.apply {
                 vm = item
                 adapter = todoChecklistAdapter
@@ -32,22 +33,18 @@ class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.DoView>(diffUtil){
     }
 
     override fun onBindViewHolder(holder: DoView, position: Int) {
-        holder.bind(currentList[position],position)
-    }
-
-    override fun getItemCount(): Int {
-        return currentList.size
+        holder.bind(currentList[position])
     }
 
     companion object {
         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.
         val diffUtil = object : DiffUtil.ItemCallback<ToDo>() {
             override fun areItemsTheSame(oldItem: ToDo, newItem: ToDo): Boolean {
-                return oldItem.date == newItem.date
+                return oldItem.title == newItem.title
             }
 
             override fun areContentsTheSame(oldItem: ToDo, newItem: ToDo): Boolean {
-                return oldItem == newItem
+                return oldItem.list == newItem.list
             }
         }
     }

@@ -39,10 +39,6 @@ class ToDoCheckAdapter:ListAdapter<ToDoCheck,ToDoCheckAdapter.CheckView>(diffUti
         holder.bind(currentList[position])
     }
 
-    override fun getItemCount(): Int {
-        return currentList.size
-    }
-
     companion object {
         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.
         val diffUtil = object : DiffUtil.ItemCallback<ToDoCheck>() {
@@ -51,7 +47,7 @@ class ToDoCheckAdapter:ListAdapter<ToDoCheck,ToDoCheckAdapter.CheckView>(diffUti
             }
 
             override fun areContentsTheSame(oldItem: ToDoCheck, newItem: ToDoCheck): Boolean {
-                return oldItem == newItem
+                return oldItem.date == newItem.date
             }
         }
     }

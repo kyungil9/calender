@@ -1,6 +1,7 @@
 package com.calender.presentation.utils
 
 import android.graphics.Paint
+import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -48,6 +49,14 @@ fun RecyclerView.bindToDoItems(result : Result<*>){
         adapter.submitList(result.data as List<ToDo>)
     }
 }
+
+//@BindingAdapter("toDoItems")
+//fun RecyclerView.bindToDoItems(list : List<ToDo>?){
+//    val adapter = this.adapter
+//    if(adapter is ToDoAdapter && !list.isNullOrEmpty()){
+//        adapter.submitList(list)
+//    }
+//}
 
 @BindingAdapter("toDoCheckItems")
 fun RecyclerView.bindToDoCheckItems(list : List<ToDoCheck>?){

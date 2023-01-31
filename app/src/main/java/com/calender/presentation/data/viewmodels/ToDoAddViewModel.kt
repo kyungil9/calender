@@ -84,7 +84,6 @@ class ToDoAddViewModel @Inject constructor(
             endDate = liveEndDate.value!!
         }
         viewModelScope.launch(Dispatchers.IO){
-            Log.d("test",toDoCheck.toString())
             insertToDoUseCase(toDoCheck)
         }
     }

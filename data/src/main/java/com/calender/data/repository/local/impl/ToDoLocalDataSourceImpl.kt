@@ -33,13 +33,12 @@ class ToDoLocalDataSourceImpl @Inject constructor(
 //    }
     override fun getProgramToDo(): Flow<Result<List<ToDo>>> = channelFlow<Result<List<ToDo>>> {
         send(Result.Loading)
-        val todoList = ArrayList<ToDo>()
         todoDao.getAllTodoInfo().collectLatest {
-            Log.d("test",it.toString())
             if(it.isEmpty())
                 send(Result.Empty)
             else {
-                todoList.add(ToDo(LocalDate.now(), "tag", mapperToToDo(it)))
+                val todoList = listOf<ToDo>(ToDo(LocalDate.now(), "tag", mapperToToDo(it)))
+                Log.d("list",todoList.toString())
                 send(Result.Success(todoList))
             }
         }

@@ -18,6 +18,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calender.domain.model.Result
+import com.calender.domain.model.successOrNull
 import com.calender.presentation.R
 import com.calender.presentation.base.BaseFragment
 import com.calender.presentation.data.viewmodels.ToDoViewModel
@@ -29,6 +30,7 @@ import com.calender.presentation.utils.bindToDoItems
 import com.calender.presentation.view.activity.AddToDo
 import com.calender.presentation.view.activity.MainActivity
 import com.calender.presentation.view.adapter.ToDoAdapter
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -36,7 +38,9 @@ import kotlinx.coroutines.launch
 
 class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) {
     private val todoViewModel : ToDoViewModel by activityViewModels()
-    private val todoAdapter = ToDoAdapter()
+    private val todoAdapter : ToDoAdapter by lazy {
+        ToDoAdapter()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
@@ -44,7 +48,6 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
             lifecycleOwner = viewLifecycleOwner
             vm = todoViewModel
             adapter = todoAdapter
-
             addToDo.setOnClickListener {
                 addToDoCheck()
             }
@@ -54,13 +57,14 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
                 addItemDecoration(HorizonItemDecorator(10))
             }
         }
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-//                todoViewModel.programResult.collectLatest { result->
-//                    binding.progressBar.bindShow(result)
+//        lifecycleScope.launch{
+//            repeatOnLifecycle(Lifecycle.State.STARTED){
+//                todoViewModel.programInfo.collectLatest {
+//                    Log.d("test",it.toString())
+//                    todoAdapter.submitList(it.toMutableList())
 //                }
-            }
-        }
+//            }
+//        }
 
     }
 
@@ -79,6 +83,7 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
         }
         return super.onOptionsItemSelected(item)
     }
+
     fun addToDoCheck(){
         val intent = Intent(context,AddToDo::class.java)
         startActivity(intent)
