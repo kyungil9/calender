@@ -86,7 +86,7 @@
                     app:command="@{`종료일자`}"
                     app:tags="@{vm.endDateTags}"
                     app:liveDate="@{vm.liveEndDate}"
-                    app:toggleFunction="@{vm.calenderEndToggleVisibility}"
+                    app:toggleFunction="@{vm::calenderEndToggleVisibility}"
                     app:liveToggle="@{vm.liveEndCalenderToggle}"/>
 
 

@@ -24,8 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ToDoViewModel @Inject constructor(
-    private val getProgramToDoUseCase: GetProgramToDoUseCase,
-    private val getDateToDoUseCase: GetDateToDoUseCase
+    private val getProgramToDoUseCase: GetProgramToDoUseCase
 ):ViewModel(){
     val programResult : StateFlow<Result<List<ToDo>>> = getProgramToDoUseCase()
         .stateIn(
@@ -34,13 +33,14 @@ class ToDoViewModel @Inject constructor(
             initialValue = Result.Loading
         )
 
-    val programInfo : StateFlow<List<ToDo>> = programResult.mapLatest { state ->
-        state.successOrNull() ?: emptyList<ToDo>()
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = emptyList<ToDo>()
-    )
+
+//    val programInfo : StateFlow<List<ToDo>> = programResult.mapLatest { state ->
+//        state.successOrNull() ?: emptyList<ToDo>()
+//    }.stateIn(
+//        scope = viewModelScope,
+//        started = SharingStarted.WhileSubscribed(5_000L),
+//        initialValue = emptyList<ToDo>()
+//    )
 
 
 }

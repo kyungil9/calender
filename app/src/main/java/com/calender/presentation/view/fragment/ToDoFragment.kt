@@ -15,6 +15,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calender.domain.model.Result
@@ -57,15 +59,6 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
                 addItemDecoration(HorizonItemDecorator(10))
             }
         }
-//        lifecycleScope.launch{
-//            repeatOnLifecycle(Lifecycle.State.STARTED){
-//                todoViewModel.programInfo.collectLatest {
-//                    Log.d("test",it.toString())
-//                    todoAdapter.submitList(it.toMutableList())
-//                }
-//            }
-//        }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

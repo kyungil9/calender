@@ -36,6 +36,36 @@ fun mapperToToDo(todoLocals : List<ToDoCheckLocal>) : List<ToDoCheck>{
     }
 }
 
+fun mapperToToDoCheck(it : ToDoCheckLocal) : ToDoCheck{
+    return ToDoCheck(
+            it.date,
+            it.doIt,
+            it.tag,
+            it.repeat,
+            it.state,
+            it.statePercent,
+            it.endDate,
+            it.alarm)
+}
+
+fun mapperToArrayToDo(todoLocals : List<ToDoCheckLocal>) : ArrayList<ToDoCheck>{
+    val arrayToDo = ArrayList<ToDoCheck>()
+    val todoCheck = todoLocals.toList().map {
+        ToDoCheck(
+            it.date,
+            it.doIt,
+            it.tag,
+            it.repeat,
+            it.state,
+            it.statePercent,
+            it.endDate,
+            it.alarm
+        )
+    }
+    arrayToDo.addAll(todoCheck)
+    return arrayToDo
+}
+
 fun mapperToMemo(memoLocals : List<MemoLocal>) : List<Memo>{
     return memoLocals.toList().map {
         Memo(

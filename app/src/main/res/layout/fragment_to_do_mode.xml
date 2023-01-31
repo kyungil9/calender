@@ -4,11 +4,21 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".view.fragment.ToDoModeFragment">
     <data>
-
+        <variable name="vm" type="com.calender.presentation.data.viewmodels.ToDoModeViewModel"/>
+        <variable name="adapter" type="com.calender.presentation.view.adapter.ToDoAdapter"/>
     </data>
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+            android:layout_height="match_parent">
+
+
+        <include android:layout_width="0dp" android:layout_height="0dp"
+                 layout="@layout/fragment_to_do"
+                 app:vmMode="@{vm}"
+                 app:adapter="@{adapter}"
+                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintTop_toTopOf="parent" android:id="@+id/todoMode"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

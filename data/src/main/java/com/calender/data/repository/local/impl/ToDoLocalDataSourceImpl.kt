@@ -2,11 +2,14 @@ package com.calender.data.repository.local.impl
 
 import android.util.Log
 import com.calender.data.database.dao.TodoDao
+import com.calender.data.mapper.mapperToArrayToDo
 import com.calender.data.mapper.mapperToToDo
+import com.calender.data.mapper.mapperToToDoCheck
 import com.calender.data.model.local.ToDoCheckLocal
 import com.calender.data.repository.local.interfaces.ToDoLocalDataSource
 import com.calender.domain.model.Result
 import com.calender.domain.model.ToDo
+import com.calender.domain.model.ToDoCheck
 import com.calender.domain.model.successOrNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -32,52 +35,79 @@ class ToDoLocalDataSourceImpl @Inject constructor(
 //        return todoList
 //    }
     override fun getProgramToDo(): Flow<Result<List<ToDo>>> = channelFlow<Result<List<ToDo>>> {
-        send(Result.Loading)
-        todoDao.getAllTodoInfo().collectLatest {
-            if(it.isEmpty())
+//        todoDao.getAllTodoInfo().collectLatest {
+//            if(it.isEmpty())
+//                send(Result.Empty)
+//            else {
+//                val todoList = listOf<ToDo>(ToDo(LocalDate.now(), "tag", mapperToToDo(it)))
+//                Log.d("list",todoList.toString())
+//                send(Result.Success(todoList))
+//            }
+//        }
+
+        todoDao.getProgramTodoInfo().collectLatest { todo->
+            if(todo.isEmpty())
                 send(Result.Empty)
             else {
-                val todoList = listOf<ToDo>(ToDo(LocalDate.now(), "tag", mapperToToDo(it)))
-                Log.d("list",todoList.toString())
+                val todoList = ArrayList<ToDo>()
+                var i =0
+                todoList.add(ToDo(LocalDate.now(), todo[0].tag, arrayListOf(mapperToToDoCheck(todo[0]))))
+                for (list in todo){
+                    if (todo.indexOf(list) == 0)
+                        continue
+                    if(todoList[i].title == list.tag){
+                        todoList[i].list.add(mapperToToDoCheck(list))
+                    }else{
+                        i++
+                        todoList.add(ToDo(LocalDate.now(), list.tag, arrayListOf(mapperToToDoCheck(list))))
+                    }
+                }
                 send(Result.Success(todoList))
             }
         }
 
 //        todoDao.getTodoTagListInfo().collectLatest {
 //            if (it.isEmpty())
-//                emit(Result.Empty)
+//                send(Result.Empty)
 //            else{
-//                Log.d("test",it.toString())
+//                val todoList = ArrayList<ToDo>()
 //                for (tag in it) {
-//                    todoDao.getProgramTodoInfo(tag).collectLatest { todo->
-//                        Log.d("test",todo.toString())
+//                    todoDao.getProgramTodoInfo().collectLatest { todo->
 //                        if(todo.isEmpty())
-//                            emit(Result.Empty)
+//                           send(Result.Empty)
 //                        else
 //                            todoList.add(ToDo(LocalDate.now(), tag, mapperToToDo(todo)))
 //                    }
 //                }
-//                Log.d("test",todoList.toString())
-//                emit(Result.Success(todoList))
+//                send(Result.Success(todoList))
 //            }
 //        }
     }.catch { e->
         emit(Result.Error(e))
     }
 
-    override fun getDateToDo(): Flow<Result<List<ToDo>>> = flow<Result<List<ToDo>>> {
-        emit(Result.Loading)
-        val dates = todoDao.getTodoDateListInfo()
-        val todoList = ArrayList<ToDo>()
-        if(dates.isEmpty()){
-            emit(Result.Empty)
-        }else {
-            for (date in dates) {
-                val list = todoDao.getDateTodoInfo(date)
-                todoList.add(ToDo(date, "", mapperToToDo(list)))
+    override fun getDateToDo(): Flow<Result<List<ToDo>>> = channelFlow<Result<List<ToDo>>> {
+        todoDao.getDateTodoInfo().collectLatest { todo->
+            if(todo.isEmpty())
+                send(Result.Empty)
+            else {
+                val todoList = ArrayList<ToDo>()
+                var i =0
+                todoList.add(ToDo(todo[0].date, "", arrayListOf(mapperToToDoCheck(todo[0]))))
+                for (list in todo){
+                    if (todo.indexOf(list) == 0)
+                        continue
+                    if(todoList[i].date == list.date){
+                        todoList[i].list.add(mapperToToDoCheck(list))
+                    }else{
+                        i++
+                        todoList.add(ToDo(list.date, "", arrayListOf(mapperToToDoCheck(list))))
+                    }
+                }
+                send(Result.Success(todoList))
             }
-            emit(Result.Success(todoList))
         }
+
     }.catch { e->
         emit(Result.Error(e))
     }

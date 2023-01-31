@@ -5,6 +5,7 @@
         tools:context=".view.fragment.ToDoFragment">
 
     <data>
+        <variable name="vmMode" type="com.calender.presentation.data.viewmodels.ToDoModeViewModel"/>
         <variable name="vm" type="com.calender.presentation.data.viewmodels.ToDoViewModel"/>
         <variable name="adapter" type="com.calender.presentation.view.adapter.ToDoAdapter"/>
     </data>
@@ -17,7 +18,7 @@
                 style="?android:attr/progressBarStyle"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                app:show="@{vm.programResult}"
+                app:show="@{vmMode.dateResult ?? vm.programResult}"
                 android:id="@+id/progressBar" app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
@@ -26,7 +27,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
                 app:adapter="@{adapter}"
-                app:toDoItems="@{vm.programResult}"
+                app:toDoItems="@{vmMode.dateResult ?? vm.programResult}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"

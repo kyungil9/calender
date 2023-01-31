@@ -46,17 +46,10 @@ fun RecyclerView.bindAdapter(adapter : RecyclerView.Adapter<*>){
 fun RecyclerView.bindToDoItems(result : Result<*>){
     val adapter = this.adapter
     if(adapter is ToDoAdapter && result is Result.Success<*>){
+        Log.d("ts",result.data.toString())
         adapter.submitList(result.data as List<ToDo>)
     }
 }
-
-//@BindingAdapter("toDoItems")
-//fun RecyclerView.bindToDoItems(list : List<ToDo>?){
-//    val adapter = this.adapter
-//    if(adapter is ToDoAdapter && !list.isNullOrEmpty()){
-//        adapter.submitList(list)
-//    }
-//}
 
 @BindingAdapter("toDoCheckItems")
 fun RecyclerView.bindToDoCheckItems(list : List<ToDoCheck>?){
@@ -76,7 +69,7 @@ fun CheckBox.bindToDoChecked(value : Int){
 @BindingAdapter("toDoMode")
 fun TextView.bindToDoMode(todo : ToDo){
     if (todo.title.isEmpty())
-        this.text = "${todo.date.monthValue}.${todo.date.dayOfMonth}(${todo.date.dayOfWeek})"
+        this.text = "${todo.date.monthValue}.${todo.date.dayOfMonth}(${Calender.transDayToKorean(todo.date.dayOfWeek.value)})"
     else
         this.text = todo.title
 }

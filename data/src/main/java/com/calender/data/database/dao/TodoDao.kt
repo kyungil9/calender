@@ -19,11 +19,11 @@ interface TodoDao {
     @Query("select date from todo group by date")
     fun getTodoDateListInfo():List<LocalDate>
 
-    @Query("select * from todo where tag = :title")
-    fun getProgramTodoInfo(title : String):Flow<List<ToDoCheckLocal>>
+    @Query("select * from todo where tag in (select tag from todo group by tag) order by tag asc")
+    fun getProgramTodoInfo():Flow<List<ToDoCheckLocal>>
 
-    @Query("select * from todo where date = :date")
-    fun getDateTodoInfo(date : LocalDate):List<ToDoCheckLocal>
+    @Query("select * from todo where date in (select date from todo group by date) order by date asc")
+    fun getDateTodoInfo():Flow<List<ToDoCheckLocal>>
 
     @Insert
     fun insertTodoInfo(todo : ToDoCheckLocal)

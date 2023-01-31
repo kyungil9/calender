@@ -39,7 +39,7 @@ class KeepStateNavigator(private val context : Context,private val manager : Fra
         transaction.setPrimaryNavigationFragment(fragment)
 
         transaction.setReorderingAllowed(true)
-        transaction.commitNow()
+        transaction.commit()
 
         return if (initialNavigate)
             destination
