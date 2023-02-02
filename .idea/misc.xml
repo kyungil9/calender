@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.2815" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/ic_baseline_analytics_24.xml" value="0.4905" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.1125" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/ic_baseline_arrow_forward_ios_24.xml" value="0.1125" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/ic_baseline_calendar_month_24.xml" value="0.494" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/ic_baseline_calendar_view_month_24.xml" value="0.494" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/ic_baseline_fact_check_24.xml" value="0.494" />
@@ -12,6 +14,7 @@
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/ic_launcher_background.xml" value="0.4905" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/view_edge2.xml" value="0.494" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/drawable/viewedge.xml" value="0.4905" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_add_tag.xml" value="0.3616161616161616" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_add_to_do.xml" value="0.33" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_lobby.xml" value="0.5390625" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/activity_loddy.xml" value="0.5" />
@@ -31,6 +34,7 @@
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/list_item_month.xml" value="0.5380208333333333" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/list_item_todo.xml" value="0.5380208333333333" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/list_schedule_item.xml" value="0.5" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/list_tag_item.xml" value="0.3616161616161616" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/list_todo.xml" value="0.49074074074074076" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/list_todo_item.xml" value="0.4440619621342513" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/layout/toolbar.xml" value="0.5390625" />
@@ -42,6 +46,7 @@
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/menu/calender_menu.xml" value="0.5526041666666667" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/menu/check_menu.xml" value="0.5526041666666667" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/menu/regular_menu.xml" value="0.4583333333333333" />
+        <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/menu/tag_menu.xml" value="0.4583333333333333" />
         <entry key="..\:/Users/Administrator/IntelliJIDEAProjects/calender/app/src/main/res/menu/todo_menu.xml" value="0.5536458333333333" />
       </map>
     </option>

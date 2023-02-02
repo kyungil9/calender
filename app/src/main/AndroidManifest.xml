@@ -14,14 +14,17 @@
             android:theme="@style/Theme.Calender"
             android:usesCleartextTraffic="true">
         <activity
-                android:name="com.calender.presentation.view.activity.AddToDo"
+                android:name=".AddTag"
                 android:exported="false"/>
         <activity
-                android:name="com.calender.presentation.view.activity.MainActivity"
+                android:name=".AddToDo"
+                android:exported="false"/>
+        <activity
+                android:name=".MainActivity"
                 android:exported="true"
                 android:screenOrientation="portrait"/>
         <activity
-                android:name="com.calender.presentation.view.activity.MainLogin"
+                android:name=".MainLogin"
                 android:exported="true"
                 android:screenOrientation="portrait">
             <intent-filter>

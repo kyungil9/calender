@@ -27,6 +27,7 @@ abstract class BaseActivity<T : ViewDataBinding>(
 
         when(transitionMode){
             TransitionMode.VERTICAL -> overridePendingTransition(R.anim.vertical_enter, R.anim.none)
+            TransitionMode.HORIZON -> overridePendingTransition(R.anim.horizon_enter, R.anim.none)
             else -> Unit
         }
     }
@@ -43,6 +44,7 @@ abstract class BaseActivity<T : ViewDataBinding>(
         super.finish()
         when(transitionMode){
             TransitionMode.VERTICAL -> overridePendingTransition(R.anim.none,R.anim.vertical_exit)
+            TransitionMode.HORIZON -> overridePendingTransition(R.anim.none, R.anim.horizon_exit)
             else -> Unit
         }
     }
@@ -51,12 +53,14 @@ abstract class BaseActivity<T : ViewDataBinding>(
         super.onBackPressed()
         when(transitionMode){
             TransitionMode.VERTICAL -> overridePendingTransition(R.anim.none,R.anim.vertical_exit)
+            TransitionMode.HORIZON -> overridePendingTransition(R.anim.none, R.anim.horizon_exit)
             else -> Unit
         }
     }
 
     enum class TransitionMode{
         NONE,
-        VERTICAL
+        VERTICAL,
+        HORIZON
     }
 }

@@ -1,13 +1,7 @@
 package com.calender.presentation.module
 
-import com.calender.data.repository.local.impl.MemoLocalDataSourceImpl
-import com.calender.data.repository.local.impl.RecordLocalDataSourceImpl
-import com.calender.data.repository.local.impl.ScheduleLocalDataSourceImpl
-import com.calender.data.repository.local.impl.ToDoLocalDataSourceImpl
-import com.calender.data.repository.local.interfaces.MemoLocalDataSource
-import com.calender.data.repository.local.interfaces.RecordLocalDataSource
-import com.calender.data.repository.local.interfaces.ScheduleLocalDataSource
-import com.calender.data.repository.local.interfaces.ToDoLocalDataSource
+import com.calender.data.repository.local.impl.*
+import com.calender.data.repository.local.interfaces.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -28,5 +22,8 @@ abstract class DataSourceModule {
 
     @Binds
     abstract fun bindRecordLocal(impl : RecordLocalDataSourceImpl) : RecordLocalDataSource
+
+    @Binds
+    abstract fun bindTagLocal(impl : TagLocalDataSourceImpl) : TagLocalDataSource
 
 }

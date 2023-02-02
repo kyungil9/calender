@@ -100,3 +100,15 @@ fun mapperToToDoLocal(todo : ToDoCheck) : ToDoCheckLocal{
         alarm = todo.alarm
     )
 }
+
+fun mapperToTagLocal(tag : String) : TagLocal{
+    return TagLocal(
+        tag = tag
+    )
+}
+
+fun mapperToTag(tags : List<TagLocal>) : List<String>{
+    return tags.toList().map{
+        it.tag
+    }
+}

@@ -1,13 +1,7 @@
 package com.calender.presentation.module
 
-import com.calender.data.repository.CalenderRepositoryImpl
-import com.calender.data.repository.MemoRepositoryImpl
-import com.calender.data.repository.RecordRepositoryImpl
-import com.calender.data.repository.ToDoRepositoryImpl
-import com.calender.domain.repository.CalenderRepository
-import com.calender.domain.repository.MemoRepositoy
-import com.calender.domain.repository.RecordRepository
-import com.calender.domain.repository.ToDoRepository
+import com.calender.data.repository.*
+import com.calender.domain.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -29,4 +23,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindRecordRepository(impl : RecordRepositoryImpl) : RecordRepository
+
+    @Binds
+    abstract fun bindTagRepository(impl : TagRepositoryImpl) : TagRepository
 }
