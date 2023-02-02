@@ -31,7 +31,6 @@ abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutRes
     override fun onResume() {
         super.onResume()
         activity?.invalidateOptionsMenu()
-
     }
 
     fun setActionBarTitle(title:String){

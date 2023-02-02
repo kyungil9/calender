@@ -23,6 +23,7 @@ import com.calender.domain.model.Result
 import com.calender.domain.model.successOrNull
 import com.calender.presentation.R
 import com.calender.presentation.base.BaseFragment
+import com.calender.presentation.base.BaseToDoFragment
 import com.calender.presentation.data.viewmodels.ToDoViewModel
 import com.calender.presentation.databinding.FragmentToDoBinding
 import com.calender.presentation.utils.HorizonItemDecorator
@@ -38,7 +39,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
-class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) {
+class ToDoFragment : BaseToDoFragment<FragmentToDoBinding>(R.layout.fragment_to_do) {
     private val todoViewModel : ToDoViewModel by activityViewModels()
     private val todoAdapter : ToDoAdapter by lazy {
         ToDoAdapter()
@@ -46,6 +47,7 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        actionId = R.id.action_HomeFragment_to_toDoModeFragment2
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = todoViewModel
@@ -59,26 +61,5 @@ class ToDoFragment : BaseFragment<FragmentToDoBinding>(R.layout.fragment_to_do) 
                 addItemDecoration(HorizonItemDecorator(10))
             }
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        setActionBarTitle("할 일")
-        inflater.inflate(R.menu.todo_menu,menu)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.changeToDoMode -> {
-                view?.findNavController()?.navigate(R.id.action_HomeFragment_to_toDoModeFragment2)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    fun addToDoCheck(){
-        val intent = Intent(context,AddToDo::class.java)
-        startActivity(intent)
     }
 }

@@ -19,79 +19,106 @@
                 android:id="@+id/todo_toolbar" app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBottom_toTopOf="@+id/guideline5"/>
-        <androidx.appcompat.widget.LinearLayoutCompat
+
+        <ScrollView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_height="0dp" app:layout_constraintTop_toTopOf="@+id/guideline5"
                 app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintTop_toTopOf="@+id/guideline5" app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintStart_toStartOf="parent">
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <EditText
+                        android:text="@={vm.inputDo}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/editToDoIt" android:minHeight="48dp" android:hint="할일을 입력하시오"/>
 
-            <EditText
-                    android:text="@={vm.inputDo}"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:ems="10"
-                    android:id="@+id/editToDoIt" android:minHeight="48dp" android:hint="할일을 입력하시오"/>
+                <include
+                        android:id="@+id/todo_startDate_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/view_calender_item"
+                        app:np="@{vm.startNp}"
+                        app:command="@{`시작일자`}"
+                        app:tags="@{vm.calenderTags}"
+                        app:liveDate="@{vm.liveStartDate}"
+                        app:toggleFunction="@{vm::calenderStartToggleVisibility}"
+                        app:liveToggle="@{vm.liveStartCalenderToggle}"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginVertical="3dp"
+                        android:background="#bbb"/>
+                <include
+                        android:id="@+id/todo_tags_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/view_item_info"
+                        app:mode="@{ViewMode.TAG}"
+                        app:command="@{`태그등록`}"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginVertical="3dp"
+                        android:background="#bbb"/>
+                <include
+                        android:id="@+id/todo_repeat_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/view_chip_item"
+                        app:mode="@{ViewMode.REPEAT}"
+                        app:tags="@{vm.repeatTags}"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginVertical="3dp"
+                        android:background="#bbb"/>
+                <include
+                        android:id="@+id/todo_alarm_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/view_item_info"
+                        app:mode="@{ViewMode.ALARM}"
+                        app:command="@{`알림`}"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginVertical="3dp"
+                        android:background="#bbb"/>
+                <include
+                        android:id="@+id/todo_state_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/view_chip_item"
+                        app:mode="@{ViewMode.STATE}"
+                        app:tags="@{vm.stateTags}"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginVertical="3dp"
+                        android:background="#bbb"/>
+                <include
+                        android:id="@+id/todo_endDate_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/view_calender_item"
+                        app:np="@{vm.endNp}"
+                        app:command="@{`종료일자`}"
+                        app:tags="@{vm.endDateTags}"
+                        app:liveDate="@{vm.liveEndDate}"
+                        app:toggleFunction="@{vm::calenderEndToggleVisibility}"
+                        app:liveToggle="@{vm.liveEndCalenderToggle}"/>
+            </LinearLayout>
+        </ScrollView>
 
-            <include
-                    android:id="@+id/todo_startDate_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/view_calender_item"
-                    app:np="@{vm.startNp}"
-                    app:command="@{`시작일자`}"
-                    app:tags="@{vm.calenderTags}"
-                    app:liveDate="@{vm.liveStartDate}"
-                    app:toggleFunction="@{vm::calenderStartToggleVisibility}"
-                    app:liveToggle="@{vm.liveStartCalenderToggle}"/>
-
-            <include
-                    android:id="@+id/todo_tags_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/view_item_info"
-                    app:mode="@{ViewMode.TAG}"
-                    app:command="@{`태그등록`}"/>
-
-            <include
-                    android:id="@+id/todo_repeat_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/view_chip_item"
-                    app:mode="@{ViewMode.REPEAT}"
-                    app:tags="@{vm.repeatTags}"/>
-            <include
-                    android:id="@+id/todo_alarm_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/view_item_info"
-                    app:mode="@{ViewMode.ALARM}"
-                    app:command="@{`알림`}"/>
-            <include
-                    android:id="@+id/todo_state_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/view_chip_item"
-                    app:mode="@{ViewMode.STATE}"
-                    app:tags="@{vm.stateTags}"/>
-
-            <include
-                    android:id="@+id/todo_endDate_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/view_calender_item"
-                    app:np="@{vm.endNp}"
-                    app:command="@{`종료일자`}"
-                    app:tags="@{vm.endDateTags}"
-                    app:liveDate="@{vm.liveEndDate}"
-                    app:toggleFunction="@{vm::calenderEndToggleVisibility}"
-                    app:liveToggle="@{vm.liveEndCalenderToggle}"/>
-
-
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.constraintlayout.widget.Guideline
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"

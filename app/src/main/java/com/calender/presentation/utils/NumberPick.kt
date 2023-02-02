@@ -31,6 +31,11 @@ class NumberPick {
         return today
     }
 
+    fun setToday(day: LocalDate):LocalDate{
+        today = day
+        return today
+    }
+
     fun getToday():LocalDate{
         return today
     }

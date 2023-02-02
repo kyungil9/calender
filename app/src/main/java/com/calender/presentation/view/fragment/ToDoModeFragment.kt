@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.calender.presentation.R
 import com.calender.presentation.base.BaseFragment
+import com.calender.presentation.base.BaseToDoFragment
 import com.calender.presentation.data.viewmodels.ToDoModeViewModel
 import com.calender.presentation.data.viewmodels.ToDoViewModel
 import com.calender.presentation.databinding.FragmentToDoModeBinding
@@ -20,7 +21,7 @@ import com.calender.presentation.view.activity.MainActivity
 import com.calender.presentation.view.adapter.ToDoAdapter
 
 
-class ToDoModeFragment : BaseFragment<FragmentToDoModeBinding>(R.layout.fragment_to_do_mode) {
+class ToDoModeFragment : BaseToDoFragment<FragmentToDoModeBinding>(R.layout.fragment_to_do_mode) {
     private val todoModeViewModel : ToDoModeViewModel by activityViewModels()
     private val todoAdapter : ToDoAdapter by lazy {
         ToDoAdapter()
@@ -29,6 +30,7 @@ class ToDoModeFragment : BaseFragment<FragmentToDoModeBinding>(R.layout.fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        actionId = R.id.action_homeFragment_to_toDoFragment
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             vm = todoModeViewModel
@@ -43,24 +45,4 @@ class ToDoModeFragment : BaseFragment<FragmentToDoModeBinding>(R.layout.fragment
             }
         }
     }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        setActionBarTitle("할 일")
-        inflater.inflate(R.menu.todo_menu,menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.changeToDoMode -> {
-                view?.findNavController()?.navigate(R.id.action_homeFragment_to_toDoFragment)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-    fun addToDoCheck(){
-        val intent = Intent(context, AddToDo::class.java)
-        startActivity(intent)
-    }
-
 }

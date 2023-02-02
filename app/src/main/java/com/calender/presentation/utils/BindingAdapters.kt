@@ -46,7 +46,6 @@ fun RecyclerView.bindAdapter(adapter : RecyclerView.Adapter<*>){
 fun RecyclerView.bindToDoItems(result : Result<*>){
     val adapter = this.adapter
     if(adapter is ToDoAdapter && result is Result.Success<*>){
-        Log.d("ts",result.data.toString())
         adapter.submitList(result.data as List<ToDo>)
     }
 }

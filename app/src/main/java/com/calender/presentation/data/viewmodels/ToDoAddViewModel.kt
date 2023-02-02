@@ -36,7 +36,7 @@ class ToDoAddViewModel @Inject constructor(
 
     val calenderTags = listOf<String>("오늘","내일","다음주")
     val stateTags = listOf<String>("시작전","진행중","완료")
-    val endDateTags = listOf<String>("오늘","내일","다음주","기타","무기한")
+    val endDateTags = listOf<String>("오늘","내일","다음주","다음달")
     val repeatTags = listOf<String>("매일","매주","매년")
 
     private val toDoCheck = ToDoCheck()
