@@ -1,5 +1,6 @@
 package com.calender.domain.repository
 
+import com.calender.domain.model.Result
 import kotlinx.coroutines.flow.Flow
 
 interface TagRepository {

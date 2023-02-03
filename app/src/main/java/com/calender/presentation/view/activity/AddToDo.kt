@@ -1,5 +1,6 @@
 package com.calender.presentation.view.activity
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import com.calender.presentation.R
@@ -18,7 +22,9 @@ import com.calender.presentation.databinding.ViewCalenderItemBinding
 import com.calender.presentation.utils.NumberPick
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+import org.jetbrains.anko.startActivityForResult
 import java.time.LocalDate
+
 
 @AndroidEntryPoint
 class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do,TransitionMode.VERTICAL) {
@@ -32,8 +38,15 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_baseline_clear_24)
         }
+        val resultActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult(),
+            ActivityResultCallback<ActivityResult> { result ->
+                if (result.resultCode == RESULT_OK){
+                    viewModel.setTag(result.data?.getStringExtra("tag")!!)
+                }
+            })
 
         binding.apply {
+            lifecycleOwner = this@AddToDo
             todoToolbar.toolbarTitle.text = "할 일"
             vm = viewModel
             //start부분
@@ -127,6 +140,9 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
                 }
             }
 
+            todoTagsView.selectItemView.setOnClickListener {
+                resultActivity.launch(Intent(application,AddTag::class.java))
+            }
         }
     }
 

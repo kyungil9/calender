@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         layout="@layout/view_item_info"
                         app:mode="@{ViewMode.TAG}"
-                        app:command="@{`태그등록`}"/>
+                        app:command="@{`태그 : ` + vm.liveTag}"/>
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"

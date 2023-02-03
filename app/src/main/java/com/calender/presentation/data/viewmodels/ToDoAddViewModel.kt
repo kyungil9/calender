@@ -1,16 +1,12 @@
 package com.calender.presentation.data.viewmodels
 
-import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.calender.domain.model.ToDoCheck
-import com.calender.domain.model.successOrNull
-import com.calender.domain.usecase.InsertToDoUseCase
+import com.calender.domain.usecase.todo.InsertToDoUseCase
 import com.calender.presentation.utils.NumberPick
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,10 +21,12 @@ class ToDoAddViewModel @Inject constructor(
     private val mutableStartCalenderToggle = MutableLiveData<Boolean>()
     private val mutableEndDate = MutableLiveData<LocalDate>()
     private val mutableEndCalenderToggle = MutableLiveData<Boolean>()
+    private val  mutableTag = MutableLiveData<String>()
     val liveStartCalenderToggle : LiveData<Boolean> get() = mutableStartCalenderToggle
     val liveStartDate : LiveData<LocalDate> get() = mutableStartDate
     val liveEndCalenderToggle : LiveData<Boolean> get() = mutableEndCalenderToggle
     val liveEndDate : LiveData<LocalDate> get() = mutableEndDate
+    val liveTag : LiveData<String> get() = mutableTag
 
     val inputDo = MutableLiveData<String>()
     val startNp = NumberPick()
@@ -41,12 +39,12 @@ class ToDoAddViewModel @Inject constructor(
 
     private val toDoCheck = ToDoCheck()
 
-
     init {
         mutableStartDate.value = startNp.getToday()
         mutableStartCalenderToggle.value = false
         mutableEndDate.value = endNp.getToday()
         mutableEndCalenderToggle.value = false
+        mutableTag.value = ""
     }
 
     fun loadStartData(){
@@ -60,6 +58,9 @@ class ToDoAddViewModel @Inject constructor(
     }
     fun calenderEndToggleVisibility(){
         mutableEndCalenderToggle.value = mutableEndCalenderToggle.value != true
+    }
+    fun setTag(tag : String){
+        mutableTag.value = tag
     }
 
     fun setRepeat(value : String){
@@ -80,7 +81,7 @@ class ToDoAddViewModel @Inject constructor(
         toDoCheck.apply {
             date = liveStartDate.value!!
             doIt = inputDo.value!!
-            tag = "1"
+            tag = liveTag.value!!
             endDate = liveEndDate.value!!
         }
         viewModelScope.launch(Dispatchers.IO){

@@ -1,6 +1,8 @@
 package com.calender.presentation.view.adapter
 
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
@@ -9,12 +11,31 @@ import androidx.recyclerview.widget.RecyclerView
 import com.calender.domain.model.ToDoCheck
 import com.calender.presentation.R
 import com.calender.presentation.databinding.ListTagItemBinding
+import com.calender.presentation.listener.RecyclerViewItemClickListener
+import com.calender.presentation.listener.RecyclerViewTagClickListener
+import java.time.LocalDate
 
-class TagAdapter : ListAdapter<String,TagAdapter.CheckView>(diffUtil) {
-
+class TagAdapter : ListAdapter<String,TagAdapter.CheckView>(diffUtil), RecyclerViewTagClickListener {
+    private var listener: RecyclerViewTagClickListener?= null
+    private var lastPosition = -1
+    private var currentPosition = -1
     inner class CheckView(private val binding : ListTagItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(item : String){
-
+            binding.apply {
+                tag = item
+                linearTag.setOnClickListener {
+                    if (checkTagView.visibility == View.INVISIBLE) {
+                        lastPosition = currentPosition
+                        onItemClickListener(textviewTag.text.toString())
+                        currentPosition = adapterPosition
+                        checkTagView.visibility = View.VISIBLE
+                        notifyItemChanged(lastPosition)
+                    }
+                }
+            }
+            if(lastPosition == adapterPosition){
+                binding.checkTagView.visibility = View.INVISIBLE
+            }
         }
     }
 
@@ -28,6 +49,14 @@ class TagAdapter : ListAdapter<String,TagAdapter.CheckView>(diffUtil) {
         holder.bind(currentList[position])
     }
 
+    override fun onItemClickListener(tag : String) {
+        listener?.onItemClickListener(tag)
+
+    }
+
+    fun setOnItemClickListener(listener : RecyclerViewTagClickListener){
+        this.listener=listener
+    }
 
     companion object {
         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.

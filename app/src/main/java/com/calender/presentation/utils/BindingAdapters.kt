@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.domain.model.*
 import com.calender.presentation.R
+import com.calender.presentation.view.adapter.TagAdapter
 import com.calender.presentation.view.adapter.ToDoAdapter
 import com.calender.presentation.view.adapter.ToDoCheckAdapter
 import com.google.android.material.chip.Chip
@@ -55,6 +56,14 @@ fun RecyclerView.bindToDoCheckItems(list : List<ToDoCheck>?){
     val adapter = this.adapter
     if(adapter is ToDoCheckAdapter){
         adapter.submitList(list)
+    }
+}
+
+@BindingAdapter("tagItems")
+fun RecyclerView.bindTagItems(result : Result<*>){
+    val adapter = this.adapter
+    if (adapter is TagAdapter && result is Result.Success<*>){
+        adapter.submitList(result.data as List<String>)
     }
 }
 

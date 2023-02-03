@@ -6,7 +6,7 @@
             android:id="@+id/add_tag"
             android:enabled="true"
             android:title="등록"
-            android:icon="@drawable/ic_baseline_add_24"
+            android:icon="@drawable/ic_baseline_add_black"
             app:showAsAction="always" android:iconTint="#000000"/>
 
     <item
