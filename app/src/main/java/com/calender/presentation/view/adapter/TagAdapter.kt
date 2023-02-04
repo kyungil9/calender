@@ -1,5 +1,6 @@
 package com.calender.presentation.view.adapter
 
+import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -26,14 +27,16 @@ class TagAdapter : ListAdapter<String,TagAdapter.CheckView>(diffUtil), RecyclerV
                 linearTag.setOnClickListener {
                     if (checkTagView.visibility == View.INVISIBLE) {
                         lastPosition = currentPosition
-                        onItemClickListener(textviewTag.text.toString())
+                        onItemClickListener(textviewTag.text.toString(),adapterPosition)
                         currentPosition = adapterPosition
-                        checkTagView.visibility = View.VISIBLE
+                        binding.checkTagView.visibility = View.VISIBLE
                         notifyItemChanged(lastPosition)
                     }
                 }
             }
-            if(lastPosition == adapterPosition){
+            if(currentPosition == adapterPosition){
+                binding.checkTagView.visibility = View.VISIBLE
+            }else if(lastPosition == adapterPosition){
                 binding.checkTagView.visibility = View.INVISIBLE
             }
         }
@@ -49,13 +52,17 @@ class TagAdapter : ListAdapter<String,TagAdapter.CheckView>(diffUtil), RecyclerV
         holder.bind(currentList[position])
     }
 
-    override fun onItemClickListener(tag : String) {
-        listener?.onItemClickListener(tag)
-
+    override fun onItemClickListener(tag : String,index: Int) {
+        listener?.onItemClickListener(tag,index)
     }
 
     fun setOnItemClickListener(listener : RecyclerViewTagClickListener){
         this.listener=listener
+    }
+
+    fun setDefaultTag(index : Int){
+        lastPosition = index
+        currentPosition = index
     }
 
     companion object {

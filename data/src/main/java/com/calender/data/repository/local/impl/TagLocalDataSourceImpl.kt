@@ -27,7 +27,15 @@ class TagLocalDataSourceImpl @Inject constructor(
         emit(Result.Error(e))
     }
 
+    override fun getOneTag(): String {
+        return tagDao.getOneTag().tag
+    }
+
     override fun insertTag(tag: TagLocal) {
         tagDao.insertTag(tag)
+    }
+
+    override fun delectTag(tag: String) {
+        tagDao.deleteTag(tag)
     }
 }

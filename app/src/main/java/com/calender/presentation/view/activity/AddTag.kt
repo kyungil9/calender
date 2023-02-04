@@ -1,14 +1,11 @@
 package com.calender.presentation.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.findViewTreeLifecycleOwner
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.calender.domain.model.successOrNull
 import com.calender.presentation.R
 import com.calender.presentation.base.BaseActivity
@@ -21,9 +18,6 @@ import com.calender.presentation.utils.HorizonItemDecorator
 import com.calender.presentation.utils.VerticalItemDecorator
 import com.calender.presentation.view.adapter.TagAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddTag : BaseActivity<ActivityAddTagBinding>(R.layout.activity_add_tag,TransitionMode.HORIZON),CustomDialogListener {
@@ -39,6 +33,8 @@ class AddTag : BaseActivity<ActivityAddTagBinding>(R.layout.activity_add_tag,Tra
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
         }
+        val defaultTag = intent.getStringExtra("defaultTag")
+        val defaultIndex = intent.getIntExtra("defaultIndex",0)
         binding.apply {
             lifecycleOwner = this@AddTag
             vm = viewModel
@@ -52,22 +48,36 @@ class AddTag : BaseActivity<ActivityAddTagBinding>(R.layout.activity_add_tag,Tra
             }
         }
         tagAdapter.setOnItemClickListener(object : RecyclerViewTagClickListener {
-            override fun onItemClickListener(item: String) {
+            override fun onItemClickListener(item: String,index : Int) {
                 viewModel.selectTag = item
+                viewModel.selectIndex = index
             }
         })
+        viewModel.selectTag = defaultTag!!
+        viewModel.selectIndex = defaultIndex
+        tagAdapter.setDefaultTag(viewModel.selectIndex)
 
-//        lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED){
-//                viewModel.tagResult.collectLatest {
-//                    tagAdapter.submitList(it.successOrNull())
-//                }
-//            }
-//        }
-
+        itemTouch()
     }
 
+    private fun itemTouch(){
+        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,ItemTouchHelper.LEFT
+        ){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
 
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                viewModel.deleteTag(viewModel.tagResult.value.successOrNull()?.get(viewHolder.adapterPosition)!!)
+            }
+        }
+        ItemTouchHelper(itemTouchCallback).attachToRecyclerView(binding.listTag)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.tag_menu,menu)
@@ -87,6 +97,7 @@ class AddTag : BaseActivity<ActivityAddTagBinding>(R.layout.activity_add_tag,Tra
             }
             R.id.register_tag -> {
                 intent.putExtra("tag",viewModel.selectTag)
+                intent.putExtra("index",viewModel.selectIndex)
                 setResult(RESULT_OK,intent)
                 finish()
                 true

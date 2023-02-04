@@ -15,7 +15,14 @@ class TagRepositoryImpl @Inject constructor(
         return tagLocalData.getAllTag()
     }
 
+    override fun getOneTag(): String {
+        return tagLocalData.getOneTag()
+    }
     override fun insertTag(tag: String) {
         tagLocalData.insertTag(mapperToTagLocal(tag))
+    }
+
+    override fun deleteTag(tag: String) {
+        tagLocalData.delectTag(tag)
     }
 }

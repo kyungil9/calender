@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="state" type="Integer"/>
+    </data>
+    <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/view_seekbar"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:visibility="gone">
+
+        <TextView
+                android:text="@{`진행상태 : ` + state.toString()}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/seekbar_text" android:textAlignment="center"
+                android:textSize="28sp"/>
+        <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:thumb="@drawable/seek_tumb"
+                android:progressDrawable="@drawable/seekbar"
+                android:max="20"
+                android:progress="0"
+                android:id="@+id/seekbar_todo"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

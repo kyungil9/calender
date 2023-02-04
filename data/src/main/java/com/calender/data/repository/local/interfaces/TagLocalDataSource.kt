@@ -7,5 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface TagLocalDataSource {
     fun getAllTag() : Flow<Result<List<String>>>
 
+    fun getOneTag() : String
     fun insertTag(tag : TagLocal)
+
+    fun delectTag(tag : String)
 }

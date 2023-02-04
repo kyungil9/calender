@@ -3,6 +3,7 @@ package com.calender.presentation.module
 import android.content.Context
 import androidx.room.Room
 import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.calender.data.database.Database
 import com.calender.data.database.dao.*
 import dagger.Module
@@ -46,9 +47,16 @@ class DatabaseModule {
         return database.tagDao()
     }
 
+    @Singleton
+    val MIGRATION_4_5 = object : Migration(4,5){
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("insert into tag values (0,'basic')")
+        }
+    }
+
     @Provides
     @Singleton
     fun providesDatabaseInstance(@ApplicationContext context: Context): Database {
-        return Room.databaseBuilder(context, Database::class.java,"Database.db").build()
+        return Room.databaseBuilder(context, Database::class.java,"Database.db").addMigrations(MIGRATION_4_5).build()
     }
 }

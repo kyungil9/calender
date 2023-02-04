@@ -31,8 +31,8 @@
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="409dp"
-                android:layout_height="673dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
                 app:adapter="@{adapter}"

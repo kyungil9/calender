@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.SeekBar
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,6 +43,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
             ActivityResultCallback<ActivityResult> { result ->
                 if (result.resultCode == RESULT_OK){
                     viewModel.setTag(result.data?.getStringExtra("tag")!!)
+                    viewModel.tagIndex = result.data?.getIntExtra("index",0)!!
                 }
             })
 
@@ -134,14 +136,32 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
                 val id = group.checkedChipId
                 if (id == View.NO_ID){
                     viewModel.setState("")
+                    todoStateProcessing.viewSeekbar.visibility = View.GONE
                 }else{
                     val chip = group.findViewById<Chip>(id)
                     viewModel.setState(chip.text.toString())
+                    if (chip.text.toString() == "진행중")
+                        todoStateProcessing.viewSeekbar.visibility = View.VISIBLE
+                    else
+                        todoStateProcessing.viewSeekbar.visibility = View.GONE
                 }
             }
 
+            todoStateProcessing.seekbarTodo.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+                override fun onStartTrackingTouch(p0: SeekBar?) {
+                }
+                override fun onStopTrackingTouch(p0: SeekBar?) {
+                }
+                override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
+                    viewModel.setStateProcessing(progress * 5)
+                }
+            })
+
             todoTagsView.selectItemView.setOnClickListener {
-                resultActivity.launch(Intent(application,AddTag::class.java))
+                val intent = Intent(application,AddTag::class.java)
+                intent.putExtra("defaultTag",viewModel.liveTag.value.toString())
+                intent.putExtra("defaultIndex",viewModel.tagIndex)
+                resultActivity.launch(intent)
             }
         }
     }

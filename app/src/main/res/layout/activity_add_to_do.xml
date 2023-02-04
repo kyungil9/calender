@@ -99,6 +99,13 @@
                         layout="@layout/view_chip_item"
                         app:mode="@{ViewMode.STATE}"
                         app:tags="@{vm.stateTags}"/>
+                <include
+                        android:id="@+id/todo_state_processing"
+                        app:state="@{vm.liveState}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/view_seekbar_item"/>
+
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
