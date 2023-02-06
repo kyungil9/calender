@@ -105,9 +105,10 @@ fun mapperToToDoLocal(todo : ToDoCheck) : ToDoCheckLocal{
     )
 }
 
-fun mapperToTagLocal(tag : String) : TagLocal{
+fun mapperToTagLocal(tag : String, mode: Int) : TagLocal{
     return TagLocal(
-        tag = tag
+        tag = tag,
+        mode = mode
     )
 }
 

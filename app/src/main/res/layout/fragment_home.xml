@@ -4,160 +4,60 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".view.fragment.HomeFragment">
     <data>
-
+        <variable name="vm" type="com.calender.presentation.data.viewmodels.RecordViewModel"/>
     </data>
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
+        <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:show="@{vm.recordTag}"
+                android:id="@+id/progressBar" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
         <LinearLayout
+                android:id="@+id/recordLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/sunday"
-                    android:textColor="#DD2C00"
-                    android:gravity="center"
-                    android:textSize="14sp"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/monday"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:textSize="14sp"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/tuesday"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:textSize="14sp"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/wednesday"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:textSize="14sp"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/thursday"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:textSize="14sp"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/friday"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:textSize="14sp"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/saturday"
-                    android:textColor="#0000ff"
-                    android:gravity="center"
-                    android:textSize="14sp"/>
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/week_calender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/guideline3"/>
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginVertical="3dp"
-                android:background="#bbb"/>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/recordLayout">
+                android:orientation="horizontal" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
             <com.google.android.material.chip.ChipGroup
                     app:singleSelection="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:chipSpacingHorizontal="8dp" android:id="@+id/recordChipGroup">
-
-            </com.google.android.material.chip.ChipGroup>
+                    app:chipSpacingHorizontal="8dp"
+                    android:id="@+id/recordChipGroup"
+                    app:recordTags="@{vm.recordTag}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
         </LinearLayout>
         <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginVertical="3dp"
-                android:background="#bbb"/>
-        <androidx.constraintlayout.widget.ConstraintLayout
+                android:background="#bbb"
+                android:id="@+id/view"
+                app:layout_constraintTop_toBottomOf="@+id/recordLayout"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
+        <ImageView
+                android:src="@drawable/ic_baseline_analytics_24"
+                android:layout_width="65dp"
+                android:layout_height="65dp" android:id="@+id/recordImage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/view"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"/>
+        <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/recordDetailLayout">
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="3dp"
+                android:background="#bbb"
+                android:id="@+id/view2"
+                app:layout_constraintTop_toBottomOf="@+id/recordImage"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
 
-            <ImageView
-                    android:src="@drawable/ic_baseline_analytics_24"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp" android:id="@+id/recordImage"
-                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginVertical="3dp"
-                android:background="#bbb"/>
-        <TextView
-                android:text="@string/calender_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/home_calender_name"
-                android:textSize="15sp"
-                android:padding="3dp"
-                android:textColor="@color/black"
-                android:textStyle="bold" android:layout_marginStart="5dp"/>
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginVertical="3dp"
-                android:background="#bbb"/>
-        <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/home_schedule_list"/>
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginVertical="3dp"
-                android:background="#bbb"/>
-        <TextView
-                android:text="ToDo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/home_todo_name"
-                android:textSize="15sp"
-                android:padding="3dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"/>
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginVertical="3dp"
-                android:background="#bbb"/>
-        <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/home_todo_list"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

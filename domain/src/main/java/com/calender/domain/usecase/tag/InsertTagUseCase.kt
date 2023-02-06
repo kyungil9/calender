@@ -6,7 +6,7 @@ import javax.inject.Inject
 class InsertTagUseCase @Inject constructor(
     private val tagRepository: TagRepository
 ) {
-    operator fun invoke(tag : String){
-        return tagRepository.insertTag(tag)
+    operator fun invoke(tag : String,mode : Int){
+        return tagRepository.insertTag(tag,mode)
     }
 }

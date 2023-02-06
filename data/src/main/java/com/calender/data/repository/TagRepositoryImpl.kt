@@ -11,18 +11,22 @@ class TagRepositoryImpl @Inject constructor(
     private val tagLocalData : TagLocalDataSource
 ) : TagRepository{
 
-    override fun getAllTag(): Flow<Result<List<String>>> {
-        return tagLocalData.getAllTag()
+    override fun getToDoAllTag(): Flow<Result<List<String>>> {
+        return tagLocalData.getToDoAllTag()
     }
 
-    override fun getOneTag(): String {
-        return tagLocalData.getOneTag()
-    }
-    override fun insertTag(tag: String) {
-        tagLocalData.insertTag(mapperToTagLocal(tag))
+    override fun getRecordAllTag(): Flow<Result<List<String>>> {
+        return tagLocalData.getRecordAllTag()
     }
 
-    override fun deleteTag(tag: String) {
-        tagLocalData.delectTag(tag)
+    override fun getToDoOneTag(): String {
+        return tagLocalData.getToDoOneTag()
+    }
+    override fun insertTag(tag: String,mode: Int) {
+        tagLocalData.insertTag(mapperToTagLocal(tag,mode))
+    }
+
+    override fun deleteTag(tag: String,mode : Int) {
+        tagLocalData.delectTag(tag,mode)
     }
 }

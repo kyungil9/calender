@@ -6,7 +6,7 @@ import javax.inject.Inject
 class DeleteTagUseCase @Inject constructor(
     private val tagRepository: TagRepository
 ) {
-    operator fun invoke(tag : String){
-        tagRepository.deleteTag(tag)
+    operator fun invoke(tag : String,mode:Int){
+        tagRepository.deleteTag(tag,mode)
     }
 }

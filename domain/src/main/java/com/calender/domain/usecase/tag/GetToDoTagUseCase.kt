@@ -5,10 +5,10 @@ import com.calender.domain.repository.TagRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetTagUseCase @Inject constructor(
+class GetToDoTagUseCase @Inject constructor(
     private val tagRepository: TagRepository
 ){
     operator fun invoke() : Flow<Result<List<String>>>{
-        return tagRepository.getAllTag()
+        return tagRepository.getToDoAllTag()
     }
 }

@@ -48,15 +48,21 @@ class DatabaseModule {
     }
 
     @Singleton
-    val MIGRATION_4_5 = object : Migration(4,5){
+    val MIGRATION_6_7 = object : Migration(6,7){
         override fun migrate(database: SupportSQLiteDatabase) {
-            database.execSQL("insert into tag values (0,'basic')")
+            database.execSQL("insert into tag values (null,'basic',0)")
+            database.execSQL("insert into tag values (null,'공부',1)")
+            database.execSQL("insert into tag values (null,'운동',1)")
+            database.execSQL("insert into tag values (null,'휴식',1)")
+            database.execSQL("insert into tag values (null,'이동시간',1)")
+            database.execSQL("insert into tag values (null,'개인일정',1)")
+            database.execSQL("insert into tag values (null,'수면',1)")
         }
     }
 
     @Provides
     @Singleton
     fun providesDatabaseInstance(@ApplicationContext context: Context): Database {
-        return Room.databaseBuilder(context, Database::class.java,"Database.db").addMigrations(MIGRATION_4_5).build()
+        return Room.databaseBuilder(context, Database::class.java,"Database.db").addMigrations(MIGRATION_6_7).build()
     }
 }

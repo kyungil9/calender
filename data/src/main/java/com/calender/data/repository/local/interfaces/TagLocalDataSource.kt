@@ -5,10 +5,9 @@ import com.calender.domain.model.Result
 import kotlinx.coroutines.flow.Flow
 
 interface TagLocalDataSource {
-    fun getAllTag() : Flow<Result<List<String>>>
-
-    fun getOneTag() : String
+    fun getToDoAllTag() : Flow<Result<List<String>>>
+    fun getRecordAllTag() : Flow<Result<List<String>>>
+    fun getToDoOneTag() : String
     fun insertTag(tag : TagLocal)
-
-    fun delectTag(tag : String)
+    fun delectTag(tag : String,mode : Int)
 }

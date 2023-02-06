@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.calender.domain.model.ToDoCheck
-import com.calender.domain.usecase.tag.GetOneTagUseCase
+import com.calender.domain.usecase.tag.GetToDoOneTagUseCase
 import com.calender.domain.usecase.todo.InsertToDoUseCase
 import com.calender.presentation.utils.NumberPick
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ToDoAddViewModel @Inject constructor(
     private val insertToDoUseCase: InsertToDoUseCase,
-    private val getOneTagUseCase: GetOneTagUseCase
+    private val getToDoOneTagUseCase: GetToDoOneTagUseCase
 ) : ViewModel() {
     private val mutableStartDate = MutableLiveData<LocalDate>()
     private val mutableStartCalenderToggle = MutableLiveData<Boolean>()
@@ -50,7 +50,7 @@ class ToDoAddViewModel @Inject constructor(
         mutableEndCalenderToggle.value = false
         mutableState.value = 0
         viewModelScope.launch(Dispatchers.IO) {
-            mutableTag.postValue(getOneTagUseCase())
+            mutableTag.postValue(getToDoOneTagUseCase())
         }
     }
 

@@ -14,8 +14,8 @@ import javax.inject.Inject
 class TagLocalDataSourceImpl @Inject constructor(
     private val tagDao: TagDao
 ) : TagLocalDataSource{
-    override fun getAllTag(): Flow<Result<List<String>>> = channelFlow<Result<List<String>>> {
-        tagDao.getAllTag().collectLatest { tag ->
+    override fun getToDoAllTag(): Flow<Result<List<String>>> = channelFlow{
+        tagDao.getToDoAllTag().collectLatest { tag ->
             if (tag.isEmpty())
                 send(Result.Empty)
             else{
@@ -27,15 +27,28 @@ class TagLocalDataSourceImpl @Inject constructor(
         emit(Result.Error(e))
     }
 
-    override fun getOneTag(): String {
-        return tagDao.getOneTag().tag
+    override fun getRecordAllTag(): Flow<Result<List<String>>> = channelFlow {
+        tagDao.getRecordAllTag().collectLatest { tag ->
+            if (tag.isEmpty())
+                send(Result.Empty)
+            else{
+                val tagList = mapperToTag(tag)
+                send(Result.Success(tagList))
+            }
+        }
+    }.catch { e ->
+        emit(Result.Error(e))
+    }
+
+    override fun getToDoOneTag(): String {
+        return tagDao.getToDoOneTag().tag
     }
 
     override fun insertTag(tag: TagLocal) {
         tagDao.insertTag(tag)
     }
 
-    override fun delectTag(tag: String) {
-        tagDao.deleteTag(tag)
+    override fun delectTag(tag: String,mode : Int) {
+        tagDao.deleteTag(tag,mode)
     }
 }

@@ -32,6 +32,18 @@ fun ChipGroup.bindTags(tags : List<String>?){
     }
 }
 
+@BindingAdapter("recordTags")
+fun ChipGroup.bindRecordTags(tags : Result<List<String>>){
+    if (tags is Result.Success<*>){
+        tags.successOrNull()?.forEach{ tag->
+            val tagView : Chip = Chip(context).apply {
+                text = tag
+                isCheckable = true
+            }
+            addView(tagView)
+        }
+    }
+}
 
 @BindingAdapter("show")
 fun ProgressBar.bindShow(uiState : Result<*>){
@@ -124,5 +136,18 @@ fun NumberPicker.bindNpMode(mode : NpMode,np : NumberPick){
             this.displayedValues = np.getDayValue()
             this.value = np.getDayCurrent()
         }
+    }
+}
+
+@BindingAdapter("viewRecord")
+fun ImageView.bindViewRecord(tag : String){
+    when(tag){
+        "공부" -> this.setImageResource(R.drawable.ic_baseline_notifications_24)
+        "운동" -> this.setImageResource(R.drawable.ic_baseline_folder_24)
+        "휴식" -> this.setImageResource(R.drawable.ic_baseline_alarm_24)
+        "이동시간" -> this.setImageResource(R.drawable.ic_baseline_check_circle_24)
+        "개인일정" -> this.setImageResource(R.drawable.ic_baseline_repeat_24)
+        "수면" -> this.setImageResource(R.drawable.ic_baseline_repeat_24)
+        else -> this.setImageResource(R.drawable.ic_baseline_repeat_24)
     }
 }

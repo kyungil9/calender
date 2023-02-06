@@ -11,15 +11,18 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TagDao {
 
-    @Query("select * from tag")
-    fun getAllTag(): Flow<List<TagLocal>>
+    @Query("select * from tag where mode = 0")
+    fun getToDoAllTag(): Flow<List<TagLocal>>
 
-    @Query("select * from tag limit 1")
-    fun getOneTag() : TagLocal
+    @Query("select * from tag where mode = 1")
+    fun getRecordAllTag(): Flow<List<TagLocal>>
+
+    @Query("select * from tag where mode = 0 limit 1")
+    fun getToDoOneTag() : TagLocal
 
     @Insert
     fun insertTag(tag : TagLocal)
 
-    @Query("Delete from tag where tag.tag = :tag")
-    fun deleteTag(tag: String)
+    @Query("Delete from tag where tag.tag = :tag and mode = :mode")
+    fun deleteTag(tag: String,mode : Int)
 }
