@@ -8,6 +8,7 @@
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <CheckBox
@@ -18,5 +19,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" android:checked="false"/>
+        <include android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 layout="@layout/view_seekbar_item"
+                 app:state="@{todo.statePercent}"
+                 android:id="@+id/todoCheck_seekState" android:layout_marginBottom="5dp"/>
+        <TextView
+                android:text="@{`종료일자 : ` + todo.endDate.toString()}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/todo_endDate"
+                android:textSize="20sp"/>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="3dp"
+                android:background="#bbb" android:layout_marginStart="3dp" android:layout_marginEnd="3dp"/>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

@@ -8,6 +8,7 @@ import com.calender.domain.model.ToDo
 import com.calender.domain.model.ToDoCheck
 import com.calender.domain.repository.ToDoRepository
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 import javax.inject.Inject
 
 class ToDoRepositoryImpl @Inject constructor(
@@ -27,5 +28,12 @@ class ToDoRepositoryImpl @Inject constructor(
 
     override fun insertToDo(todo : ToDoCheck) {
         toDoLocalData.insertToDo(mapperToToDoLocal(todo))
+    }
+    override fun updateToDoState(state : Int,id : Int){
+        toDoLocalData.updateToDoState(state,id)
+    }
+
+    override fun updateToDoStatePercent(statePercent: Int, id : Int) {
+        toDoLocalData.updateToDoStatePercent(statePercent,id)
     }
 }

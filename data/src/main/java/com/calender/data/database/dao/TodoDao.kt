@@ -28,5 +28,9 @@ interface TodoDao {
     @Insert
     fun insertTodoInfo(todo : ToDoCheckLocal)
 
+    @Query("update todo SET state=:mState where id =:id")
+    fun updateTodoState(mState : Int,id : Int)
 
+    @Query("update todo SET statePercent=:mStatePercent where id =:id")
+    fun updateTodoStatePercent(mStatePercent : Int,id : Int)
 }

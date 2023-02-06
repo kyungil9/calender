@@ -3,6 +3,7 @@ package com.calender.domain.model
 import java.time.LocalDate
 
 data class ToDoCheck(
+    val id : Int = 0,
     var date : LocalDate = LocalDate.now(),
     var doIt : String = "",
     var tag : String = "",
@@ -12,3 +13,8 @@ data class ToDoCheck(
     var endDate : LocalDate = LocalDate.now(),
     var alarm : Int = 0, // 알람 시간대 번호로 설정
 )
+
+enum class ToDoCheckMode{
+    STATE,
+    STATEPERCENT
+}

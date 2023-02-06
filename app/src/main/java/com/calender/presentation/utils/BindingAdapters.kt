@@ -69,7 +69,7 @@ fun RecyclerView.bindTagItems(result : Result<*>){
 
 @BindingAdapter("toDoChecked")
 fun CheckBox.bindToDoChecked(value : Int){
-    this.isChecked = value == 3
+    this.isChecked = value == 2
     if(this.isChecked)
         this.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 }

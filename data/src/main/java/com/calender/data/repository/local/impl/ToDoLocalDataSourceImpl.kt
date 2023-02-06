@@ -116,5 +116,13 @@ class ToDoLocalDataSourceImpl @Inject constructor(
         todoDao.insertTodoInfo(todo)
     }
 
+    override fun updateToDoState(state: Int, id : Int) {
+        todoDao.updateTodoState(state,id)
+    }
+
+    override fun updateToDoStatePercent(statePercent: Int,id : Int) {
+        todoDao.updateTodoStatePercent(statePercent,id)
+    }
+
 
 }

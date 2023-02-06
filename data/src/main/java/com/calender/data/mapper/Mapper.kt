@@ -24,6 +24,7 @@ fun mapperToSchedule(scheduleLocals : List<ScheduleLocal>) : List<Schedule>{
 fun mapperToToDo(todoLocals : List<ToDoCheckLocal>) : List<ToDoCheck>{
     return todoLocals.toList().map {
         ToDoCheck(
+            it.id,
             it.date,
             it.doIt,
             it.tag,
@@ -38,6 +39,7 @@ fun mapperToToDo(todoLocals : List<ToDoCheckLocal>) : List<ToDoCheck>{
 
 fun mapperToToDoCheck(it : ToDoCheckLocal) : ToDoCheck{
     return ToDoCheck(
+            it.id,
             it.date,
             it.doIt,
             it.tag,
@@ -52,6 +54,7 @@ fun mapperToArrayToDo(todoLocals : List<ToDoCheckLocal>) : ArrayList<ToDoCheck>{
     val arrayToDo = ArrayList<ToDoCheck>()
     val todoCheck = todoLocals.toList().map {
         ToDoCheck(
+            it.id,
             it.date,
             it.doIt,
             it.tag,
@@ -90,6 +93,7 @@ fun mapperToRecord(recordLocals : List<RecordLocal>) : List<Record>{
 
 fun mapperToToDoLocal(todo : ToDoCheck) : ToDoCheckLocal{
     return ToDoCheckLocal(
+        id = todo.id,
         date = todo.date,
         doIt = todo.doIt,
         tag = todo.tag,

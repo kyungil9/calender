@@ -4,16 +4,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import com.calender.domain.model.ToDoCheck
+import com.calender.domain.model.ToDoCheckMode
 import com.calender.presentation.R
 import com.calender.presentation.base.BaseFragment
 import com.calender.presentation.base.BaseToDoFragment
 import com.calender.presentation.data.viewmodels.ToDoModeViewModel
 import com.calender.presentation.data.viewmodels.ToDoViewModel
 import com.calender.presentation.databinding.FragmentToDoModeBinding
+import com.calender.presentation.listener.RecyclerViewToDoClickListener
 import com.calender.presentation.utils.HorizonItemDecorator
 import com.calender.presentation.utils.VerticalItemDecorator
 import com.calender.presentation.view.activity.AddToDo
@@ -44,5 +49,19 @@ class ToDoModeFragment : BaseToDoFragment<FragmentToDoModeBinding>(R.layout.frag
                 addItemDecoration(HorizonItemDecorator(10))
             }
         }
+        todoAdapter.setOnItemClickListener(object : RecyclerViewToDoClickListener {
+            override fun onItemClickListener(item: ToDoCheck, mode : ToDoCheckMode) {
+                when(mode){
+                    ToDoCheckMode.STATE -> {
+                        todoModeViewModel.updateToDoState(item.state,item.id)
+                    }
+                    ToDoCheckMode.STATEPERCENT -> {
+                        todoModeViewModel.updateToDoStatePercent(item.statePercent,item.id)
+                    }
+                }
+            }
+        })
+
+
     }
 }

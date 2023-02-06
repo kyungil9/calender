@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -18,14 +19,18 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.calender.domain.model.Result
+import com.calender.domain.model.ToDoCheck
+import com.calender.domain.model.ToDoCheckMode
 import com.calender.domain.model.successOrNull
 import com.calender.presentation.R
 import com.calender.presentation.base.BaseFragment
 import com.calender.presentation.base.BaseToDoFragment
 import com.calender.presentation.data.viewmodels.ToDoViewModel
 import com.calender.presentation.databinding.FragmentToDoBinding
+import com.calender.presentation.listener.RecyclerViewToDoClickListener
 import com.calender.presentation.utils.HorizonItemDecorator
 import com.calender.presentation.utils.VerticalItemDecorator
 import com.calender.presentation.utils.bindShow
@@ -61,5 +66,20 @@ class ToDoFragment : BaseToDoFragment<FragmentToDoBinding>(R.layout.fragment_to_
                 addItemDecoration(HorizonItemDecorator(10))
             }
         }
+        todoAdapter.setOnItemClickListener(object : RecyclerViewToDoClickListener {
+            override fun onItemClickListener(item: ToDoCheck,mode : ToDoCheckMode) {
+                when(mode){
+                    ToDoCheckMode.STATE -> {
+                        todoViewModel.updateToDoState(item.state,item.id)
+                    }
+                    ToDoCheckMode.STATEPERCENT -> {
+                        todoViewModel.updateToDoStatePercent(item.statePercent,item.id)
+                    }
+                }
+            }
+        })
+
     }
+
+
 }

@@ -52,19 +52,19 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
             todoToolbar.toolbarTitle.text = "할 일"
             vm = viewModel
             //start부분
-            todoStartDateView.calenderView.npYear.setOnValueChangedListener { numberPicker, i, i2 ->
+            todoStartDateView.calenderView.npYear.setOnValueChangedListener { _, _, i2 ->
                 viewModel.startNp.changeDayInfo(viewModel.startNp.setYear(i2))
                 changeDays(binding.todoStartDateView,viewModel.startNp)
                 viewModel.loadStartData()
                 updateEndDate()
             }
-            todoStartDateView.calenderView.npMonth.setOnValueChangedListener { numberPicker, i, i2 ->
+            todoStartDateView.calenderView.npMonth.setOnValueChangedListener { _, _, i2 ->
                 viewModel.startNp.changeDayInfo(viewModel.startNp.setMonth(i2))
                 changeDays(binding.todoStartDateView,viewModel.startNp)
                 viewModel.loadStartData()
                 updateEndDate()
             }
-            todoStartDateView.calenderView.npDay.setOnValueChangedListener { numberPicker, i, i2 ->
+            todoStartDateView.calenderView.npDay.setOnValueChangedListener { _, _, i2 ->
                 viewModel.startNp.setDay(i2)
                 viewModel.loadStartData()
                 updateEndDate()
@@ -83,7 +83,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
             }
 
             //end부분
-            todoEndDateView.calenderView.npYear.setOnValueChangedListener { numberPicker, i, i2 ->
+            todoEndDateView.calenderView.npYear.setOnValueChangedListener { _, _, i2 ->
                 if(viewModel.liveStartDate.value!! > viewModel.endNp.getToday().withYear(i2+2000)){
                     updateEndDate()
                 }else {
@@ -92,7 +92,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
                     viewModel.loadEndData()
                 }
             }
-            todoEndDateView.calenderView.npMonth.setOnValueChangedListener { numberPicker, i, i2 ->
+            todoEndDateView.calenderView.npMonth.setOnValueChangedListener { _, _, i2 ->
                 if(viewModel.liveStartDate.value!! > viewModel.endNp.getToday().withMonth(i2+1)){
                     updateEndDate()
                 }else {
@@ -101,7 +101,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
                     viewModel.loadEndData()
                 }
             }
-            todoEndDateView.calenderView.npDay.setOnValueChangedListener { numberPicker, i, i2 ->
+            todoEndDateView.calenderView.npDay.setOnValueChangedListener { _, _, i2 ->
                 if(viewModel.liveStartDate.value!! > viewModel.endNp.getToday().withDayOfMonth(i2+1)){
                     updateEndDate()
                 }else {
@@ -109,7 +109,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
                     viewModel.loadEndData()
                 }
             }
-            todoEndDateView.calenderSelectview.selectChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            todoEndDateView.calenderSelectview.selectChipGroup.setOnCheckedStateChangeListener { group, _ ->
                 val id = group.checkedChipId
                 if (id != View.NO_ID){
                     when(group.findViewById<Chip>(id).text){
@@ -122,7 +122,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
                 }
             }
 
-            todoRepeatView.selectChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            todoRepeatView.selectChipGroup.setOnCheckedStateChangeListener { group, _ ->
                 val id = group.checkedChipId
                 if (id == View.NO_ID){
                     viewModel.setRepeat("")
@@ -132,7 +132,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
                 }
             }
 
-            todoStateView.selectChipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            todoStateView.selectChipGroup.setOnCheckedStateChangeListener { group, _ ->
                 val id = group.checkedChipId
                 if (id == View.NO_ID){
                     viewModel.setState("")

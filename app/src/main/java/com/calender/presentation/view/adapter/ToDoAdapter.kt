@@ -3,26 +3,32 @@ package com.calender.presentation.view.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.calender.domain.model.ToDo
+import com.calender.domain.model.ToDoCheck
+import com.calender.domain.model.ToDoCheckMode
 import com.calender.presentation.R
 import com.calender.presentation.databinding.ListTodoBinding
+import com.calender.presentation.listener.RecyclerViewToDoClickListener
 import com.calender.presentation.utils.HorizonItemDecorator
+import com.calender.presentation.utils.VerticalItemDecorator
 
-class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.DoView>(diffUtil){
-
+class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.DoView>(diffUtil),RecyclerViewToDoClickListener{
+    private var listener : RecyclerViewToDoClickListener? = null
     inner class DoView(private val binding: ListTodoBinding): RecyclerView.ViewHolder(binding.root){
         private val todoChecklistAdapter = ToDoCheckAdapter()
         fun bind(item: ToDo){
             binding.apply {
                 vm = item
                 adapter = todoChecklistAdapter
-                binding.itemTodoList.addItemDecoration(HorizonItemDecorator(15))
+                binding.itemTodoList.apply {
+                    addItemDecoration(HorizonItemDecorator(10))
+                    addItemDecoration(VerticalItemDecorator(10))
+                }
             }
+            todoChecklistAdapter.setOnItemClickListener(listener!!)
         }
     }
 
@@ -34,6 +40,14 @@ class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.DoView>(diffUtil){
 
     override fun onBindViewHolder(holder: DoView, position: Int) {
         holder.bind(currentList[position])
+    }
+
+    override fun onItemClickListener(item: ToDoCheck,mode : ToDoCheckMode) {
+        listener?.onItemClickListener(item,mode)
+    }
+
+    fun setOnItemClickListener(listener: RecyclerViewToDoClickListener){
+        this.listener = listener
     }
 
     companion object {
