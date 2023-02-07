@@ -16,7 +16,6 @@ abstract class Database :RoomDatabase(){
     abstract fun toDoDao(): TodoDao
     abstract fun memoDao(): MemoDao
     abstract fun recordDao(): RecordDao
-
     abstract fun tagDao() : TagDao
 
 }

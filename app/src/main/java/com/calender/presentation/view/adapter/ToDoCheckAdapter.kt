@@ -42,8 +42,13 @@ class ToDoCheckAdapter:ListAdapter<ToDoCheck,ToDoCheckAdapter.CheckView>(diffUti
                         onItemClickListener(item, ToDoCheckMode.STATE)
                     }
                 }
+                todoDetailButton.setOnClickListener {
+                    if(item.state != 2 && todoCheckSeekState.viewSeekbar.visibility == View.GONE)
+                        todoCheckSeekState.viewSeekbar.visibility = View.VISIBLE
+                    else
+                        todoCheckSeekState.viewSeekbar.visibility = View.GONE
+                }
                 todoCheckSeekState.apply {
-                    viewSeekbar.visibility = if(item.state != 2) View.VISIBLE else View.GONE
                     seekbarTodo.progress = item.statePercent / 5
                     seekbarTodo.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
                         override fun onStartTrackingTouch(p0: SeekBar?) {

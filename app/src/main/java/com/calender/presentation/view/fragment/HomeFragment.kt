@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.get
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -40,11 +41,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             recordChipGroup.setOnCheckedStateChangeListener { group, _ ->
                 val id = group.checkedChipId
                 if (id != View.NO_ID){
-                    when(group.findViewById<Chip>(id).text){
-                        //when사용 안하고 그냥 record추가되서 변경되는걸로 내용추가
-                    }
+                    recordViewModel.updateRecord()//기존 내용은 db저장
+                    recordViewModel.insertRecord(group.findViewById<Chip>(id).text.toString())//새로운 기록 작성
                 }else{
-                    //강제로 휴식에 클릭되도록 설정
+                    recordChipGroup.check(group[2].id)//화면에 변경사항 추가하기
                 }
             }
         }

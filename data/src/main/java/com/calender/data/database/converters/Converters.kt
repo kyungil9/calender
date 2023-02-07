@@ -3,9 +3,11 @@ package com.calender.data.database.converters
 import android.util.Log
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 class Converters {
@@ -31,12 +33,12 @@ class Converters {
     }
 
     @TypeConverter
-    fun localDateTimeToJson(value: LocalDateTime) : String?{
-        return Gson().toJson(value.toString())
+    fun localDateTimeToJson(value: LocalDateTime?) : Long?{
+        return value?.atZone(ZoneOffset.UTC)?.toInstant()?.toEpochMilli()
     }
 
     @TypeConverter
-    fun jsonToLocalDateTime(value: String) : LocalDateTime?{
-        return Gson().fromJson(value,LocalDateTime::class.java)
+    fun jsonToLocalDateTime(value: Long?) : LocalDateTime? {
+        return value?.let { LocalDateTime.ofInstant(Instant.ofEpochMilli(value),ZoneOffset.UTC)}
     }
 }
