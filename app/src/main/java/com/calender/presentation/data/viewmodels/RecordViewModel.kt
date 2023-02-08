@@ -20,6 +20,8 @@ import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Period
+import java.util.Timer
+import java.util.TimerTask
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,8 +33,10 @@ class RecordViewModel @Inject constructor(
     private val getSelectRecordUseCase: GetSelectRecordUseCase
 ):ViewModel(){
     private val mutableSelectTag = MutableLiveData<String>()
-
+    private val mutableProgressTime = MutableLiveData<Long>()
     val liveTag : LiveData<String> get() = mutableSelectTag
+    val liveProgressTime : LiveData<Long> get() = mutableProgressTime
+    val timer = Timer()
 
     val recordResult : StateFlow<Result<List<Record>>> = getTodayRecordUseCase(date = LocalDateTime.now())
         .stateIn(
@@ -65,6 +69,7 @@ class RecordViewModel @Inject constructor(
 
     init {
         //현재 선택되어있는 record 불러오기
+        mutableProgressTime.value = -1
     }
     fun selectTag(tag :String){
         mutableSelectTag.value = tag
@@ -84,12 +89,23 @@ class RecordViewModel @Inject constructor(
     }
 
     fun updateRecord(){
-        val record = selectRecord.value.successOrNull() as Record
+        val record = selectRecord.value.successOrNull()
         if (record != null){
             val time = LocalDateTime.now()
             val duration = Duration.between(record.startTime,time)
             viewModelScope.launch(Dispatchers.IO){
                 updateRecordUseCase(time,duration.toMinutes(),record.id)
+            }
+        }
+    }
+
+    val timerTask = object : TimerTask(){
+        override fun run() {
+            val record = selectRecord.value.successOrNull()
+            if (record != null) {
+                val time = LocalDateTime.now()
+                val duration = Duration.between(record.startTime, time)
+                mutableProgressTime.postValue(duration.toMinutes())
             }
         }
     }

@@ -129,7 +129,7 @@ fun mapperToRecordLocal(record: Record) : RecordLocal {
     return RecordLocal(
             tag = record.tag,
             startTime = record.startTime,
-            endTime = record.endTime!!,
+            endTime = record?.endTime,
             progressTime = record.progressTime,
             check = record.check
     )
@@ -140,7 +140,7 @@ fun mapperToRecordSingle(record: RecordLocal) : Record{
         id = record.id,
         tag = record.tag,
         startTime = record.startTime,
-        endTime = record.endTime!!,
+        endTime = record?.endTime,
         progressTime = record.progressTime,
         check = record.check
     )

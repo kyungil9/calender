@@ -4,6 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".view.fragment.HomeFragment">
     <data>
+        <import type="android.view.View"/>
         <variable name="vm" type="com.calender.presentation.data.viewmodels.RecordViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,9 +47,17 @@
                 android:src="@drawable/ic_baseline_analytics_24"
                 android:layout_width="65dp"
                 android:layout_height="65dp" android:id="@+id/recordImage"
+                app:viewRecord="@{vm.selectRecord}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/view"
                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"/>
+        <TextView
+                app:textRecord="@{vm.selectRecord}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" android:id="@+id/recordStartTime"
+                app:layout_constraintStart_toEndOf="@+id/recordImage" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view"
+                app:layout_constraintHorizontal_bias="0.513" android:textSize="20sp"/>
         <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -58,6 +67,13 @@
                 android:id="@+id/view2"
                 app:layout_constraintTop_toBottomOf="@+id/recordImage"
                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+                android:text="@{`진행 시간 : ` + vm.liveProgressTime.toString() + `분`}"
+                android:layout_width="0dp"
+                android:visibility="@{vm.liveProgressTime == -1 ? View.GONE : View.VISIBLE}"
+                android:layout_height="wrap_content" android:id="@+id/recordProgressTime"
+                app:layout_constraintStart_toEndOf="@+id/recordImage" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recordStartTime" android:textSize="14sp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

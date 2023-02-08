@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.view.get
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import org.jetbrains.anko.custom.style
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @BindingAdapter("tags")
 fun ChipGroup.bindTags(tags : List<String>?){
@@ -34,6 +36,7 @@ fun ChipGroup.bindTags(tags : List<String>?){
 
 @BindingAdapter("recordTags")
 fun ChipGroup.bindRecordTags(tags : Result<List<String>>){
+    removeAllViews()
     if (tags is Result.Success<*>){
         tags.successOrNull()?.forEach{ tag->
             val tagView : Chip = Chip(context).apply {
@@ -42,6 +45,14 @@ fun ChipGroup.bindRecordTags(tags : Result<List<String>>){
             }
             addView(tagView)
         }
+    }
+}
+
+@BindingAdapter("recordCheck")
+fun ChipGroup.bindRecordCheck(result : Result<*>){
+    if (result is Result.Success<*>){
+        val record = result.data as Record
+        check(get(0).id)
     }
 }
 
@@ -140,14 +151,26 @@ fun NumberPicker.bindNpMode(mode : NpMode,np : NumberPick){
 }
 
 @BindingAdapter("viewRecord")
-fun ImageView.bindViewRecord(tag : String){
-    when(tag){
-        "공부" -> this.setImageResource(R.drawable.ic_baseline_notifications_24)
-        "운동" -> this.setImageResource(R.drawable.ic_baseline_folder_24)
-        "휴식" -> this.setImageResource(R.drawable.ic_baseline_alarm_24)
-        "이동시간" -> this.setImageResource(R.drawable.ic_baseline_check_circle_24)
-        "개인일정" -> this.setImageResource(R.drawable.ic_baseline_repeat_24)
-        "수면" -> this.setImageResource(R.drawable.ic_baseline_repeat_24)
-        else -> this.setImageResource(R.drawable.ic_baseline_repeat_24)
+fun ImageView.bindViewRecord(result: Result<*>){
+    if(result is Result.Success<*>){
+        val tag = result.data as Record
+        when(tag.tag){
+            "공부" -> this.setImageResource(R.drawable.ic_baseline_study)
+            "운동" -> this.setImageResource(R.drawable.ic_baseline_exercise)
+            "휴식" -> this.setImageResource(R.drawable.ic_baseline_person_outline_24)
+            "이동시간" -> this.setImageResource(R.drawable.ic_baseline_movecar)
+            "개인일정" -> this.setImageResource(R.drawable.ic_baseline_promise)
+            "수면" -> this.setImageResource(R.drawable.ic_baseline_rest)
+            "식사" -> this.setImageResource(R.drawable.ic_baseline_dining_24)
+            else -> this.setImageResource(R.drawable.ic_baseline_repeat_24)
+        }
+    }
+}
+
+@BindingAdapter("textRecord")
+fun TextView.bindTextRecord(result: Result<*>){
+    if (result is Result.Success<*>){
+        val startDate = result.data as Record
+        this.text = startDate.startTime.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"))
     }
 }

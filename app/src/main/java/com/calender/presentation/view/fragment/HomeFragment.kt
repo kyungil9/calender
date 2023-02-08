@@ -44,12 +44,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     recordViewModel.updateRecord()//기존 내용은 db저장
                     recordViewModel.insertRecord(group.findViewById<Chip>(id).text.toString())//새로운 기록 작성
                 }else{
-                    recordChipGroup.check(group[2].id)//화면에 변경사항 추가하기
+                    recordChipGroup.check(group[2].id)
                 }
             }
+
+            recordViewModel.timer.schedule(recordViewModel.timerTask,0,10000)
         }
-
-
 
     }
 
