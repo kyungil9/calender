@@ -1,5 +1,6 @@
 package com.calender.data.repository
 
+import androidx.lifecycle.LiveData
 import com.calender.data.mapper.mapperToToDo
 import com.calender.data.mapper.mapperToToDoLocal
 import com.calender.data.repository.local.interfaces.ToDoLocalDataSource
@@ -35,5 +36,9 @@ class ToDoRepositoryImpl @Inject constructor(
 
     override fun updateToDoStatePercent(statePercent: Int, id : Int) {
         toDoLocalData.updateToDoStatePercent(statePercent,id)
+    }
+
+    override fun getOneDateToDo(date: LiveData<LocalDate>): Flow<Result<ToDo>> {
+        return toDoLocalData.getOneDateToDo(date)
     }
 }

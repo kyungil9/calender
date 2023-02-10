@@ -1,19 +1,13 @@
 package com.calender.data.repository.local.impl
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import com.calender.data.database.dao.TodoDao
-import com.calender.data.mapper.mapperToArrayToDo
-import com.calender.data.mapper.mapperToToDo
 import com.calender.data.mapper.mapperToToDoCheck
 import com.calender.data.model.local.ToDoCheckLocal
 import com.calender.data.repository.local.interfaces.ToDoLocalDataSource
 import com.calender.domain.model.Result
 import com.calender.domain.model.ToDo
-import com.calender.domain.model.ToDoCheck
-import com.calender.domain.model.successOrNull
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.flow.internal.ChannelFlow
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -108,6 +102,17 @@ class ToDoLocalDataSourceImpl @Inject constructor(
             }
         }
 
+    }.catch { e->
+        emit(Result.Error(e))
+    }
+
+    override fun getOneDateToDo(date: LiveData<LocalDate>): Flow<Result<ToDo>> = channelFlow<Result<ToDo>> {
+        todoDao.getOneDateTodoInfo(date.value!!).collectLatest { todo->
+            if(todo.isEmpty())
+                send(Result.Empty)
+            else
+                send(Result.Success(ToDo(todo[0].date, "", arrayListOf(mapperToToDoCheck(todo[0])))))
+            }
     }.catch { e->
         emit(Result.Error(e))
     }

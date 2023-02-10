@@ -20,11 +20,12 @@ import com.calender.presentation.view.adapter.ToDoCheckAdapter
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import org.jetbrains.anko.custom.style
+import java.time.Duration
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-@BindingAdapter("tags")
-fun ChipGroup.bindTags(tags : List<String>?){
+@BindingAdapter(value =["tags","defaultCheck"], requireAll = true)
+fun ChipGroup.bindTags(tags : List<String>?,defaultCheck : Boolean){
     tags?.forEach{tag->
         val tagView : Chip = Chip(context).apply {
             text = tag
@@ -32,20 +33,32 @@ fun ChipGroup.bindTags(tags : List<String>?){
         }
         addView(tagView)
     }
+    if (defaultCheck)
+        check(get(0).id)
 }
 
-@BindingAdapter("recordTags")
-fun ChipGroup.bindRecordTags(tags : Result<List<String>>){
+@BindingAdapter(value = ["recordTags","selectTags"], requireAll = true)
+fun ChipGroup.bindRecordTags(tags : Result<List<String>>,selectTags : Result<Record>){
     removeAllViews()
     if (tags is Result.Success<*>){
-        tags.successOrNull()?.forEach{ tag->
+        var select = -1
+        tags.successOrNull()?.forEachIndexed{ index,tag->
             val tagView : Chip = Chip(context).apply {
                 text = tag
                 isCheckable = true
             }
             addView(tagView)
+            if (selectTags is Result.Success<*>){
+                val selectTag = selectTags.successOrNull()
+                if (selectTag?.tag == tag)
+                    select = index
+            }
+        }
+        if(select != -1){
+            check(get(select).id)
         }
     }
+
 }
 
 @BindingAdapter("recordCheck")
@@ -74,13 +87,6 @@ fun RecyclerView.bindToDoItems(result : Result<*>){
     }
 }
 
-@BindingAdapter("toDoCheckItems")
-fun RecyclerView.bindToDoCheckItems(list : List<ToDoCheck>?){
-    val adapter = this.adapter
-    if(adapter is ToDoCheckAdapter){
-        adapter.submitList(list)
-    }
-}
 
 @BindingAdapter("tagItems")
 fun RecyclerView.bindTagItems(result : Result<*>){
@@ -90,6 +96,18 @@ fun RecyclerView.bindTagItems(result : Result<*>){
     }
 }
 
+@BindingAdapter(value = ["toDoCheckItems","toDoHomeItems"], requireAll = true)
+fun RecyclerView.bindToDoCheckItems(todo: ToDo, result: Result<*>){
+    val adapter = this.adapter
+    if(adapter is ToDoCheckAdapter ){
+        if (result is Result.Success<*>) {
+            val list = result.successOrNull() as ToDo
+            adapter.submitList(list.list)
+        }else if (todo.title != "-1234567"){
+            adapter.submitList(todo.list)
+        }
+    }
+}
 @BindingAdapter("toDoChecked")
 fun CheckBox.bindToDoChecked(value : Int){
     this.isChecked = value == 2
@@ -97,13 +115,19 @@ fun CheckBox.bindToDoChecked(value : Int){
         this.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 }
 
-@BindingAdapter("toDoMode")
-fun TextView.bindToDoMode(todo : ToDo){
-    if (todo.title.isEmpty())
-        this.text = "${todo.date.monthValue}.${todo.date.dayOfMonth}(${Calender.transDayToKorean(todo.date.dayOfWeek.value)})"
-    else
-        this.text = todo.title
+@BindingAdapter(value = ["toDoMode","oneDate"], requireAll = true)
+fun TextView.bindToDoMode(todo : ToDo,today: LocalDate){
+    if (today.year == 2000 && today.monthValue == 1) {
+        if (todo.title.isEmpty())
+            this.text = "${todo.date.monthValue}.${todo.date.dayOfMonth}(${Calender.transDayToKorean(todo.date.dayOfWeek.value)})"
+        else
+            this.text = todo.title
+    }else{
+        this.text = "${today.monthValue}.${today.dayOfMonth}(${Calender.transDayToKorean(today.dayOfWeek.value)})"
+    }
 }
+
+
 
 @BindingAdapter("viewMode")
 fun ImageView.bindViewMode(mode : ViewMode){
@@ -172,5 +196,12 @@ fun TextView.bindTextRecord(result: Result<*>){
     if (result is Result.Success<*>){
         val startDate = result.data as Record
         this.text = startDate.startTime.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss"))
+    }
+}
+
+@BindingAdapter("textRecordTime")
+fun TextView.bindTextRecordTime(duration : Duration){
+    if (duration != Duration.ZERO){
+        this.text = "진행 시간 : " + duration.toHours() + "시 " + duration.toMinutes() % 60 + "분 ( " + duration.seconds % 60 +" )"
     }
 }

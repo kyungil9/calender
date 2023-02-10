@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.calender.domain.model.Result
 import com.calender.domain.model.ToDoCheck
 import com.calender.domain.model.ToDoCheckMode
 import com.calender.presentation.R

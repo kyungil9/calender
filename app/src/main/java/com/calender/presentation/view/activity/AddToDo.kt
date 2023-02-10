@@ -14,6 +14,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.view.get
 import androidx.navigation.findNavController
 import com.calender.presentation.R
 import com.calender.presentation.base.BaseActivity
@@ -121,7 +122,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
                     viewModel.loadEndData()
                 }
             }
-
+            todoRepeatView.selectChipGroup.isSelectionRequired = false
             todoRepeatView.selectChipGroup.setOnCheckedStateChangeListener { group, _ ->
                 val id = group.checkedChipId
                 if (id == View.NO_ID){
@@ -131,7 +132,6 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
                     viewModel.setRepeat(chip.text.toString())
                 }
             }
-
             todoStateView.selectChipGroup.setOnCheckedStateChangeListener { group, _ ->
                 val id = group.checkedChipId
                 if (id == View.NO_ID){

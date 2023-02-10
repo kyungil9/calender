@@ -35,7 +35,6 @@
                         android:inputType="textPersonName"
                         android:ems="10"
                         android:id="@+id/editToDoIt" android:minHeight="48dp" android:hint="할일을 입력하시오"/>
-
                 <include
                         android:id="@+id/todo_startDate_view"
                         android:layout_width="match_parent"
@@ -44,6 +43,7 @@
                         app:np="@{vm.startNp}"
                         app:command="@{`시작일자`}"
                         app:tags="@{vm.calenderTags}"
+                        app:chipCheckMode="@{true}"
                         app:liveDate="@{vm.liveStartDate}"
                         app:toggleFunction="@{vm::calenderStartToggleVisibility}"
                         app:liveToggle="@{vm.liveStartCalenderToggle}"/>
@@ -72,6 +72,7 @@
                         android:layout_height="wrap_content"
                         layout="@layout/view_chip_item"
                         app:mode="@{ViewMode.REPEAT}"
+                        app:chipCheckMode="@{false}"
                         app:tags="@{vm.repeatTags}"/>
                 <View
                         android:layout_width="match_parent"
@@ -98,6 +99,7 @@
                         android:layout_height="wrap_content"
                         layout="@layout/view_chip_item"
                         app:mode="@{ViewMode.STATE}"
+                        app:chipCheckMode="@{true}"
                         app:tags="@{vm.stateTags}"/>
                 <include
                         android:id="@+id/todo_state_processing"
@@ -120,6 +122,7 @@
                         app:np="@{vm.endNp}"
                         app:command="@{`종료일자`}"
                         app:tags="@{vm.endDateTags}"
+                        app:chipCheckMode="@{true}"
                         app:liveDate="@{vm.liveEndDate}"
                         app:toggleFunction="@{vm::calenderEndToggleVisibility}"
                         app:liveToggle="@{vm.liveEndCalenderToggle}"/>

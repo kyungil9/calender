@@ -17,6 +17,7 @@
         <variable name="liveDate" type="LiveData&lt;LocalDate>"/>
         <variable name="toggleFunction" type="Function0&lt;Unit>"/>
         <variable name="command" type="String"/>
+        <variable name="chipCheckMode" type="Boolean"/>
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
             android:orientation="vertical"
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 layout="@layout/view_chip_item"
                 app:mode="@{ViewMode.EMPTY}"
+                app:chipCheckMode="@{chipCheckMode}"
                 app:tags="@{tags}"/>
         
     </androidx.appcompat.widget.LinearLayoutCompat>

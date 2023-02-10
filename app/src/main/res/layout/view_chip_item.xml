@@ -7,7 +7,7 @@
         <import type="com.calender.domain.model.ViewMode"/>
         <variable name="mode" type="com.calender.domain.model.ViewMode"/>
         <variable name="tags" type="List&lt;String>"/>
-
+        <variable name="chipCheckMode" type="Boolean"/>
     </data>
     
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +16,9 @@
 
         <com.google.android.material.chip.ChipGroup
                 app:singleSelection="true"
+                app:selectionRequired="true"
                 app:tags="@{tags}"
+                app:defaultCheck="@{chipCheckMode}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:chipSpacingHorizontal="8dp" android:id="@+id/selectChipGroup"

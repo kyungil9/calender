@@ -1,5 +1,6 @@
 package com.calender.data.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -24,6 +25,9 @@ interface TodoDao {
 
     @Query("select * from todo where date in (select date from todo group by date) order by date asc")
     fun getDateTodoInfo():Flow<List<ToDoCheckLocal>>
+
+    @Query("select * from todo where date = :date order by date asc")
+    fun getOneDateTodoInfo(date: LocalDate):Flow<List<ToDoCheckLocal>>
 
     @Insert
     fun insertTodoInfo(todo : ToDoCheckLocal)

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.*
+import com.calender.domain.model.Result
 import com.calender.domain.model.ToDo
 import com.calender.domain.model.ToDoCheck
 import com.calender.domain.model.ToDoCheckMode
@@ -22,8 +23,9 @@ class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.DoView>(diffUtil),RecyclerView
         fun bind(item: ToDo){
             binding.apply {
                 vm = item
+                dummy = Result.Empty
                 adapter = todoChecklistAdapter
-                binding.itemTodoList.apply {
+                itemTodoList.apply {
                     addItemDecoration(HorizonItemDecorator(10))
                     addItemDecoration(VerticalItemDecorator(10))
                 }
