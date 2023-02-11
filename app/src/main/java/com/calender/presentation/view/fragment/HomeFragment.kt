@@ -44,15 +44,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),C
         setHasOptionsMenu(true)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            vm = recordViewModel
-
-            recordChipGroup.setOnCheckedStateChangeListener { group, _ ->
-                val id = group.checkedChipId
-                if (id != View.NO_ID && group.findViewById<Chip>(id).text.toString() != recordViewModel.selectRecord.value.successOrNull()?.tag){
-                    recordViewModel.updateRecord()//기존 내용은 db저장
-                    recordViewModel.insertRecord(group.findViewById<Chip>(id).text.toString())//새로운 기록 작성
-                }
-            }
             homeTodayTodo.apply {
                 adapter = todoCheckAdapter
                 homeVm = recordViewModel
@@ -61,19 +52,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),C
                     addItemDecoration(VerticalItemDecorator(10))
                 }
             }
+            vm = recordViewModel
+            recordChipGroup.setOnCheckedStateChangeListener { group, _ ->
+                val id = group.checkedChipId
+                if (id != View.NO_ID && group.findViewById<Chip>(id).text.toString() != recordViewModel.selectRecord.value.successOrNull()?.tag){
+                    recordViewModel.updateRecord()//기존 내용은 db저장
+                    recordViewModel.insertRecord(group.findViewById<Chip>(id).text.toString())//새로운 기록 작성
+                }
+            }
+
             fabHomeMain.setOnClickListener {
                 toggleFab()
             }
             fabHomeTag.setOnClickListener {
                 val dialog = CustomDialog(requireContext(),this@HomeFragment)
                 dialog.show()
+                toggleFab()
             }
             fabHomeToDo.setOnClickListener {
                 val intent = Intent(context, AddToDo::class.java)
                 startActivity(intent)
+                toggleFab()
             }
             fabHomeCalender.setOnClickListener {
-
+                recordViewModel.updateLiveToday()
+                toggleFab()
             }
 
         }

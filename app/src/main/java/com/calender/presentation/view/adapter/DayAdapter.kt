@@ -50,16 +50,6 @@ class DayAdapter(
                     else -> Color.BLACK
                 }
             )
-            if (size == 7){
-                if(item.date == LocalDate.now()){
-                    //오늘날짜 색상바꾸기
-                    binding.itemDayText.apply {
-                        setBackgroundColor(Color.GREEN)
-                        setTextColor(Color.WHITE)
-                    }
-                }
-
-            }
             if(tempMonth != item.date.monthValue) {
                 binding.itemDayText.alpha = 0.4f
             }

@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.calender.domain.model.Record
-import com.calender.domain.model.Result
-import com.calender.domain.model.ToDo
-import com.calender.domain.model.successOrNull
+import com.calender.domain.model.*
 import com.calender.domain.usecase.record.GetSelectRecordUseCase
 import com.calender.domain.usecase.record.GetTodayRecordUseCase
 import com.calender.domain.usecase.record.InsertRecordUseCase
@@ -19,6 +16,7 @@ import com.calender.domain.usecase.todo.UpdateToDoStatePercentUseCase
 import com.calender.domain.usecase.todo.UpdateToDoStateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.Duration
@@ -43,10 +41,12 @@ class RecordViewModel @Inject constructor(
 
     private val mutableProgressTime = MutableLiveData<Duration>()
     private val mutableTodayDate = MutableLiveData<LocalDate>()
+    private val mutableTodayToDo = MutableStateFlow(listOf(ToDoCheck()))
 
     var fabMain_status = false
     val liveProgressTime : LiveData<Duration> get() = mutableProgressTime
     val liveTodayDate : LiveData<LocalDate> get() = mutableTodayDate
+    val todayToDo = mutableTodayToDo.asStateFlow()
     val timer = Timer()
     val dumyToDo = ToDo(title = "-1234567")
     val recordResult : StateFlow<Result<List<Record>>> = getTodayRecordUseCase(date = LocalDateTime.now())
@@ -78,20 +78,19 @@ class RecordViewModel @Inject constructor(
             initialValue = Result.Loading
         )
 
-    val todayToDo : StateFlow<Result<ToDo>> = getOneDateToDoUseCase(liveTodayDate)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = Result.Loading
-        )
-
-
     init {
         //현재 선택되어있는 record 불러오기
         mutableTodayDate.value = LocalDate.now()
         mutableProgressTime.value = Duration.ZERO
-
+        getTodayToDo(liveTodayDate.value!!)
     }
+
+//    var todayToDo : StateFlow<Result<ToDo>> = getOneDateToDoUseCase(liveTodayDate.value!!)
+//        .stateIn(
+//            scope = viewModelScope,
+//            started = SharingStarted.WhileSubscribed(5_000L),
+//            initialValue = Result.Loading
+//        )
 
 
     fun insertRecord(tag : String){
@@ -106,7 +105,6 @@ class RecordViewModel @Inject constructor(
             ))
         }
     }
-
     fun updateRecord(){
         val record = selectRecord.value.successOrNull()
         if (record != null){
@@ -125,8 +123,9 @@ class RecordViewModel @Inject constructor(
                 val time = LocalDateTime.now()
                 val duration = Duration.between(record.startTime, time)
                 mutableProgressTime.postValue(duration)
-                if (liveTodayDate.value?.dayOfMonth != time.dayOfMonth)
-                    mutableTodayDate.postValue(time.toLocalDate())
+//                if (liveTodayDate.value?.dayOfMonth != time.dayOfMonth) {
+//                    mutableTodayDate.postValue(time.toLocalDate())
+//                }
             }
         }
     }
@@ -145,6 +144,27 @@ class RecordViewModel @Inject constructor(
     fun insertHomeTag(tag : String){
         viewModelScope.launch(Dispatchers.IO) {
             insertTagUseCase(tag,1)
+        }
+    }
+    fun updateLiveToday(){
+        mutableTodayDate.value = mutableTodayDate.value?.plusDays(1)
+        getTodayToDo(liveTodayDate.value!!)
+    }
+
+    fun getTodayToDo(date : LocalDate){
+        viewModelScope.launch {
+            getOneDateToDoUseCase(date).collectLatest {
+                when(it){
+                    is Result.Success<*> ->{
+                        val list = it.successOrNull()
+                        if (list?.date != liveTodayDate.value){
+                            cancel()
+                        }
+                        mutableTodayToDo.emit(list?.list!!.toList())
+                    }
+                    else -> mutableTodayToDo.emit(emptyList<ToDoCheck>())
+                }
+            }
         }
     }
 

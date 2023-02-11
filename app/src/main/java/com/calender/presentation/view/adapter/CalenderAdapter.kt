@@ -18,14 +18,14 @@ class CalenderAdapter : RecyclerView.Adapter<CalenderAdapter.MonthView>(), Recyc
         var dayListAdapter : DayAdapter? = null
         var calender = Calender()
         fun bind(position: Int){
+            binding.apply {
+                itemMonthDayList.apply {
+                    adapter = dayListAdapter
+                }
+            }
             dayListAdapter = calender.createMonth(position-center)
             var dailyList = calender.dailyList
-            val dayListManager = GridLayoutManager(binding.itemMonthDayList.context, 7)
 
-            binding.itemMonthDayList.apply {
-                layoutManager = dayListManager
-                adapter = dayListAdapter
-            }
             dayListAdapter?.submitList(dailyList) //데이터 삽입
             dayListAdapter?.setOnItemClickListener(listener!!)
 

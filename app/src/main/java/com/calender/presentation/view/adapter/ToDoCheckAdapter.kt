@@ -38,7 +38,6 @@ class ToDoCheckAdapter:ListAdapter<ToDoCheck,ToDoCheckAdapter.CheckView>(diffUti
                         } else {
                             paintFlags = (paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv())
                             item.state = 1
-                            todoCheckSeekState.viewSeekbar.visibility = View.VISIBLE
                         }
                         onItemClickListener(item, ToDoCheckMode.STATE)
                     }
@@ -88,11 +87,11 @@ class ToDoCheckAdapter:ListAdapter<ToDoCheck,ToDoCheckAdapter.CheckView>(diffUti
         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.
         val diffUtil = object : DiffUtil.ItemCallback<ToDoCheck>() {
             override fun areItemsTheSame(oldItem: ToDoCheck, newItem: ToDoCheck): Boolean {
-                return oldItem.date == newItem.date
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: ToDoCheck, newItem: ToDoCheck): Boolean {
-                return oldItem.date == newItem.date
+                return oldItem.id == newItem.id
             }
         }
     }

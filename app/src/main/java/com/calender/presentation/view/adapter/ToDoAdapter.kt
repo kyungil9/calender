@@ -23,8 +23,9 @@ class ToDoAdapter : ListAdapter<ToDo, ToDoAdapter.DoView>(diffUtil),RecyclerView
         fun bind(item: ToDo){
             binding.apply {
                 vm = item
-                dummy = Result.Empty
+                dummy = emptyList<ToDoCheck>()
                 adapter = todoChecklistAdapter
+                mode = false
                 itemTodoList.apply {
                     addItemDecoration(HorizonItemDecorator(10))
                     addItemDecoration(VerticalItemDecorator(10))

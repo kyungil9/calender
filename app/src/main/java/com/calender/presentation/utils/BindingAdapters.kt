@@ -5,9 +5,11 @@ import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.get
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
@@ -97,14 +99,13 @@ fun RecyclerView.bindTagItems(result : Result<*>){
 }
 
 @BindingAdapter(value = ["toDoCheckItems","toDoHomeItems"], requireAll = true)
-fun RecyclerView.bindToDoCheckItems(todo: ToDo, result: Result<*>){
+fun RecyclerView.bindToDoCheckItems(todo: ToDo, list: List<ToDoCheck>){
     val adapter = this.adapter
     if(adapter is ToDoCheckAdapter ){
-        if (result is Result.Success<*>) {
-            val list = result.successOrNull() as ToDo
-            adapter.submitList(list.list)
-        }else if (todo.title != "-1234567"){
+        if (todo.title != "-1234567"){
             adapter.submitList(todo.list)
+        }else{
+            adapter.submitList(list)
         }
     }
 }
@@ -186,7 +187,7 @@ fun ImageView.bindViewRecord(result: Result<*>){
             "개인일정" -> this.setImageResource(R.drawable.ic_baseline_promise)
             "수면" -> this.setImageResource(R.drawable.ic_baseline_rest)
             "식사" -> this.setImageResource(R.drawable.ic_baseline_dining_24)
-            else -> this.setImageResource(R.drawable.ic_baseline_repeat_24)
+            else -> this.setImageResource(R.drawable.ic_baseline_help_center_24)
         }
     }
 }
@@ -203,5 +204,12 @@ fun TextView.bindTextRecord(result: Result<*>){
 fun TextView.bindTextRecordTime(duration : Duration){
     if (duration != Duration.ZERO){
         this.text = "진행 시간 : " + duration.toHours() + "시 " + duration.toMinutes() % 60 + "분 ( " + duration.seconds % 60 +" )"
+    }
+}
+
+@BindingAdapter(value = ["viewHomeToDo","viewHomeMode"], requireAll = true)
+fun LinearLayoutCompat.bindViewHome(list : List<ToDoCheck>, mode : Boolean){
+    if (mode && list.isEmpty()){
+        this.visibility = View.GONE
     }
 }

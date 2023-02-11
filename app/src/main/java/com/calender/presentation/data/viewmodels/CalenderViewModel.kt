@@ -26,27 +26,7 @@ class CalenderViewModel @Inject constructor(
             initialValue = Result.Loading
         )
 
-    val scheduleInfo : StateFlow<List<Schedule?>> = scheduleResult.mapLatest { state ->
-        state.successOrNull() ?: emptyList<Schedule>()
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = emptyList<Schedule>()
-    )
 
-
-
-
-
-    fun getAllScheduleInfo() {//수정
-        //mutableCalenderInfo.value?.clear()
-        //mutableCalenderInfo.value?.addAll()
-    }
-
-    fun searchScheduleDate(date: LocalDate){
-        //mutableScheduleInfo.value?.clear()
-        //mutableScheduleInfo.value?.addAll(getSearchScheduleUseCase(date))
-    }
 
 
 }

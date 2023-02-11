@@ -4,8 +4,15 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="com.calender.domain.model.Result"/>
+        <import type="java.time.LocalDate"/>
+        <import type="java.util.List"/>
+        <import type="com.calender.domain.model.ToDoCheck"/>
+        <variable name="dummy" type="List&lt;ToDoCheck>"/>
+        <variable name="homeVm" type="com.calender.presentation.data.viewmodels.RecordViewModel"/>
         <variable name="vm" type="com.calender.domain.model.ToDo"/>
         <variable name="adapter" type="com.calender.presentation.view.adapter.ToDoCheckAdapter"/>
+        <variable name="mode" type="Boolean"/>
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -13,29 +20,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            app:viewHomeToDo="@{homeVm.todayToDo ?? dummy}"
+            app:viewHomeMode="@{mode}"
             android:background="@drawable/view_edge2">
-    <TextView
-            android:text="toDo"
-            app:toDoMode="@{vm}"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/todo_list_name"
-            android:textSize="18sp"
-            android:layout_marginStart="7dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
+        <TextView
+                android:text="toDo"
+                app:toDoMode="@{vm ?? homeVm.dumyToDo}"
+                app:oneDate="@{homeVm.liveTodayDate ?? LocalDate.of(2000,1,1)}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/todo_list_name"
+                android:textSize="18sp"
+                android:layout_marginStart="7dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
         <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="3dp"
                 android:background="#bbb" android:layout_marginStart="3dp" android:layout_marginEnd="3dp"/>
-    <androidx.recyclerview.widget.RecyclerView
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"
-            app:adapter="@{adapter}"
-            app:toDoCheckItems="@{vm.list}"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/item_todo_list"
-    />
+        <androidx.recyclerview.widget.RecyclerView
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                app:adapter="@{adapter}"
+                app:toDoCheckItems="@{vm ?? homeVm.dumyToDo}"
+                app:toDoHomeItems="@{homeVm.todayToDo ?? dummy}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/item_todo_list"/>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

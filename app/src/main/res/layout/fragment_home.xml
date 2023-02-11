@@ -125,8 +125,10 @@
                 android:layout_height="wrap_content" android:id="@+id/recordProgressTime"
                 app:layout_constraintStart_toEndOf="@+id/recordImage" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recordStartTime" android:textSize="14sp"/>
-        <include android:layout_width="0dp" android:layout_height="wrap_content" layout="@layout/list_todo"
+        <include android:layout_width="0dp" android:layout_height="wrap_content"
+                 layout="@layout/list_todo"
                  app:layout_constraintStart_toStartOf="parent"
+                 app:mode="@{true}"
                  app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/view2"
                  android:id="@+id/home_today_todo"/>
 

@@ -4,7 +4,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".view.fragment.CalenderFragment">
 <data>
-
+    <variable name="cAdapter" type="com.calender.presentation.view.adapter.CalenderAdapter"/>
+    <variable name="sAdapter" type="com.calender.presentation.view.adapter.ScheduleAdapter"/>
 </data>
     <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -77,6 +78,9 @@
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/custom_calender"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="horizontal"
+                    app:adapter="@{cAdapter}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
             </androidx.recyclerview.widget.RecyclerView>
@@ -85,7 +89,6 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-
                 android:layout_height="match_parent" android:id="@+id/schedule_layout">
             <TextView
                     android:text="@string/calender_name"
@@ -104,7 +107,11 @@
                     android:background="#bbb"/>
             <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/schedule_list"/>
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="vertical"
+                    app:adapter="@{sAdapter}"
+                    android:id="@+id/schedule_list"/>
         </LinearLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
