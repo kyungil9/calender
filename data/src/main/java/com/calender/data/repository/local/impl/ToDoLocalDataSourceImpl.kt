@@ -1,6 +1,5 @@
 package com.calender.data.repository.local.impl
 
-import androidx.lifecycle.LiveData
 import com.calender.data.database.dao.TodoDao
 import com.calender.data.mapper.mapperToToDoCheck
 import com.calender.data.model.local.ToDoCheckLocal
@@ -10,6 +9,8 @@ import com.calender.domain.model.ToDo
 import kotlinx.coroutines.flow.*
 import java.time.LocalDate
 import javax.inject.Inject
+import javax.inject.Singleton
+
 
 class ToDoLocalDataSourceImpl @Inject constructor(
     private val todoDao: TodoDao
@@ -106,8 +107,8 @@ class ToDoLocalDataSourceImpl @Inject constructor(
         emit(Result.Error(e))
     }
 
-    override fun getOneDateToDo(date: LiveData<LocalDate>): Flow<Result<ToDo>> = channelFlow<Result<ToDo>> {
-        todoDao.getOneDateTodoInfo(date.value!!).collectLatest { todo->
+    override fun getOneDateToDo(date: LocalDate): Flow<Result<ToDo>> = channelFlow<Result<ToDo>> {
+        todoDao.getOneDateTodoInfo(date).collectLatest { todo->
             if(todo.isEmpty())
                 send(Result.Empty)
             else

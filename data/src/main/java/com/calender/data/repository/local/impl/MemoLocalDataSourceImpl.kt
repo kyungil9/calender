@@ -9,6 +9,8 @@ import com.calender.domain.model.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
+import javax.inject.Singleton
+
 
 class MemoLocalDataSourceImpl @Inject constructor(
     private val memoDao: MemoDao

@@ -1,6 +1,5 @@
 package com.calender.data.repository.local.interfaces
 
-import androidx.lifecycle.LiveData
 import com.calender.data.model.local.ToDoCheckLocal
 import com.calender.domain.model.Result
 import com.calender.domain.model.ToDo
@@ -20,5 +19,5 @@ interface ToDoLocalDataSource {
 
     fun updateToDoStatePercent(statePercent : Int,id : Int)
 
-    fun getOneDateToDo(date: LiveData<LocalDate>) : Flow<Result<ToDo>>
+    fun getOneDateToDo(date: LocalDate) : Flow<Result<ToDo>>
 }

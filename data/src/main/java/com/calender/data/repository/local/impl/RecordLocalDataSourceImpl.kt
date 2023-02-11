@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
+import javax.inject.Singleton
+
 
 class RecordLocalDataSourceImpl @Inject constructor(
     private val recordDao: RecordDao

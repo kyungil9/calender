@@ -6,6 +6,8 @@ import com.calender.domain.model.Result
 import com.calender.domain.repository.TagRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import javax.inject.Singleton
+
 
 class TagRepositoryImpl @Inject constructor(
     private val tagLocalData : TagLocalDataSource

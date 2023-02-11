@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDate
 import javax.inject.Inject
+import javax.inject.Singleton
+
 
 class ScheduleLocalDataSourceImpl @Inject constructor(
     private val scheduleDao: ScheduleDao) : ScheduleLocalDataSource

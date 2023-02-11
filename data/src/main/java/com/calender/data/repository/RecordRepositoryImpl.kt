@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
+import javax.inject.Singleton
+
 
 class RecordRepositoryImpl @Inject constructor(
     private val recordLocalDataSource: RecordLocalDataSource

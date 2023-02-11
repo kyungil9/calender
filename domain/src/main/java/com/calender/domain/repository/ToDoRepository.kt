@@ -1,6 +1,5 @@
 package com.calender.domain.repository
 
-import androidx.lifecycle.LiveData
 import com.calender.domain.model.Result
 import com.calender.domain.model.ToDo
 import com.calender.domain.model.ToDoCheck
@@ -14,5 +13,5 @@ interface ToDoRepository {
     fun insertToDo(todo : ToDoCheck)
     fun updateToDoState(state : Int,id : Int)
     fun updateToDoStatePercent(statePercent : Int,id : Int)
-    fun getOneDateToDo(date: LiveData<LocalDate>) : Flow<Result<ToDo>>
+    fun getOneDateToDo(date: LocalDate) : Flow<Result<ToDo>>
 }

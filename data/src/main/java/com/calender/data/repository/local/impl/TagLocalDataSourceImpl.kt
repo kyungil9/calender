@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
+import javax.inject.Singleton
+
 
 class TagLocalDataSourceImpl @Inject constructor(
     private val tagDao: TagDao
