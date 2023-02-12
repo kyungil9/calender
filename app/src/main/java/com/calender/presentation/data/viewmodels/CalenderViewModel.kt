@@ -25,7 +25,7 @@ class CalenderViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = Result.Loading
         )
-
+    var mode = 0
 
 
 

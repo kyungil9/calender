@@ -1,7 +1,6 @@
-package com.calender.presentation.utils
+package com.calender.presentation.listener
 
 import android.content.Context
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -45,7 +44,7 @@ open class OnSwipeTouchListener(ctx:Context):View.OnTouchListener {
                         } else {
                             onSwipeLeft()
                         }
-                        result = true
+                        result = false
                     }
                 } else if (abs(diffY) > SWIPE_THRESHOLD && abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffY < 0) {

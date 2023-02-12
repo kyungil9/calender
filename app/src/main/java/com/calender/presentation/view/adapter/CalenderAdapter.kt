@@ -14,21 +14,22 @@ import java.time.LocalDate
 class CalenderAdapter : RecyclerView.Adapter<CalenderAdapter.MonthView>(), RecyclerViewItemClickListener {
     val center = Int.MAX_VALUE / 2
     private var listener: RecyclerViewItemClickListener?= null
+    var parentHeight = 0
     inner class MonthView(private val binding: ListCalenderBinding): RecyclerView.ViewHolder(binding.root){
         var dayListAdapter : DayAdapter? = null
         var calender = Calender()
         fun bind(position: Int){
+            dayListAdapter = calender.createMonth(position-center)
             binding.apply {
                 itemMonthDayList.apply {
                     adapter = dayListAdapter
                 }
             }
-            dayListAdapter = calender.createMonth(position-center)
-            var dailyList = calender.dailyList
 
+            var dailyList = calender.dailyList
             dayListAdapter?.submitList(dailyList) //데이터 삽입
             dayListAdapter?.setOnItemClickListener(listener!!)
-
+            dayListAdapter?.setcParentHeight(parentHeight)
         }
 
 
@@ -51,5 +52,8 @@ class CalenderAdapter : RecyclerView.Adapter<CalenderAdapter.MonthView>(), Recyc
     }
     fun setOnItemClickListener(listener : RecyclerViewItemClickListener){
         this.listener=listener
+    }
+    fun setcParentHeight(height : Int){
+        parentHeight = height
     }
 }

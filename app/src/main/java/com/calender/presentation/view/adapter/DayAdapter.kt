@@ -18,6 +18,7 @@ class DayAdapter(
     val tempMonth:Int, val size:Int
 ): ListAdapter<Daily,DayAdapter.DayView>(diffUtil), RecyclerViewItemClickListener {
     private var listener: RecyclerViewItemClickListener?= null
+    var parentHeight = 0
     inner class DayView(private val binding: ListCalenderItemBinding): RecyclerView.ViewHolder(binding.root){
         init {
             if (size == 42) {
@@ -35,24 +36,19 @@ class DayAdapter(
             }
         }
         fun bind(item : Daily, position: Int){
-            binding.itemDayLayout.setOnClickListener {
-                Toast.makeText(binding.itemDayLayout.context, "${item.date}", Toast.LENGTH_SHORT).show()
-                //특정 날짜 데이터를 viewmodel에 삽입 size로 구분
-                onItemClickListener(item.date)
-            }
+            binding.apply {
+                day = position % 7
+                data = item
+                month = tempMonth
 
-
-            binding.itemDayText.text = item.date.dayOfMonth.toString()
-            binding.itemDayText.setTextColor(
-                when (position % 7) {
-                    0 -> Color.RED
-                    6 -> Color.BLUE
-                    else -> Color.BLACK
+                itemDayLayout.setOnClickListener {
+                    Toast.makeText(binding.itemDayLayout.context, "${item.date}", Toast.LENGTH_SHORT).show()
+                    //특정 날짜 데이터를 viewmodel에 삽입 size로 구분
+                    onItemClickListener(item.date)
                 }
-            )
-            if(tempMonth != item.date.monthValue) {
-                binding.itemDayText.alpha = 0.4f
             }
+
+
         }
     }
 
@@ -74,8 +70,9 @@ class DayAdapter(
     fun setOnItemClickListener(listener : RecyclerViewItemClickListener){
         this.listener=listener
     }
-
-
+    fun setcParentHeight(height : Int){
+        parentHeight = height
+    }
     companion object {
         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.
         val diffUtil = object : DiffUtil.ItemCallback<Daily>() {

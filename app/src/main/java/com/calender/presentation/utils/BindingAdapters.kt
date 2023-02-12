@@ -1,5 +1,6 @@
 package com.calender.presentation.utils
 
+import android.graphics.Color
 import android.graphics.Paint
 import android.util.Log
 import android.view.View
@@ -211,5 +212,18 @@ fun TextView.bindTextRecordTime(duration : Duration){
 fun LinearLayoutCompat.bindViewHome(list : List<ToDoCheck>, mode : Boolean){
     if (mode && list.isEmpty()){
         this.visibility = View.GONE
+    }else if(mode){
+        this.visibility = View.VISIBLE
     }
+}
+
+@BindingAdapter("textCalender")
+fun TextView.bindTextCalender(mode : Int){
+    this.setTextColor(
+        when(mode){
+            0 -> Color.RED
+            6 -> Color.BLUE
+            else -> Color.BLACK
+        }
+    )
 }
