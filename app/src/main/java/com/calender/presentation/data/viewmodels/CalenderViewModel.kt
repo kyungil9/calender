@@ -1,5 +1,7 @@
 package com.calender.presentation.data.viewmodels
 
+import android.app.Application
+import android.util.TypedValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,9 +18,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CalenderViewModel @Inject constructor(
+    application: Application,
     private val getSearchScheduleUseCase: GetSearchScheduleUseCase
     ) :ViewModel(){
-
+    private val mutableHeight = MutableLiveData<Int>()
+    var parentHeight = 0
+    val liveHeight : LiveData<Int> get() = mutableHeight
     val scheduleResult : StateFlow<Result<List<Schedule>>> = getSearchScheduleUseCase(LocalDate.now())
         .stateIn(
             scope = viewModelScope,
@@ -27,6 +32,12 @@ class CalenderViewModel @Inject constructor(
         )
     var mode = 0
 
+    init {
+        mutableHeight.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,50F,application.resources.displayMetrics).toInt()
+    }
 
+    fun setViewHeight(height : Int){
+        mutableHeight.value = height / 5
+    }
 
 }

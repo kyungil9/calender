@@ -3,15 +3,17 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+
         <variable name="data" type="com.calender.domain.model.Daily"/>
-        <variable name="day" type="Integer"/>
-        <variable name="month" type="Integer"/>
+        <variable name="items" type="com.calender.presentation.view.adapter.CalenderItem"/>
+
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/item_day_layout"
             android:layout_width="match_parent"
             android:gravity="center_horizontal"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
+            app:viewHeight="@{items.height}"
             android:layout_marginTop="5dp"
             android:orientation="vertical"
             android:background="@drawable/viewedge">
@@ -20,8 +22,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
+                app:textCalenderColor="@{items.color}"
                 android:text="@{``+data.date.dayOfMonth}"
-                android:alpha="@{month != data.date.monthValue ? 0.4F : 1F}"
-                android:textCalender="@{day}"/>
+                android:alpha="@{items.month != data.date.monthValue ? 0.4F : 1F}"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

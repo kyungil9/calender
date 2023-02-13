@@ -23,6 +23,7 @@ import com.calender.presentation.view.adapter.ToDoCheckAdapter
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import org.jetbrains.anko.custom.style
+import org.w3c.dom.Text
 import java.time.Duration
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -216,11 +217,15 @@ fun LinearLayoutCompat.bindViewHome(list : List<ToDoCheck>, mode : Boolean){
         this.visibility = View.VISIBLE
     }
 }
+@BindingAdapter("viewHeight")
+fun LinearLayoutCompat.bindViewHeight(height : Int){
+    this.layoutParams.height = height
+}
 
-@BindingAdapter("textCalender")
-fun TextView.bindTextCalender(mode : Int){
+@BindingAdapter("textCalenderColor")
+fun TextView.bindTextCalenderColor(color : Int){
     this.setTextColor(
-        when(mode){
+        when(color){
             0 -> Color.RED
             6 -> Color.BLUE
             else -> Color.BLACK

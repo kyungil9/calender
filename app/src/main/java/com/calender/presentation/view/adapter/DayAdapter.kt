@@ -5,6 +5,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +19,7 @@ class DayAdapter(
     val tempMonth:Int, val size:Int
 ): ListAdapter<Daily,DayAdapter.DayView>(diffUtil), RecyclerViewItemClickListener {
     private var listener: RecyclerViewItemClickListener?= null
-    var parentHeight = 0
+    var parentHeight : LiveData<Int>? = null
     inner class DayView(private val binding: ListCalenderItemBinding): RecyclerView.ViewHolder(binding.root){
         init {
             if (size == 42) {
@@ -34,12 +35,13 @@ class DayAdapter(
                 params.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,70F,binding.itemDayLayout.context.resources.displayMetrics).toInt()
                 binding.itemDayLayout.layoutParams = params
             }
+
+
         }
         fun bind(item : Daily, position: Int){
             binding.apply {
-                day = position % 7
                 data = item
-                month = tempMonth
+                items = CalenderItem(tempMonth,parentHeight!!,position % 7)
 
                 itemDayLayout.setOnClickListener {
                     Toast.makeText(binding.itemDayLayout.context, "${item.date}", Toast.LENGTH_SHORT).show()
@@ -70,7 +72,7 @@ class DayAdapter(
     fun setOnItemClickListener(listener : RecyclerViewItemClickListener){
         this.listener=listener
     }
-    fun setcParentHeight(height : Int){
+    fun setcParentHeight(height : LiveData<Int>){
         parentHeight = height
     }
     companion object {
@@ -86,3 +88,9 @@ class DayAdapter(
         }
     }
 }
+
+data class CalenderItem(
+    val month : Int,
+    val height : LiveData<Int>,
+    val color : Int
+)

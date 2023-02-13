@@ -2,6 +2,7 @@ package com.calender.presentation.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.presentation.databinding.ListCalenderBinding
@@ -14,7 +15,7 @@ import java.time.LocalDate
 class CalenderAdapter : RecyclerView.Adapter<CalenderAdapter.MonthView>(), RecyclerViewItemClickListener {
     val center = Int.MAX_VALUE / 2
     private var listener: RecyclerViewItemClickListener?= null
-    var parentHeight = 0
+    var parentHeight : LiveData<Int>? = null
     inner class MonthView(private val binding: ListCalenderBinding): RecyclerView.ViewHolder(binding.root){
         var dayListAdapter : DayAdapter? = null
         var calender = Calender()
@@ -29,7 +30,7 @@ class CalenderAdapter : RecyclerView.Adapter<CalenderAdapter.MonthView>(), Recyc
             var dailyList = calender.dailyList
             dayListAdapter?.submitList(dailyList) //데이터 삽입
             dayListAdapter?.setOnItemClickListener(listener!!)
-            dayListAdapter?.setcParentHeight(parentHeight)
+            dayListAdapter?.setcParentHeight(parentHeight!!)
         }
 
 
@@ -53,7 +54,7 @@ class CalenderAdapter : RecyclerView.Adapter<CalenderAdapter.MonthView>(), Recyc
     fun setOnItemClickListener(listener : RecyclerViewItemClickListener){
         this.listener=listener
     }
-    fun setcParentHeight(height : Int){
+    fun setcParentHeight(height : LiveData<Int>){
         parentHeight = height
     }
 }

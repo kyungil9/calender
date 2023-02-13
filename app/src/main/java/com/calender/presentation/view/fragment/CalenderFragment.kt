@@ -47,7 +47,6 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                     when(newState){
                         BottomSheetBehavior.STATE_EXPANDED -> {
                             //완전 펼쳐진 상태
-
                         }
                         BottomSheetBehavior.STATE_COLLAPSED -> {
                             //절반 상태
@@ -55,6 +54,7 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                         }
                         BottomSheetBehavior.STATE_HIDDEN -> {
                             //숨김상태
+                            calenderViewModel.setViewHeight(calenderViewModel.parentHeight/5)
                         }
                     }
                 }
@@ -62,18 +62,17 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
                     //히든 상태가 될때 리사이클러뷰 크기를 조정하는 애니메이션 추가, 펼칠때는 색상도를 낮추는 효과를 추가
                     if (slideOffset < 0.0){
-
+                        binding.calenderLayout.alpha = 1f
                     }else if(slideOffset == 0.0F){
                         binding.calenderLayout.alpha = 1f
                     }else{
                         val slide = 1F - (slideOffset*0.8F + 0.5F)
                         binding.calenderLayout.alpha = if (slide <= 0.25F) 0.25F else slide
-                        Log.d("slid",slideOffset.toString())
                     }
                 }
             })
         }
-
+        calenderAdapter.setcParentHeight(calenderViewModel.liveHeight)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             cAdapter = calenderAdapter
@@ -87,9 +86,14 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
             scheduleList.apply {
                 setHasFixedSize(true)
             }
-
-
-            //calenderFragment.setBinding(bottomBehavior)
+            customCalender.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener{
+                override fun onGlobalLayout() {
+                    calenderViewModel.parentHeight = customCalender.height
+                    calenderViewModel.setViewHeight((customCalender.height * 0.45).toInt())
+                    bottomBehavior?.peekHeight = (customCalender.height * 0.55).toInt()
+                    customCalender.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            })
 //            calenderFragment.setOnTouchListener(object : OnSwipeTouchListener(requireActivity()){//플레그먼트 빈공간만 인식되는 문제(터치권한을 전체로 가져와야??)
 //                override fun onSwipeTop() {
 //                    //binding.calenderLayout.visibility = View.VISIBLE
@@ -150,7 +154,8 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                 //bottomsheet에 변경되도록 전달
             }
         })
-        calenderAdapter.setcParentHeight(getDisplayHeight())
+
+
 
 //        binding.calenderFragment.setOnTouchListener { view, motionEvent ->
 //            val action = motionEvent.action
@@ -190,8 +195,5 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
         return super.onOptionsItemSelected(item)
     }
 
-    fun getDisplayHeight() : Int{
-        val params = binding.calenderFragment.layoutParams
-        return params.height
-    }
+
 }
