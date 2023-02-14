@@ -9,6 +9,7 @@ import android.view.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.domain.model.successOrNull
@@ -31,9 +32,6 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
     private val calenderAdapter = CalenderAdapter()
     private val scheduleAdapter = ScheduleAdapter()
     private var bottomBehavior :BottomSheetBehavior<ConstraintLayout>? = null
-    private var lastY = 0
-    private var curY = 0
-    private val OFF_SET = 20
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,10 +49,13 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                         BottomSheetBehavior.STATE_COLLAPSED -> {
                             //절반 상태
                             binding.customCalender.alpha = 1.0F
+                            calenderViewModel.setViewHeight((calenderViewModel.parentHeight * 0.45).toInt())
+                            calenderAdapter.notifyDataSetChanged()
                         }
                         BottomSheetBehavior.STATE_HIDDEN -> {
                             //숨김상태
-                            calenderViewModel.setViewHeight(calenderViewModel.parentHeight/5)
+                            calenderViewModel.setViewHeight(calenderViewModel.parentHeight)
+                            calenderAdapter.notifyDataSetChanged()
                         }
                     }
                 }
@@ -78,42 +79,50 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
             cAdapter = calenderAdapter
             sAdapter = scheduleAdapter
             customCalender.apply {
-                addItemDecoration(HorizonItemDecorator(10))
+                addItemDecoration(HorizonItemDecorator(5))
                 scrollToPosition(Int.MAX_VALUE / 2)
-                setHasFixedSize(true)
-
+                setHasFixedSize(false)
             }
             scheduleList.apply {
                 setHasFixedSize(true)
             }
             customCalender.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener{
                 override fun onGlobalLayout() {
-                    calenderViewModel.parentHeight = customCalender.height
-                    calenderViewModel.setViewHeight((customCalender.height * 0.45).toInt())
-                    bottomBehavior?.peekHeight = (customCalender.height * 0.55).toInt()
+                    calenderViewModel.parentHeight = customCalender.height - calenderDays.root.height -5
+                    calenderViewModel.setViewHeight((calenderViewModel.parentHeight * 0.45).toInt())
+                    bottomBehavior?.peekHeight = (calenderViewModel.parentHeight * 0.55).toInt()
                     customCalender.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
             })
-//            calenderFragment.setOnTouchListener(object : OnSwipeTouchListener(requireActivity()){//플레그먼트 빈공간만 인식되는 문제(터치권한을 전체로 가져와야??)
-//                override fun onSwipeTop() {
-//                    //binding.calenderLayout.visibility = View.VISIBLE
-//                    bottomBehavior?.state = if (bottomBehavior?.state == BottomSheetBehavior.STATE_HALF_EXPANDED){
-//                        BottomSheetBehavior.STATE_EXPANDED
-//                    }else
-//                        BottomSheetBehavior.STATE_HALF_EXPANDED
-//                }
-//
-//                override fun onSwipeBottom() {
-//                    bottomBehavior?.state = if (bottomBehavior?.state == BottomSheetBehavior.STATE_EXPANDED){
-//                        BottomSheetBehavior.STATE_HALF_EXPANDED
-//                    }else
-//                        BottomSheetBehavior.STATE_EXPANDED
-////                val params = binding.calenderLayout.layoutParams
-////                params.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,5F,binding.calenderLayout.context.resources.displayMetrics).toInt()
-////                binding.calenderLayout.layoutParams
-//                    //binding.calenderLayout.visibility = View.GONE
-//                }
-//            })
+            customCalender.addOnItemTouchListener(object : OnSwipeTouchListener(requireActivity()){//플레그먼트 빈공간만 인식되는 문제(터치권한을 전체로 가져와야??)
+                override fun onSwipeTop() {
+                    bottomBehavior?.state = if (bottomBehavior?.state == BottomSheetBehavior.STATE_HIDDEN){
+                        BottomSheetBehavior.STATE_COLLAPSED
+                    }else
+                        BottomSheetBehavior.STATE_EXPANDED
+                }
+
+                override fun onSwipeBottom() {
+                    if (bottomBehavior?.state == BottomSheetBehavior.STATE_COLLAPSED){
+                        bottomBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
+                    }
+                }
+
+                override fun onSwipeLeft() {
+//                    calenderViewModel.setSelectDay(calenderViewModel.liveSelectDay.value?.minusMonths(1)!!)
+//                    setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
+                    //calenderViewModel.position = calenderViewModel.position -1
+                    //customCalender.smoothScrollToPosition(calenderViewModel.position )
+                }
+
+                override fun onSwipeRight() {
+//                    calenderViewModel.setSelectDay(calenderViewModel.liveSelectDay.value?.plusMonths(1)!!)
+//                    setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
+                    //calenderViewModel.position = calenderViewModel.position +1
+                    //customCalender.smoothScrollToPosition(calenderViewModel.position )
+                }
+            })
+
 //            calenderFragment.setOnTouchListener { view, ev ->
 //                val action = ev?.action
 //                when(action){
@@ -177,7 +186,7 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        setActionBarTitle("${LocalDate.now().year}.${LocalDate.now().monthValue} v")
+        setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
         inflater.inflate(R.menu.calender_menu,menu)
     }
 
@@ -185,10 +194,6 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.weekMode -> {
-                bottomBehavior?.state = if (bottomBehavior?.state == BottomSheetBehavior.STATE_EXPANDED){
-                    BottomSheetBehavior.STATE_COLLAPSED
-                }else
-                    BottomSheetBehavior.STATE_EXPANDED
                 //view?.findNavController()?.navigate(R.id.action_HomeFragment_to_toDoModeFragment2)
             }
         }

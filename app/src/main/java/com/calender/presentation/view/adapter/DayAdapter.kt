@@ -41,8 +41,7 @@ class DayAdapter(
         fun bind(item : Daily, position: Int){
             binding.apply {
                 data = item
-                items = CalenderItem(tempMonth,parentHeight!!,position % 7)
-
+                items = CalenderItem(tempMonth,parentHeight!!,position % 7,size /7)
                 itemDayLayout.setOnClickListener {
                     Toast.makeText(binding.itemDayLayout.context, "${item.date}", Toast.LENGTH_SHORT).show()
                     //특정 날짜 데이터를 viewmodel에 삽입 size로 구분
@@ -79,7 +78,7 @@ class DayAdapter(
         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.
         val diffUtil = object : DiffUtil.ItemCallback<Daily>() {
             override fun areItemsTheSame(oldItem: Daily, newItem: Daily): Boolean {
-                return oldItem.date == newItem.date
+                return oldItem == newItem
             }
 
             override fun areContentsTheSame(oldItem: Daily, newItem: Daily): Boolean {
@@ -92,5 +91,6 @@ class DayAdapter(
 data class CalenderItem(
     val month : Int,
     val height : LiveData<Int>,
-    val color : Int
+    val color : Int,
+    val size : Int
 )

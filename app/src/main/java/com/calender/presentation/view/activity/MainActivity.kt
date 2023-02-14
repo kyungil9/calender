@@ -2,6 +2,7 @@ package com.calender.presentation.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.calender.presentation.R
@@ -12,6 +13,7 @@ import com.calender.presentation.databinding.ActivityMainBinding
 import com.calender.presentation.utils.ForceService
 import com.calender.presentation.utils.KeepStateNavigator
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main,TransitionMode.NONE) {

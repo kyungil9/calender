@@ -22,8 +22,10 @@ class CalenderViewModel @Inject constructor(
     private val getSearchScheduleUseCase: GetSearchScheduleUseCase
     ) :ViewModel(){
     private val mutableHeight = MutableLiveData<Int>()
+    private val mutableSelectDay = MutableLiveData<LocalDate>()
     var parentHeight = 0
     val liveHeight : LiveData<Int> get() = mutableHeight
+    val liveSelectDay : LiveData<LocalDate> get() = mutableSelectDay
     val scheduleResult : StateFlow<Result<List<Schedule>>> = getSearchScheduleUseCase(LocalDate.now())
         .stateIn(
             scope = viewModelScope,
@@ -31,13 +33,16 @@ class CalenderViewModel @Inject constructor(
             initialValue = Result.Loading
         )
     var mode = 0
-
+    var position = Int.MAX_VALUE / 2
     init {
+        mutableSelectDay.value = LocalDate.now()
         mutableHeight.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,50F,application.resources.displayMetrics).toInt()
     }
 
     fun setViewHeight(height : Int){
-        mutableHeight.value = height / 5
+        mutableHeight.value = height
     }
-
+    fun setSelectDay(date: LocalDate){
+        mutableSelectDay.value = date
+    }
 }

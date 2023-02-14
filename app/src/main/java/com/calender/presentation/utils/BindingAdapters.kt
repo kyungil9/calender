@@ -3,6 +3,7 @@ package com.calender.presentation.utils
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -217,9 +218,11 @@ fun LinearLayoutCompat.bindViewHome(list : List<ToDoCheck>, mode : Boolean){
         this.visibility = View.VISIBLE
     }
 }
-@BindingAdapter("viewHeight")
-fun LinearLayoutCompat.bindViewHeight(height : Int){
-    this.layoutParams.height = height
+@BindingAdapter(value = ["viewHeight","viewSize"], requireAll = true)
+fun LinearLayoutCompat.bindViewHeight(height : Int,size : Int){
+    val params = this.layoutParams
+    params.height = (height - size * 5) / size
+    this.layoutParams = params
 }
 
 @BindingAdapter("textCalenderColor")
