@@ -75,7 +75,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),C
                 toggleFab()
             }
             fabHomeCalender.setOnClickListener {
-                recordViewModel.updateLiveToday()
+                //recordViewModel.updateLiveToday()
                 toggleFab()
             }
 
@@ -98,6 +98,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),C
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         setActionBarTitle("${recordViewModel.liveTodayDate.value?.year}.${recordViewModel.liveTodayDate.value?.monthValue}.${recordViewModel.liveTodayDate.value?.dayOfMonth}(${Calender.transDayToKorean(recordViewModel.liveTodayDate.value?.dayOfWeek!!.value)})")
+        setActionBarListener(null)
         inflater.inflate(R.menu.regular_menu,menu)
     }
 

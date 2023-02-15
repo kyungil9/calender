@@ -17,10 +17,6 @@ open class OnSwipeTouchListener(ctx:Context):RecyclerView.OnItemTouchListener {
     init {
         gestureDetector = GestureDetector(ctx,GestureListener())
     }
-
-//    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-//        return gestureDetector.onTouchEvent(event)
-//    }
     override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
         gestureDetector.onTouchEvent(e)
         return false
@@ -49,7 +45,7 @@ open class OnSwipeTouchListener(ctx:Context):RecyclerView.OnItemTouchListener {
                         } else {
                             onSwipeLeft()
                         }
-                        result = false
+                        result = true
                     }
                 } else if (abs(diffY) > SWIPE_THRESHOLD && abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffY > 0) {

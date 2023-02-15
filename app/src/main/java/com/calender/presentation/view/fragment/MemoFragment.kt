@@ -19,6 +19,7 @@ class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         setActionBarTitle("메 모")
+        setActionBarListener(null)
         inflater.inflate(R.menu.regular_menu,menu)
     }
 

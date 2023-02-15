@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,5 +45,10 @@ class CalenderViewModel @Inject constructor(
     }
     fun setSelectDay(date: LocalDate){
         mutableSelectDay.value = date
+    }
+
+    fun updatePosition(date : LocalDate){
+        position += ChronoUnit.MONTHS.between(liveSelectDay.value,date).toInt()
+        setSelectDay(date)
     }
 }

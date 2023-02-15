@@ -36,9 +36,13 @@ abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutRes
     }
 
     fun setActionBarTitle(title:String){
-        val activity = activity
         if (activity != null) {
             (activity as MainActivity).setActionBarTitle(title)
         }
+    }
+
+    fun setActionBarListener(listener : View.OnClickListener?){
+        if (activity != null)
+            (activity as MainActivity).setActionBarClickListener(listener)
     }
 }

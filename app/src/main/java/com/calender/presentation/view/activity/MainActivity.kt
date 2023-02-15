@@ -2,6 +2,7 @@ package com.calender.presentation.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -44,6 +45,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main,Tr
 
     fun setActionBarTitle(title: String) {
         binding.toolbar.toolbarTitle.text = title
+    }
+
+    fun setActionBarClickListener(listener : View.OnClickListener?){
+        binding.toolbar.toolbarTitle.setOnClickListener(listener)
     }
 
 }

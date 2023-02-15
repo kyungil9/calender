@@ -20,6 +20,7 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>(R.layout.fragment
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         setActionBarTitle("분 석")
+        setActionBarListener(null)
         inflater.inflate(R.menu.regular_menu,menu)
     }
 

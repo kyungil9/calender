@@ -1,11 +1,13 @@
 package com.calender.presentation.view.fragment
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.DatePicker
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -22,6 +24,7 @@ import com.calender.presentation.databinding.FragmentCalenderBinding
 import com.calender.presentation.utils.HorizonItemDecorator
 import com.calender.presentation.listener.RecyclerViewItemClickListener
 import com.calender.presentation.listener.OnSwipeTouchListener
+import com.calender.presentation.listener.SnapPagerScrollListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
@@ -74,6 +77,28 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
             })
         }
         calenderAdapter.setcParentHeight(calenderViewModel.liveHeight)
+        val sanp = PagerSnapHelper()
+        sanp.attachToRecyclerView(binding.customCalender)//달별로 페이지 넘기기
+        val sanpListener = SnapPagerScrollListener(
+            sanp,
+            SnapPagerScrollListener.ON_SETTLED,
+            true,
+            object : SnapPagerScrollListener.OnChangeListener{//나중에 달력으로 이동시 작동되는지 확인
+                override fun onSnapped(position: Int) {
+                    if (position < calenderViewModel.position){
+                        calenderViewModel.position = position
+                        calenderViewModel.setSelectDay(calenderViewModel.liveSelectDay.value?.minusMonths(1)!!)
+                        setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
+                    }else if (position > calenderViewModel.position){
+                        calenderViewModel.position = position
+                        calenderViewModel.setSelectDay(calenderViewModel.liveSelectDay.value?.plusMonths(1)!!)
+                        setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
+                    }
+                }
+            }
+        )
+
+
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             cAdapter = calenderAdapter
@@ -82,19 +107,15 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                 addItemDecoration(HorizonItemDecorator(5))
                 scrollToPosition(Int.MAX_VALUE / 2)
                 setHasFixedSize(false)
-            }
-            scheduleList.apply {
-                setHasFixedSize(true)
-            }
-            customCalender.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener{
-                override fun onGlobalLayout() {
-                    calenderViewModel.parentHeight = customCalender.height - calenderDays.root.height -5
-                    calenderViewModel.setViewHeight((calenderViewModel.parentHeight * 0.45).toInt())
-                    bottomBehavior?.peekHeight = (calenderViewModel.parentHeight * 0.55).toInt()
-                    customCalender.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                }
-            })
-            customCalender.addOnItemTouchListener(object : OnSwipeTouchListener(requireActivity()){//플레그먼트 빈공간만 인식되는 문제(터치권한을 전체로 가져와야??)
+                viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener{
+                    override fun onGlobalLayout() {
+                        calenderViewModel.parentHeight = customCalender.height - calenderDays.root.height -5
+                        calenderViewModel.setViewHeight((calenderViewModel.parentHeight * 0.45).toInt())
+                        bottomBehavior?.peekHeight = (calenderViewModel.parentHeight * 0.55).toInt()
+                        customCalender.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    }
+                })
+                addOnItemTouchListener(object : OnSwipeTouchListener(requireActivity()){//플레그먼트 빈공간만 인식되는 문제(터치권한을 전체로 가져와야??)
                 override fun onSwipeTop() {
                     bottomBehavior?.state = if (bottomBehavior?.state == BottomSheetBehavior.STATE_HIDDEN){
                         BottomSheetBehavior.STATE_COLLAPSED
@@ -102,91 +123,56 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                         BottomSheetBehavior.STATE_EXPANDED
                 }
 
-                override fun onSwipeBottom() {
-                    if (bottomBehavior?.state == BottomSheetBehavior.STATE_COLLAPSED){
-                        bottomBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
+                    override fun onSwipeBottom() {
+                        if (bottomBehavior?.state == BottomSheetBehavior.STATE_COLLAPSED){
+                            bottomBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
+                        }
                     }
-                }
 
-                override fun onSwipeLeft() {
-//                    calenderViewModel.setSelectDay(calenderViewModel.liveSelectDay.value?.minusMonths(1)!!)
-//                    setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
-                    //calenderViewModel.position = calenderViewModel.position -1
-                    //customCalender.smoothScrollToPosition(calenderViewModel.position )
-                }
+                    override fun onSwipeLeft() {
+//                        calenderViewModel.setSelectDay(calenderViewModel.liveSelectDay.value?.minusMonths(1)!!)
+//                        setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
+                        //calenderViewModel.position = calenderViewModel.position -1
+                        //customCalender.smoothScrollToPosition(calenderViewModel.position )
+                    }
 
-                override fun onSwipeRight() {
-//                    calenderViewModel.setSelectDay(calenderViewModel.liveSelectDay.value?.plusMonths(1)!!)
-//                    setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
-                    //calenderViewModel.position = calenderViewModel.position +1
-                    //customCalender.smoothScrollToPosition(calenderViewModel.position )
-                }
-            })
+                    override fun onSwipeRight() {
+//                        calenderViewModel.setSelectDay(calenderViewModel.liveSelectDay.value?.plusMonths(1)!!)
+//                        setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
+                        //calenderViewModel.position = calenderViewModel.position +1
+                        //customCalender.smoothScrollToPosition(calenderViewModel.position )
+                    }
+                })
+                addOnScrollListener(sanpListener)
+            }
+            scheduleList.apply {
+                setHasFixedSize(true)
+            }
 
-//            calenderFragment.setOnTouchListener { view, ev ->
-//                val action = ev?.action
-//                when(action){
-//                    MotionEvent.ACTION_DOWN -> lastY = ev.y.toInt()
-//                    MotionEvent.ACTION_MOVE -> {
-//                        var curY = ev.y.toInt()
-//                        if (!(curY - OFF_SET <= lastY && lastY <= curY + OFF_SET)){
-//                            if (calenderViewModel.mode == 0) {
-//                                binding.calenderLayout.visibility = View.VISIBLE
-//                                calenderViewModel.mode = 1
-//                            } else if (calenderViewModel.mode == 1) {
-//                                binding.calenderLayout.visibility = View.GONE
-//                                calenderViewModel.mode = 0
-//                            }
-//                        }
-//                    }
-//                }
-//
-//                if(motionEvent.action == MotionEvent.ACTION_MOVE) {
-//                    if (calenderViewModel.mode == 0) {
-//                        binding.calenderLayout.visibility = View.VISIBLE
-//                        calenderViewModel.mode = 1
-//                        Log.d("tset", "1")
-//                    } else if (calenderViewModel.mode == 1) {
-//                        binding.calenderLayout.visibility = View.GONE
-//                        calenderViewModel.mode = 0
-//                    }
-//                }
-//                true
-//           }
         }
-        val sanp = PagerSnapHelper()
-        sanp.attachToRecyclerView(binding.customCalender)//달별로 페이지 넘기기
-
 
         calenderAdapter.setOnItemClickListener(object : RecyclerViewItemClickListener {
             override fun onItemClickListener(date: LocalDate) {//해당 날짜의 데이터 조회해서 입력
                 //bottomsheet에 변경되도록 전달
             }
         })
-
-
-
-//        binding.calenderFragment.setOnTouchListener { view, motionEvent ->
-//            val action = motionEvent.action
-//            if(action == MotionEvent.ACTION_DOWN) {
-//                lastY = motionEvent.y.toInt()
-//                Log.d("scorll","botom22")
-//            }else if(action == MotionEvent.ACTION_MOVE ) {//&& (abs(lastY - binding.calenderLayout.layoutParams.height) < 20)
-//                curY = motionEvent.y.toInt()
-//                val params = binding.calenderLayout.layoutParams
-//                params.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,(binding.calenderLayout.layoutParams.height + curY - lastY).toFloat(),binding.calenderLayout.context.resources.displayMetrics).toInt()
-//                binding.calenderLayout.layoutParams = params
-//                lastY = motionEvent.y.toInt()
-//                Log.d("scorll","botom")
-//            }
-//            true
-//        }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
+        setActionBarListener {
+            val dateDialog = DatePickerDialog(requireContext(),
+                { view, year, month, dayOfMonth ->
+                    calenderViewModel.updatePosition(LocalDate.of(year, month+1, dayOfMonth))
+                    setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
+                    binding.customCalender.scrollToPosition(calenderViewModel.position)
+                },calenderViewModel.liveSelectDay.value?.year!!,
+                calenderViewModel.liveSelectDay.value?.monthValue!!-1,
+                calenderViewModel.liveSelectDay.value?.dayOfMonth!!
+            )
+            dateDialog.show()
+        }
         inflater.inflate(R.menu.calender_menu,menu)
     }
 

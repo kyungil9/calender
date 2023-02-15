@@ -16,6 +16,7 @@ abstract class BaseToDoFragment<T : ViewDataBinding>(@LayoutRes private val layo
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         setActionBarTitle("할 일")
+        setActionBarListener(null)
         inflater.inflate(R.menu.todo_menu,menu)
     }
 
