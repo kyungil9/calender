@@ -49,12 +49,12 @@ class RecordViewModel @Inject constructor(
     val todayToDo = mutableTodayToDo.asStateFlow()
     val timer = Timer()
     val dumyToDo = ToDo(title = "-1234567")
-    val recordResult : StateFlow<Result<List<Record>>> = getTodayRecordUseCase(date = LocalDateTime.now())
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = Result.Loading
-        )
+//    val recordResult : StateFlow<Result<List<Record>>> = getTodayRecordUseCase(date = LocalDateTime.now())
+//        .stateIn(
+//            scope = viewModelScope,
+//            started = SharingStarted.WhileSubscribed(5_000L),
+//            initialValue = Result.Loading
+//        )
 
 //    val recordInfo : StateFlow<List<Record?>> = recordResult.mapLatest { state ->
 //        state.successOrNull() ?: emptyList<Record>()

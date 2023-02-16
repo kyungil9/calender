@@ -103,6 +103,7 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
             lifecycleOwner = viewLifecycleOwner
             cAdapter = calenderAdapter
             sAdapter = scheduleAdapter
+            vm = calenderViewModel
             customCalender.apply {
                 addItemDecoration(HorizonItemDecorator(5))
                 scrollToPosition(Int.MAX_VALUE / 2)
@@ -121,26 +122,12 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                         BottomSheetBehavior.STATE_COLLAPSED
                     }else
                         BottomSheetBehavior.STATE_EXPANDED
-                }
+                    }
 
                     override fun onSwipeBottom() {
                         if (bottomBehavior?.state == BottomSheetBehavior.STATE_COLLAPSED){
                             bottomBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
                         }
-                    }
-
-                    override fun onSwipeLeft() {
-//                        calenderViewModel.setSelectDay(calenderViewModel.liveSelectDay.value?.minusMonths(1)!!)
-//                        setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
-                        //calenderViewModel.position = calenderViewModel.position -1
-                        //customCalender.smoothScrollToPosition(calenderViewModel.position )
-                    }
-
-                    override fun onSwipeRight() {
-//                        calenderViewModel.setSelectDay(calenderViewModel.liveSelectDay.value?.plusMonths(1)!!)
-//                        setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
-                        //calenderViewModel.position = calenderViewModel.position +1
-                        //customCalender.smoothScrollToPosition(calenderViewModel.position )
                     }
                 })
                 addOnScrollListener(sanpListener)

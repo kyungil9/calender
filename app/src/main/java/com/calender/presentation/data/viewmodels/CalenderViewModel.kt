@@ -7,12 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.calender.domain.model.*
-import com.calender.domain.usecase.GetSearchScheduleUseCase
+import com.calender.domain.usecase.calender.GetMonthScheduleUseCase
+import com.calender.domain.usecase.calender.GetSearchScheduleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
@@ -20,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CalenderViewModel @Inject constructor(
     application: Application,
-    private val getSearchScheduleUseCase: GetSearchScheduleUseCase
+    private val getSearchScheduleUseCase: GetSearchScheduleUseCase,
+    private val getMonthScheduleUseCase: GetMonthScheduleUseCase
     ) :ViewModel(){
     private val mutableHeight = MutableLiveData<Int>()
     private val mutableSelectDay = MutableLiveData<LocalDate>()
@@ -50,5 +53,18 @@ class CalenderViewModel @Inject constructor(
     fun updatePosition(date : LocalDate){
         position += ChronoUnit.MONTHS.between(liveSelectDay.value,date).toInt()
         setSelectDay(date)
+    }
+
+    fun getMonthSchedule(startDate: LocalDate , endDate: LocalDate){
+        viewModelScope.launch {
+            getMonthScheduleUseCase(startDate, endDate).collectLatest {
+                when(it){
+                    is Result.Success<*> ->{
+                        val list = it.successOrNull()
+
+                    }
+                }
+            }
+        }
     }
 }

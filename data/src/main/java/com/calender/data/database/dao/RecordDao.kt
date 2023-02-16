@@ -14,8 +14,8 @@ interface RecordDao {
     @Query("select * from record")
     fun getAllRecordInfo(): Flow<List<RecordLocal>>
 
-    @Query("select * from record where startTime >= :date or endTime < :date")
-    fun getTodayRecordInfo(date : Long):Flow<List<RecordLocal>>
+    @Query("select * from record where (startTime >= :startDateTime and endTime < :endDateTime)")//추후 수정 필요??,하루를 넘기는 데이터를 어찌 처리할지
+    fun getTodayRecordInfo(startDateTime: Long ,endDateTime: Long):Flow<List<RecordLocal>>
 
     @Insert
     fun insertRecord(record : RecordLocal)

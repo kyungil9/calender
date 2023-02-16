@@ -44,6 +44,7 @@ class DayAdapter(
                 items = CalenderItem(tempMonth,parentHeight!!,position % 7,size /7)
                 itemDayLayout.setOnClickListener {
                     Toast.makeText(binding.itemDayLayout.context, "${item.date}", Toast.LENGTH_SHORT).show()
+
                     //특정 날짜 데이터를 viewmodel에 삽입 size로 구분
                     onItemClickListener(item.date)
                 }

@@ -19,7 +19,11 @@ class RecordLocalDataSourceImpl @Inject constructor(
     private val recordDao: RecordDao
 ) : RecordLocalDataSource{
     override fun getTodayRecord(date: LocalDateTime): Flow<Result<List<Record>>> = channelFlow {
-        recordDao.getTodayRecordInfo(mapperToDateTimetoLong(date)).collectLatest { record ->
+        val startDateTime = LocalDateTime.of(date.year,date.monthValue,date.dayOfMonth,0,0,0)
+        val endDateTime = LocalDateTime.of(date.year,date.monthValue,date.dayOfMonth,23,59,59)
+        recordDao.getTodayRecordInfo(mapperToDateTimetoLong(startDateTime),
+            mapperToDateTimetoLong(endDateTime)
+        ).collectLatest { record ->
             if(record.isEmpty()){
                 send(Result.Empty)
             }else{

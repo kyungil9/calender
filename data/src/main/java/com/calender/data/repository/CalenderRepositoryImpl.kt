@@ -2,6 +2,7 @@ package com.calender.data.repository
 
 import com.calender.data.mapper.mapperToSchedule
 import com.calender.data.repository.local.interfaces.ScheduleLocalDataSource
+import com.calender.domain.model.Calender
 import com.calender.domain.model.Daily
 import com.calender.domain.model.Result
 import com.calender.domain.model.Schedule
@@ -20,4 +21,7 @@ class CalenderRepositoryImpl @Inject constructor(
         return scheduleLocalData.getSearchSchedule(date)
     }
 
+    override fun getMonthSchedule(startDate: LocalDate, endDate: LocalDate): Flow<Result<Calender>> {
+        return scheduleLocalData.getMonthSchedule(startDate, endDate)
+    }
 }

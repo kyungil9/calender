@@ -11,16 +11,26 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 class Converters {
+//    @TypeConverter
+//    fun localDateToJson(value: LocalDate) : String?{
+//        return Gson().toJson(value.toString())
+//    }
+//    @TypeConverter
+//    fun jsonToLocalDate(value : String) : LocalDate?{
+//        val string = Gson().fromJson(value,String::class.java)
+//        val format = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+//        return LocalDate.parse(string, format)
+//    }
     @TypeConverter
-    fun localDateToJson(value: LocalDate) : String?{
-        return Gson().toJson(value.toString())
+    fun localDateToJson(value: LocalDate?) : Int?{
+        return ((value?.year!! * 10000) + (value?.monthValue!! * 100) + value?.dayOfMonth!!)
     }
+
     @TypeConverter
-    fun jsonToLocalDate(value : String) : LocalDate?{
-        val string = Gson().fromJson(value,String::class.java)
-        val format = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        return LocalDate.parse(string, format)
+    fun jsonToLocalDate(value: Int?) : LocalDate? {
+        return LocalDate.of(value!!/10000,(value!!%10000)/100,value!!%100)
     }
+
 
     @TypeConverter
     fun localTimeToJson(value: LocalTime) : String?{

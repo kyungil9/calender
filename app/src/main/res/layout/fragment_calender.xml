@@ -6,6 +6,7 @@
 <data>
     <variable name="sAdapter" type="com.calender.presentation.view.adapter.ScheduleAdapter"/>
     <variable name="cAdapter" type="com.calender.presentation.view.adapter.CalenderAdapter"/>
+    <variable name="vm" type="com.calender.presentation.data.viewmodels.CalenderViewModel"/>
 </data>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -53,7 +54,7 @@
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent">
                 <TextView
-                        android:text="@string/calender_name"
+                        android:text="@{vm.liveSelectDay.monthValue + `월 `+vm.liveSelectDay.dayOfMonth + `일` }"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/calender_list_name"

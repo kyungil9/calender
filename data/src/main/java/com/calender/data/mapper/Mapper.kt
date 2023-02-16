@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-fun mapperToSchedule(scheduleLocals : List<ScheduleLocal>) : List<Schedule>{
+fun mapperToScheduleList(scheduleLocals : List<ScheduleLocal>) : List<Schedule>{
     return scheduleLocals.toList().map {
         Schedule(
             it.date,
@@ -22,7 +22,20 @@ fun mapperToSchedule(scheduleLocals : List<ScheduleLocal>) : List<Schedule>{
         )
     }
 }
-
+fun mapperToSchedule(it : ScheduleLocal) : Schedule{
+    return Schedule(
+            it.date,
+            it.timeSelect,
+            it.startTime,
+            it.endTime,
+            it.repeat,
+            it.tag,
+            it.alarm,
+            it.color,
+            it.memoryDay,
+            it.detail
+        )
+}
 fun mapperToToDo(todoLocals : List<ToDoCheckLocal>) : List<ToDoCheck>{
     return todoLocals.toList().map {
         ToDoCheck(

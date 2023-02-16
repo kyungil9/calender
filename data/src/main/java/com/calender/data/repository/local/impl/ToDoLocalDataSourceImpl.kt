@@ -20,26 +20,8 @@ class ToDoLocalDataSourceImpl @Inject constructor(
         TODO()
     }
 
-//    override fun getProgramToDo(): List<ToDo> {
-//        val tags = todoDao.getTodoTagListInfo()
-//        val todoList = ArrayList<ToDo>()
-//        for (tag in tags){
-//            val list = todoDao.getProgramTodoInfo(tag)
-//            todoList.add(ToDo(LocalDate.now(),tag, mapperToToDo(list)))
-//        }
-//        return todoList
-//    }
-    override fun getProgramToDo(): Flow<Result<List<ToDo>>> = channelFlow<Result<List<ToDo>>> {
-//        todoDao.getAllTodoInfo().collectLatest {
-//            if(it.isEmpty())
-//                send(Result.Empty)
-//            else {
-//                val todoList = listOf<ToDo>(ToDo(LocalDate.now(), "tag", mapperToToDo(it)))
-//                Log.d("list",todoList.toString())
-//                send(Result.Success(todoList))
-//            }
-//        }
 
+    override fun getProgramToDo(): Flow<Result<List<ToDo>>> = channelFlow<Result<List<ToDo>>> {
         todoDao.getProgramTodoInfo().collectLatest { todo->
             if(todo.isEmpty())
                 send(Result.Empty)
@@ -60,23 +42,6 @@ class ToDoLocalDataSourceImpl @Inject constructor(
                 send(Result.Success(todoList))
             }
         }
-
-//        todoDao.getTodoTagListInfo().collectLatest {
-//            if (it.isEmpty())
-//                send(Result.Empty)
-//            else{
-//                val todoList = ArrayList<ToDo>()
-//                for (tag in it) {
-//                    todoDao.getProgramTodoInfo().collectLatest { todo->
-//                        if(todo.isEmpty())
-//                           send(Result.Empty)
-//                        else
-//                            todoList.add(ToDo(LocalDate.now(), tag, mapperToToDo(todo)))
-//                    }
-//                }
-//                send(Result.Success(todoList))
-//            }
-//        }
     }.catch { e->
         emit(Result.Error(e))
     }
