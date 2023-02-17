@@ -3,6 +3,7 @@ package com.calender.presentation.view.adapter
 import android.graphics.Color
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.domain.model.Daily
+import com.calender.presentation.R
 import com.calender.presentation.databinding.ListCalenderItemBinding
 import com.calender.presentation.listener.RecyclerViewItemClickListener
 import java.time.LocalDate
@@ -44,9 +46,9 @@ class DayAdapter(
                 items = CalenderItem(tempMonth,parentHeight!!,position % 7,size /7)
                 itemDayLayout.setOnClickListener {
                     Toast.makeText(binding.itemDayLayout.context, "${item.date}", Toast.LENGTH_SHORT).show()
-
+                    itemDayLayout.setBackgroundResource(R.drawable.view_edge4)
                     //특정 날짜 데이터를 viewmodel에 삽입 size로 구분
-                    onItemClickListener(item.date)
+                    onItemClickListener(item.date,it)
                 }
             }
 
@@ -66,8 +68,8 @@ class DayAdapter(
         return currentList.size
     }
 
-    override fun onItemClickListener(date: LocalDate) {
-        listener?.onItemClickListener(date)
+    override fun onItemClickListener(date: LocalDate,view : View) {
+        listener?.onItemClickListener(date,view)
     }
     fun setOnItemClickListener(listener : RecyclerViewItemClickListener){
         this.listener=listener

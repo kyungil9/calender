@@ -15,7 +15,6 @@
             android:layout_height="50dp"
             app:viewHeight="@{items.height}"
             app:viewSize="@{items.size}"
-            android:layout_marginTop="5dp"
             android:orientation="vertical"
             android:background="@drawable/viewedge">
         <TextView
@@ -25,6 +24,6 @@
                 android:textSize="12sp"
                 app:textCalenderColor="@{items.color}"
                 android:text="@{``+data.date.dayOfMonth}"
-                android:alpha="@{items.month != data.date.monthValue ? 0.4F : 1F}"/>
+                android:alpha="@{items.month != data.date.monthValue ? 0.4F : 1F}" android:layout_marginTop="5dp"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

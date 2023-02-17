@@ -5,21 +5,14 @@ import android.animation.PropertyValuesHolder
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.core.view.get
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.calender.domain.model.*
 import com.calender.presentation.R
-import com.calender.presentation.utils.Calender
-import com.calender.presentation.view.adapter.ScheduleAdapter
-import com.calender.presentation.view.adapter.ToDoAdapter
+import com.calender.presentation.utils.CalenderUtils
 import com.calender.presentation.base.BaseFragment
 import com.calender.presentation.data.viewmodels.RecordViewModel
 import com.calender.presentation.databinding.FragmentHomeBinding
@@ -29,11 +22,8 @@ import com.calender.presentation.utils.CustomDialog
 import com.calender.presentation.utils.HorizonItemDecorator
 import com.calender.presentation.utils.VerticalItemDecorator
 import com.calender.presentation.view.activity.AddToDo
-import com.calender.presentation.view.activity.MainActivity
 import com.calender.presentation.view.adapter.ToDoCheckAdapter
 import com.google.android.material.chip.Chip
-import java.time.LocalDate
-import java.time.LocalTime
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),CustomDialogListener {
@@ -97,7 +87,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),C
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        setActionBarTitle("${recordViewModel.liveTodayDate.value?.year}.${recordViewModel.liveTodayDate.value?.monthValue}.${recordViewModel.liveTodayDate.value?.dayOfMonth}(${Calender.transDayToKorean(recordViewModel.liveTodayDate.value?.dayOfWeek!!.value)})")
+        setActionBarTitle("${recordViewModel.liveTodayDate.value?.year}.${recordViewModel.liveTodayDate.value?.monthValue}.${recordViewModel.liveTodayDate.value?.dayOfMonth}(${CalenderUtils.transDayToKorean(recordViewModel.liveTodayDate.value?.dayOfWeek!!.value)})")
         setActionBarListener(null)
         inflater.inflate(R.menu.regular_menu,menu)
     }

@@ -5,7 +5,7 @@ import com.calender.domain.model.Schedule
 import com.calender.presentation.view.adapter.DayAdapter
 import java.time.LocalDate
 
-class Calender {
+class CalenderUtils {
     var dailyList = ArrayList<Daily>()
     var currentDate : LocalDate? = null
 

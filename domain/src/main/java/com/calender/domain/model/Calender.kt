@@ -3,6 +3,6 @@ package com.calender.domain.model
 import java.time.LocalDate
 
 data class Calender(
-    val month : LocalDate,
-    val list : ArrayList<Daily>
+    val month : LocalDate = LocalDate.now(),
+    val list : ArrayList<Daily> = arrayListOf()
 )

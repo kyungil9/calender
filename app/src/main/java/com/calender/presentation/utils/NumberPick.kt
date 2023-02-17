@@ -1,6 +1,5 @@
 package com.calender.presentation.utils
 
-import android.util.Log
 import java.time.LocalDate
 
 class NumberPick {
@@ -85,6 +84,6 @@ class NumberPick {
             1,3,5,7,8,10,12 -> dayList = (1..31).toList()
             else -> dayList = (1..30).toList()
         }
-        dayStrList = dayList.map { it.toString()+"일 " + Calender.transDayToKorean(today.withDayOfMonth(it).dayOfWeek.value) }
+        dayStrList = dayList.map { it.toString()+"일 " + CalenderUtils.transDayToKorean(today.withDayOfMonth(it).dayOfWeek.value) }
     }
 }

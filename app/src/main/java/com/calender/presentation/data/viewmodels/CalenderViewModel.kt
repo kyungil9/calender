@@ -2,6 +2,7 @@ package com.calender.presentation.data.viewmodels
 
 import android.app.Application
 import android.util.TypedValue
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,10 +11,8 @@ import com.calender.domain.model.*
 import com.calender.domain.usecase.calender.GetMonthScheduleUseCase
 import com.calender.domain.usecase.calender.GetSearchScheduleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -27,9 +26,11 @@ class CalenderViewModel @Inject constructor(
     ) :ViewModel(){
     private val mutableHeight = MutableLiveData<Int>()
     private val mutableSelectDay = MutableLiveData<LocalDate>()
+    private val mutableMonthSchedule = MutableStateFlow(ArrayList<Daily>())
     var parentHeight = 0
     val liveHeight : LiveData<Int> get() = mutableHeight
     val liveSelectDay : LiveData<LocalDate> get() = mutableSelectDay
+    val liveMonthSchedule = mutableMonthSchedule.asStateFlow()
     val scheduleResult : StateFlow<Result<List<Schedule>>> = getSearchScheduleUseCase(LocalDate.now())
         .stateIn(
             scope = viewModelScope,
@@ -38,9 +39,11 @@ class CalenderViewModel @Inject constructor(
         )
     var mode = 0
     var position = Int.MAX_VALUE / 2
+    var lastView :View? = null
     init {
         mutableSelectDay.value = LocalDate.now()
         mutableHeight.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,50F,application.resources.displayMetrics).toInt()
+        //getMonthSchedule()
     }
 
     fun setViewHeight(height : Int){
@@ -60,9 +63,12 @@ class CalenderViewModel @Inject constructor(
             getMonthScheduleUseCase(startDate, endDate).collectLatest {
                 when(it){
                     is Result.Success<*> ->{
-                        val list = it.successOrNull()
-
+                        val calender = it.successOrNull()
+                        if (calender?.month?.year != liveSelectDay.value?.year || calender?.month?.monthValue != liveSelectDay.value?.monthValue)
+                            cancel()
+                        mutableMonthSchedule.emit(calender?.list!!)
                     }
+                    else -> mutableMonthSchedule.emit(arrayListOf())
                 }
             }
         }

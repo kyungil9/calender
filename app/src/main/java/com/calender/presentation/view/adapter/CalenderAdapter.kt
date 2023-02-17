@@ -1,12 +1,12 @@
 package com.calender.presentation.view.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.presentation.databinding.ListCalenderBinding
-import com.calender.presentation.utils.Calender
+import com.calender.presentation.utils.CalenderUtils
 import com.calender.presentation.listener.RecyclerViewItemClickListener
 import java.time.LocalDate
 
@@ -18,16 +18,16 @@ class CalenderAdapter : RecyclerView.Adapter<CalenderAdapter.MonthView>(), Recyc
     var parentHeight : LiveData<Int>? = null
     inner class MonthView(private val binding: ListCalenderBinding): RecyclerView.ViewHolder(binding.root){
         var dayListAdapter : DayAdapter? = null
-        var calender = Calender()
+        var calenderUtils = CalenderUtils()
         fun bind(position: Int){
-            dayListAdapter = calender.createMonth(position-center)
+            dayListAdapter = calenderUtils.createMonth(position-center)
             binding.apply {
                 itemMonthDayList.apply {
                     adapter = dayListAdapter
                 }
             }
 
-            var dailyList = calender.dailyList
+            var dailyList = calenderUtils.dailyList
             dayListAdapter?.submitList(dailyList) //데이터 삽입
             dayListAdapter?.setOnItemClickListener(listener!!)
             dayListAdapter?.setcParentHeight(parentHeight!!)
@@ -48,8 +48,8 @@ class CalenderAdapter : RecyclerView.Adapter<CalenderAdapter.MonthView>(), Recyc
         return Int.MAX_VALUE
     }
 
-    override fun onItemClickListener(date: LocalDate) {
-        listener?.onItemClickListener(date)
+    override fun onItemClickListener(date: LocalDate,view : View) {
+        listener?.onItemClickListener(date,view)
     }
     fun setOnItemClickListener(listener : RecyclerViewItemClickListener){
         this.listener=listener

@@ -105,12 +105,12 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
             sAdapter = scheduleAdapter
             vm = calenderViewModel
             customCalender.apply {
-                addItemDecoration(HorizonItemDecorator(5))
+                //addItemDecoration(HorizonItemDecorator(5))
                 scrollToPosition(Int.MAX_VALUE / 2)
                 setHasFixedSize(false)
                 viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener{
                     override fun onGlobalLayout() {
-                        calenderViewModel.parentHeight = customCalender.height - calenderDays.root.height -5
+                        calenderViewModel.parentHeight = customCalender.height
                         calenderViewModel.setViewHeight((calenderViewModel.parentHeight * 0.45).toInt())
                         bottomBehavior?.peekHeight = (calenderViewModel.parentHeight * 0.55).toInt()
                         customCalender.viewTreeObserver.removeOnGlobalLayoutListener(this)
@@ -139,8 +139,12 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
         }
 
         calenderAdapter.setOnItemClickListener(object : RecyclerViewItemClickListener {
-            override fun onItemClickListener(date: LocalDate) {//해당 날짜의 데이터 조회해서 입력
+            override fun onItemClickListener(date: LocalDate,view: View) {//해당 날짜의 데이터 조회해서 입력
                 //bottomsheet에 변경되도록 전달
+                calenderViewModel.lastView?.setBackgroundResource(R.drawable.viewedge)
+                calenderViewModel.lastView = view
+                calenderViewModel.setSelectDay(date)
+                //해당 날짜의 데이터 bottom에 보여주기
             }
         })
     }

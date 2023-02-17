@@ -2,19 +2,15 @@ package com.calender.presentation.utils
 
 import android.graphics.Color
 import android.graphics.Paint
-import android.util.Log
-import android.util.TypedValue
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.get
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.domain.model.*
 import com.calender.presentation.R
@@ -23,8 +19,6 @@ import com.calender.presentation.view.adapter.ToDoAdapter
 import com.calender.presentation.view.adapter.ToDoCheckAdapter
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import org.jetbrains.anko.custom.style
-import org.w3c.dom.Text
 import java.time.Duration
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -123,11 +117,11 @@ fun CheckBox.bindToDoChecked(value : Int){
 fun TextView.bindToDoMode(todo : ToDo,today: LocalDate){
     if (today.year == 2000 && today.monthValue == 1) {
         if (todo.title.isEmpty())
-            this.text = "${todo.date.monthValue}.${todo.date.dayOfMonth}(${Calender.transDayToKorean(todo.date.dayOfWeek.value)})"
+            this.text = "${todo.date.monthValue}.${todo.date.dayOfMonth}(${CalenderUtils.transDayToKorean(todo.date.dayOfWeek.value)})"
         else
             this.text = todo.title
     }else{
-        this.text = "${today.monthValue}.${today.dayOfMonth}(${Calender.transDayToKorean(today.dayOfWeek.value)})"
+        this.text = "${today.monthValue}.${today.dayOfMonth}(${CalenderUtils.transDayToKorean(today.dayOfWeek.value)})"
     }
 }
 
