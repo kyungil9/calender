@@ -4,15 +4,15 @@ import com.calender.domain.model.Daily
 import com.calender.domain.model.Schedule
 import com.calender.presentation.view.adapter.DayAdapter
 import java.time.LocalDate
+import java.time.Month
 
 class CalenderUtils {
     var dailyList = ArrayList<Daily>()
-    var currentDate : LocalDate? = null
+
 
     fun createHomeWeek():DayAdapter{
         dailyList.clear()
         var date = LocalDate.now()
-        currentDate = date
         date = date.plusDays((-(date.dayOfWeek.value%7)).toLong())
         val tempMonth = date.monthValue
         val daily = Daily(date,ArrayList<Schedule>())
@@ -25,24 +25,23 @@ class CalenderUtils {
         return DayAdapter(tempMonth,7)
     }
 
-    fun createMonth(position: Int):DayAdapter{
+    fun createMonth(position: Int):CalenderMonth{
         dailyList.clear()
         var date = LocalDate.now()
         date = date.plusMonths((position).toLong())
         date = date.withDayOfMonth(1)
-        currentDate = date
         val tempMonth = date.monthValue
 
         var size = 33
         if (date.monthValue == 2 && !date.isLeapYear && date.dayOfWeek.value == 7){//윤년이 없는 2월일 경우 4개가 나옴
             size = 26
-        } else if (date.dayOfWeek.value == 5){
+        } else if (date.dayOfWeek.value == 5){//1일 날짜로 해당 달에 개수 분별
             when (date.monthValue){
                 1,3,5,7,8,10,12-> size = 40
             }
         }else if (date.dayOfWeek.value == 6 && date.monthValue != 2)
             size = 40
-        date = date.plusDays((-(date.dayOfWeek.value%7)).toLong())
+        date = date.minusDays((date.dayOfWeek.value%7).toLong())
         val daily = Daily(date,ArrayList<Schedule>())
         dailyList.add(daily)
         for(i in 0..size) {
@@ -50,7 +49,7 @@ class CalenderUtils {
             val daily = Daily(date,ArrayList<Schedule>())
             dailyList.add(daily)
         }
-        return DayAdapter(tempMonth,size+2)
+        return CalenderMonth(tempMonth,size+2)
     }
 
     companion object {
@@ -66,6 +65,31 @@ class CalenderUtils {
                 else ->""
             }
         }
+        fun getMonthPeriod(date: LocalDate) : MonthPeriod{
+            var tempDate = date.withDayOfMonth(1)
+            var size = 33
+            if (date.monthValue == 2 && !date.isLeapYear && date.dayOfWeek.value == 7){//윤년이 없는 2월일 경우 4개가 나옴
+                size = 26
+            } else if (date.dayOfWeek.value == 5){//1일 날짜로 해당 달에 개수 분별
+                when (date.monthValue){
+                    1,3,5,7,8,10,12-> size = 40
+                }
+            }else if (date.dayOfWeek.value == 6 && date.monthValue != 2)
+                size = 40
+            val startDate = tempDate.minusDays((tempDate.dayOfWeek.value%7).toLong())
+            val endDate = startDate.plusDays((size+1).toLong())
+            return MonthPeriod(startDate, endDate)
+        }
     }
 
 }
+
+data class CalenderMonth(
+    val month : Int,
+    val size : Int
+)
+
+data class MonthPeriod(
+    val startDate: LocalDate,
+    val endDate: LocalDate
+)

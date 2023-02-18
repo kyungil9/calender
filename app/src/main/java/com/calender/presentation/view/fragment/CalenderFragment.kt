@@ -25,9 +25,13 @@ import com.calender.presentation.utils.HorizonItemDecorator
 import com.calender.presentation.listener.RecyclerViewItemClickListener
 import com.calender.presentation.listener.OnSwipeTouchListener
 import com.calender.presentation.listener.SnapPagerScrollListener
+import com.calender.presentation.utils.CalenderUtils
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
+import java.time.ZoneId
+import java.time.temporal.ChronoUnit
+import java.util.Calendar
 
 @AndroidEntryPoint
 class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment_calender) {
@@ -81,19 +85,20 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
         sanp.attachToRecyclerView(binding.customCalender)//달별로 페이지 넘기기
         val sanpListener = SnapPagerScrollListener(
             sanp,
-            SnapPagerScrollListener.ON_SETTLED,
+            SnapPagerScrollListener.ON_SCROLL,
             true,
             object : SnapPagerScrollListener.OnChangeListener{//나중에 달력으로 이동시 작동되는지 확인
                 override fun onSnapped(position: Int) {
                     if (position < calenderViewModel.position){
                         calenderViewModel.position = position
                         calenderViewModel.setSelectDay(calenderViewModel.liveSelectDay.value?.minusMonths(1)!!)
-                        setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
                     }else if (position > calenderViewModel.position){
                         calenderViewModel.position = position
                         calenderViewModel.setSelectDay(calenderViewModel.liveSelectDay.value?.plusMonths(1)!!)
-                        setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
                     }
+                    setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
+                    val monthPeriod = CalenderUtils.getMonthPeriod(calenderViewModel.liveSelectDay.value!!)
+                    calenderViewModel.getMonthSchedule(monthPeriod.startDate,monthPeriod.endDate)
                 }
             }
         )
@@ -106,7 +111,7 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
             vm = calenderViewModel
             customCalender.apply {
                 //addItemDecoration(HorizonItemDecorator(5))
-                scrollToPosition(Int.MAX_VALUE / 2)
+                scrollToPosition(ChronoUnit.MONTHS.between(LocalDate.of(2000,1,1), LocalDate.now().withDayOfMonth(1)).toInt())
                 setHasFixedSize(false)
                 viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener{
                     override fun onGlobalLayout() {
@@ -145,6 +150,10 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                 calenderViewModel.lastView = view
                 calenderViewModel.setSelectDay(date)
                 //해당 날짜의 데이터 bottom에 보여주기
+                for (item in calenderViewModel.liveMonthSchedule.value){//해당 날짜의 데이터가 들어있는지 확인
+                    if (item.date == calenderViewModel.liveSelectDay.value)
+                        scheduleAdapter.setItems(item.list)
+                }
             }
         })
     }
@@ -158,10 +167,14 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                     calenderViewModel.updatePosition(LocalDate.of(year, month+1, dayOfMonth))
                     setActionBarTitle("${calenderViewModel.liveSelectDay.value?.year}.${calenderViewModel.liveSelectDay.value?.monthValue} v")
                     binding.customCalender.scrollToPosition(calenderViewModel.position)
+                    calenderViewModel.lastView?.setBackgroundResource(R.drawable.viewedge)
+                    //calenderViewModel.lastView = //해당 뷰의 주소를 찾아서 클릭상태로 만들어 주기
                 },calenderViewModel.liveSelectDay.value?.year!!,
                 calenderViewModel.liveSelectDay.value?.monthValue!!-1,
                 calenderViewModel.liveSelectDay.value?.dayOfMonth!!
             )
+            dateDialog.datePicker.minDate = LocalDate.of(2000,1,1).atTime(0,0).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+            dateDialog.datePicker.maxDate = LocalDate.of(2049,12,31).atTime(0,0).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
             dateDialog.show()
         }
         inflater.inflate(R.menu.calender_menu,menu)

@@ -38,7 +38,7 @@ class CalenderViewModel @Inject constructor(
             initialValue = Result.Loading
         )
     var mode = 0
-    var position = Int.MAX_VALUE / 2
+    var position = ChronoUnit.MONTHS.between(LocalDate.of(2000,1,1), LocalDate.now().withDayOfMonth(1)).toInt()
     var lastView :View? = null
     init {
         mutableSelectDay.value = LocalDate.now()
