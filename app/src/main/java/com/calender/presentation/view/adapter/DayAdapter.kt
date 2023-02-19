@@ -36,7 +36,7 @@ class DayAdapter(
                     onItemClickListener(item.date,it)
                 }
             }
-
+            //날짜에 맞는 데이터를 찾아서 data에 넣는 형식으로
 
         }
     }

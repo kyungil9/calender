@@ -122,6 +122,7 @@ class AddToDo : BaseActivity<ActivityAddToDoBinding>(R.layout.activity_add_to_do
                     viewModel.loadEndData()
                 }
             }
+
             todoRepeatView.selectChipGroup.isSelectionRequired = false
             todoRepeatView.selectChipGroup.setOnCheckedStateChangeListener { group, _ ->
                 val id = group.checkedChipId

@@ -1,5 +1,6 @@
 package com.calender.presentation.utils
 
+import com.calender.domain.model.Calender
 import com.calender.domain.model.Daily
 import com.calender.domain.model.Schedule
 import com.calender.presentation.view.adapter.DayAdapter
@@ -8,7 +9,7 @@ import java.time.Month
 
 class CalenderUtils {
     var dailyList = ArrayList<Daily>()
-
+    var calender : Calender? = null
 
     fun createHomeWeek():DayAdapter{
         dailyList.clear()
@@ -42,13 +43,24 @@ class CalenderUtils {
         }else if (date.dayOfWeek.value == 6 && date.monthValue != 2)
             size = 40
         date = date.minusDays((date.dayOfWeek.value%7).toLong())
-        val daily = Daily(date,ArrayList<Schedule>())
+        var daily = Daily(date, ArrayList<Schedule>())
+        for (day in calender?.list!!){
+            if (day.date == date){
+                daily = Daily(date,day.list)
+            }
+        }
         dailyList.add(daily)
-        for(i in 0..size) {
+        for (i in 0..size) {
             date = date.plusDays(1)
-            val daily = Daily(date,ArrayList<Schedule>())
+            daily = Daily(date, ArrayList<Schedule>())
+            for (day in calender?.list!!){
+                if (day.date == date){
+                    daily = Daily(date,day.list)
+                }
+            }
             dailyList.add(daily)
         }
+
         return CalenderMonth(tempMonth,size+2)
     }
 

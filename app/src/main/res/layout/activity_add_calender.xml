@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".view.activity.AddCalender">
+    <data>
+        <import type="com.calender.domain.model.ViewMode"/>
+        <variable name="vm" type="com.calender.presentation.data.viewmodels.CalenderAddViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <include
+                layout="@layout/toolbar"
+                android:id="@+id/calender_toolbar" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBottom_toTopOf="@+id/addtoolLine"/>
+        <androidx.constraintlayout.widget.Guideline
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/addtoolLine" app:layout_constraintGuide_percent="0.08"/>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/addtoolLine" app:layout_constraintVertical_bias="0.52">
+
+            <EditText
+                    android:text="@={vm.inputCalender}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editToDoIt" android:minHeight="48dp" android:hint="일정을 입력하시오"/>
+            <include
+                    android:id="@+id/calender_repeat_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/view_chip_item"
+                    app:mode="@{ViewMode.REPEAT}"
+                    app:chipCheckMode="@{false}"
+                    app:tags="@{vm.repeatTags}"/>
+            <include
+                    android:id="@+id/todo_tags_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/view_item_info"
+                    app:mode="@{ViewMode.TAG}"
+                    app:command="@{`태그 : ` + vm.liveTag}"/>
+            <include
+                    android:id="@+id/calender_alarm_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/view_item_info"
+                    app:mode="@{ViewMode.ALARM}"
+                    app:command="@{`알림`}"/>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

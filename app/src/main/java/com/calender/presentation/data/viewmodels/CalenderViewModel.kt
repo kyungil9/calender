@@ -26,7 +26,7 @@ class CalenderViewModel @Inject constructor(
     ) :ViewModel(){
     private val mutableHeight = MutableLiveData<Int>()
     private val mutableSelectDay = MutableLiveData<LocalDate>()
-    private val mutableMonthSchedule = MutableStateFlow(ArrayList<Daily>())
+    private val mutableMonthSchedule = MutableStateFlow(Calender())
     var parentHeight = 0
     val liveHeight : LiveData<Int> get() = mutableHeight
     val liveSelectDay : LiveData<LocalDate> get() = mutableSelectDay
@@ -66,9 +66,9 @@ class CalenderViewModel @Inject constructor(
                         val calender = it.successOrNull()
                         if (calender?.month?.year != liveSelectDay.value?.year || calender?.month?.monthValue != liveSelectDay.value?.monthValue)
                             cancel()
-                        mutableMonthSchedule.emit(calender?.list!!)
+                        mutableMonthSchedule.emit(calender!!)
                     }
-                    else -> mutableMonthSchedule.emit(arrayListOf())
+                    else -> mutableMonthSchedule.emit(Calender())
                 }
             }
         }

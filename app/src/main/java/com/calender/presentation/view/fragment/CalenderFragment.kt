@@ -2,6 +2,7 @@ package com.calender.presentation.view.fragment
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
@@ -26,6 +27,7 @@ import com.calender.presentation.listener.RecyclerViewItemClickListener
 import com.calender.presentation.listener.OnSwipeTouchListener
 import com.calender.presentation.listener.SnapPagerScrollListener
 import com.calender.presentation.utils.CalenderUtils
+import com.calender.presentation.view.activity.AddCalender
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
@@ -140,7 +142,11 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
             scheduleList.apply {
                 setHasFixedSize(true)
             }
-
+            addCalender.setOnClickListener {
+                val intent = Intent(activity,AddCalender::class.java)
+                intent.putExtra("selectDay",calenderViewModel.liveSelectDay.value)
+                startActivity(intent)
+            }
         }
 
         calenderAdapter.setOnItemClickListener(object : RecyclerViewItemClickListener {
@@ -150,7 +156,7 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                 calenderViewModel.lastView = view
                 calenderViewModel.setSelectDay(date)
                 //해당 날짜의 데이터 bottom에 보여주기
-                for (item in calenderViewModel.liveMonthSchedule.value){//해당 날짜의 데이터가 들어있는지 확인
+                for (item in calenderViewModel.liveMonthSchedule.value.list){//해당 날짜의 데이터가 들어있는지 확인
                     if (item.date == calenderViewModel.liveSelectDay.value)
                         scheduleAdapter.setItems(item.list)
                 }
@@ -169,6 +175,8 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                     binding.customCalender.scrollToPosition(calenderViewModel.position)
                     calenderViewModel.lastView?.setBackgroundResource(R.drawable.viewedge)
                     //calenderViewModel.lastView = //해당 뷰의 주소를 찾아서 클릭상태로 만들어 주기
+                    val monthPeriod = CalenderUtils.getMonthPeriod(calenderViewModel.liveSelectDay.value!!)
+                    calenderViewModel.getMonthSchedule(monthPeriod.startDate,monthPeriod.endDate)
                 },calenderViewModel.liveSelectDay.value?.year!!,
                 calenderViewModel.liveSelectDay.value?.monthValue!!-1,
                 calenderViewModel.liveSelectDay.value?.dayOfMonth!!

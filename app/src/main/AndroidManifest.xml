@@ -14,6 +14,10 @@
             android:theme="@style/Theme.Calender"
             android:usesCleartextTraffic="true">
         <activity
+                android:name=".view.activity.AddCalender"
+                android:exported="false"
+                android:screenOrientation="portrait"/>
+        <activity
                 android:name=".view.activity.AddTag"
                 android:exported="false"
                 android:parentActivityName=".view.activity.AddToDo"

@@ -14,6 +14,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.domain.model.*
 import com.calender.presentation.R
+import com.calender.presentation.view.adapter.CalenderAdapter
 import com.calender.presentation.view.adapter.TagAdapter
 import com.calender.presentation.view.adapter.ToDoAdapter
 import com.calender.presentation.view.adapter.ToDoCheckAdapter
@@ -93,6 +94,13 @@ fun RecyclerView.bindTagItems(result : Result<*>){
     if (adapter is TagAdapter && result is Result.Success<*>){
         adapter.submitList(result.data as List<String>)
     }
+}
+
+@BindingAdapter("calenderItems")
+fun RecyclerView.bindCalenderItems(data : Calender){
+    val adapter = this.adapter
+    if (adapter is CalenderAdapter)
+        adapter.submitList(listOf(data))
 }
 
 @BindingAdapter(value = ["toDoCheckItems","toDoHomeItems"], requireAll = true)

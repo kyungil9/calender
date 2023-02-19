@@ -27,6 +27,7 @@ class CalenderAdapter : ListAdapter<Calender,CalenderAdapter.MonthView>(diffUtil
         var dayListAdapter : DayAdapter? = null
         var calenderUtils = CalenderUtils()
         fun bind(position: Int){
+            calenderUtils.calender = currentList[0]
             val monthValue = calenderUtils.createMonth(position-center)
             dayListAdapter = DayAdapter(monthValue.month,monthValue.size)
             binding.apply {
