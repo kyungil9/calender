@@ -231,7 +231,7 @@ fun LinearLayoutCompat.bindViewHeight(height : Int,size : Int){
 fun TextView.bindTextCalenderColor(color : Int){
     this.setTextColor(
         when(color){
-            0 -> Color.RED
+            0,7 -> Color.RED
             6 -> Color.BLUE
             else -> Color.BLACK
         }

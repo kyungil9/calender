@@ -10,7 +10,9 @@ import androidx.lifecycle.viewModelScope
 import com.calender.domain.model.*
 import com.calender.domain.usecase.calender.GetMonthScheduleUseCase
 import com.calender.domain.usecase.calender.GetSearchScheduleUseCase
+import com.calender.presentation.utils.CalenderUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -40,16 +42,19 @@ class CalenderViewModel @Inject constructor(
     var mode = 0
     var position = ChronoUnit.MONTHS.between(LocalDate.of(2000,1,1), LocalDate.now().withDayOfMonth(1)).toInt()
     var lastView :View? = null
+    var pastDay = LocalDate.now()
     init {
         mutableSelectDay.value = LocalDate.now()
         mutableHeight.value = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,50F,application.resources.displayMetrics).toInt()
-        //getMonthSchedule()
+        val tempDate = CalenderUtils.getMonthPeriod(LocalDate.now())
+        getMonthSchedule(tempDate.startDate,tempDate.endDate)
     }
 
     fun setViewHeight(height : Int){
         mutableHeight.value = height
     }
     fun setSelectDay(date: LocalDate){
+        pastDay = liveSelectDay.value
         mutableSelectDay.value = date
     }
 
@@ -59,13 +64,13 @@ class CalenderViewModel @Inject constructor(
     }
 
     fun getMonthSchedule(startDate: LocalDate , endDate: LocalDate){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getMonthScheduleUseCase(startDate, endDate).collectLatest {
+                if (pastDay.year != liveSelectDay.value?.year && pastDay.monthValue != liveSelectDay.value?.monthValue)
+                    cancel()
                 when(it){
                     is Result.Success<*> ->{
                         val calender = it.successOrNull()
-                        if (calender?.month?.year != liveSelectDay.value?.year || calender?.month?.monthValue != liveSelectDay.value?.monthValue)
-                            cancel()
                         mutableMonthSchedule.emit(calender!!)
                     }
                     else -> mutableMonthSchedule.emit(Calender())

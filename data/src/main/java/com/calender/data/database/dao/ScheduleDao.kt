@@ -3,7 +3,9 @@ package com.calender.data.database.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.calender.data.model.local.ScheduleLocal
+import com.calender.domain.model.Schedule
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
@@ -18,5 +20,6 @@ interface ScheduleDao {
     @Insert
     fun insertSchedule(schedule : ScheduleLocal)
 
-
+    @Update
+    fun updateSchedule(schedule: ScheduleLocal)
 }

@@ -36,6 +36,13 @@
                     android:ems="10"
                     android:id="@+id/editToDoIt" android:minHeight="48dp" android:hint="일정을 입력하시오"/>
             <include
+                    android:id="@+id/calender_time_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/view_item_info"
+                    app:mode="@{ViewMode.DATE}"
+                    app:command="@{`종일`}"/>
+            <include
                     android:id="@+id/calender_repeat_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -44,7 +51,7 @@
                     app:chipCheckMode="@{false}"
                     app:tags="@{vm.repeatTags}"/>
             <include
-                    android:id="@+id/todo_tags_view"
+                    android:id="@+id/calender_tags_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     layout="@layout/view_item_info"

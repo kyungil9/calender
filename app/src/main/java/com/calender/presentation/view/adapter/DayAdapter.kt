@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,21 +24,28 @@ class DayAdapter(
 ): ListAdapter<Daily,DayAdapter.DayView>(diffUtil), RecyclerViewItemClickListener {
     private var listener: RecyclerViewItemClickListener?= null
     var parentHeight : LiveData<Int>? = null
+    var selectDay : LiveData<LocalDate>? = null
     inner class DayView(private val binding: ListCalenderItemBinding): RecyclerView.ViewHolder(binding.root){
 
         fun bind(item : Daily, position: Int){
             binding.apply {
                 data = item
-                items = CalenderItem(tempMonth,parentHeight!!,position % 7,size /7)
+                items = CalenderItem(tempMonth,parentHeight!!,position % 7,size /7,selectDay!!)
                 itemDayLayout.setOnClickListener {
                     Toast.makeText(binding.itemDayLayout.context, "${item.date}", Toast.LENGTH_SHORT).show()
-                    itemDayLayout.setBackgroundResource(R.drawable.view_edge4)
+                    //itemDayLayout.setBackgroundResource(R.drawable.view_edge4)
                     //특정 날짜 데이터를 viewmodel에 삽입 size로 구분
                     onItemClickListener(item.date,it)
                 }
             }
             //날짜에 맞는 데이터를 찾아서 data에 넣는 형식으로
-
+            selectDay?.observeForever{
+                if (item.date == it){
+                    binding.itemDayLayout.setBackgroundResource(R.drawable.view_edge4)
+                }else{
+                    binding.itemDayLayout.setBackgroundResource(R.drawable.viewedge)
+                }
+            }
         }
     }
 
@@ -53,9 +61,6 @@ class DayAdapter(
     }
     fun setOnItemClickListener(listener : RecyclerViewItemClickListener){
         this.listener=listener
-    }
-    fun setcParentHeight(height : LiveData<Int>){
-        parentHeight = height
     }
     companion object {
         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.
@@ -75,5 +80,6 @@ data class CalenderItem(
     val month : Int,
     val height : LiveData<Int>,
     val color : Int,
-    val size : Int
+    val size : Int,
+    val selectDay : LiveData<LocalDate>
 )

@@ -66,6 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/calender_list_name"
+                        app:textCalenderColor="@{vm.liveSelectDay.dayOfWeek.value}"
                         android:textSize="15sp"
                         android:padding="3dp"
                         android:textColor="@color/black"

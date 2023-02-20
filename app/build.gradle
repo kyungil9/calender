@@ -101,4 +101,7 @@ dependencies {
 
     // gson
     implementation 'com.google.code.gson:gson:2.9.0'
+
+    //timepicker
+    implementation 'com.borax12.materialdaterangepicker:library:2.0'
 }

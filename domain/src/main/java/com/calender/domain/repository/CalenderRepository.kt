@@ -10,6 +10,7 @@ import java.time.LocalDate
 
 interface CalenderRepository {
     fun getSearchSchedule(date : LocalDate): Flow<Result<List<Schedule>>>
-
     fun getMonthSchedule(startDate : LocalDate,endDate: LocalDate) : Flow<Result<Calender>>
+    fun insertSchedule(schedule: Schedule)
+    fun updateSchedule(schedule: Schedule)
 }

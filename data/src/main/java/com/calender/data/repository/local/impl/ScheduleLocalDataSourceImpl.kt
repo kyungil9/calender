@@ -3,6 +3,7 @@ package com.calender.data.repository.local.impl
 import com.calender.data.database.dao.ScheduleDao
 import com.calender.data.mapper.mapperToSchedule
 import com.calender.data.mapper.mapperToScheduleList
+import com.calender.data.model.local.ScheduleLocal
 import com.calender.data.repository.local.interfaces.ScheduleLocalDataSource
 import com.calender.domain.model.Calender
 import com.calender.domain.model.Daily
@@ -49,5 +50,13 @@ class ScheduleLocalDataSourceImpl @Inject constructor(
         }
     }.catch { e->
         emit(Result.Error(e))
+    }
+
+    override fun insertSchedule(scheduleLocal: ScheduleLocal) {
+        scheduleDao.insertSchedule(scheduleLocal)
+    }
+
+    override fun updateSchedule(scheduleLocal: ScheduleLocal) {
+        scheduleDao.updateSchedule(scheduleLocal)
     }
 }

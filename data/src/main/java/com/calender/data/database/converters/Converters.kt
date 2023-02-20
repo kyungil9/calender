@@ -39,7 +39,9 @@ class Converters {
 
     @TypeConverter
     fun jsonToLocalTime(value: String) : LocalTime?{
-        return Gson().fromJson(value,LocalTime::class.java)
+        val string = Gson().fromJson(value,String::class.java)
+        val format = DateTimeFormatter.ofPattern("HH:mm:ss")
+        return LocalTime.parse(string,format)
     }
 
     @TypeConverter

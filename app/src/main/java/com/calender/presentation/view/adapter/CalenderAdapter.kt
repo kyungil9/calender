@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,7 @@ class CalenderAdapter : ListAdapter<Calender,CalenderAdapter.MonthView>(diffUtil
     val center = ChronoUnit.MONTHS.between(minDate, LocalDate.now().withDayOfMonth(1)).toInt()
     private var listener: RecyclerViewItemClickListener?= null
     var parentHeight : LiveData<Int>? = null
+    var selectDay : LiveData<LocalDate>? = null
     inner class MonthView(private val binding: ListCalenderBinding): RecyclerView.ViewHolder(binding.root){
         var dayListAdapter : DayAdapter? = null
         var calenderUtils = CalenderUtils()
@@ -36,9 +38,12 @@ class CalenderAdapter : ListAdapter<Calender,CalenderAdapter.MonthView>(diffUtil
                 }
             }
             var dailyList = calenderUtils.dailyList
-            dayListAdapter?.submitList(dailyList) //데이터 삽입
-            dayListAdapter?.setOnItemClickListener(listener!!)
-            dayListAdapter?.setcParentHeight(parentHeight!!)
+            dayListAdapter?.apply {
+                submitList(dailyList)
+                setOnItemClickListener(listener!!)
+                selectDay = this@CalenderAdapter.selectDay!!
+                parentHeight = this@CalenderAdapter.parentHeight!!
+            }
         }
 
 
@@ -59,9 +64,6 @@ class CalenderAdapter : ListAdapter<Calender,CalenderAdapter.MonthView>(diffUtil
     }
     fun setOnItemClickListener(listener : RecyclerViewItemClickListener){
         this.listener=listener
-    }
-    fun setcParentHeight(height : LiveData<Int>){
-        parentHeight = height
     }
 
     companion object {
