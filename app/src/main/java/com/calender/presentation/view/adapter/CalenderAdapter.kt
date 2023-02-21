@@ -13,6 +13,8 @@ import com.calender.domain.model.Daily
 import com.calender.presentation.databinding.ListCalenderBinding
 import com.calender.presentation.utils.CalenderUtils
 import com.calender.presentation.listener.RecyclerViewItemClickListener
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import kotlin.math.max
@@ -25,6 +27,7 @@ class CalenderAdapter : ListAdapter<Calender,CalenderAdapter.MonthView>(diffUtil
     private var listener: RecyclerViewItemClickListener?= null
     var parentHeight : LiveData<Int>? = null
     var selectDay : LiveData<LocalDate>? = null
+    var calenderData : LiveData<Calender>? = null
     inner class MonthView(private val binding: ListCalenderBinding): RecyclerView.ViewHolder(binding.root){
         var dayListAdapter : DayAdapter? = null
         var calenderUtils = CalenderUtils()
@@ -44,9 +47,13 @@ class CalenderAdapter : ListAdapter<Calender,CalenderAdapter.MonthView>(diffUtil
                 selectDay = this@CalenderAdapter.selectDay!!
                 parentHeight = this@CalenderAdapter.parentHeight!!
             }
+            calenderData?.observeForever {
+                if (calenderData?.value?.month?.monthValue == monthValue.month) {
+                    val dailyList = CalenderUtils.transCalender(calenderData?.value!!)
+                    dayListAdapter?.submitList(dailyList)
+                }
+            }
         }
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthView {

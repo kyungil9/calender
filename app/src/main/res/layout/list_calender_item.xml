@@ -3,19 +3,15 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-
+        <import type="android.view.View"/>
         <variable name="data" type="com.calender.domain.model.Daily"/>
         <variable name="items" type="com.calender.presentation.view.adapter.CalenderItem"/>
 
     </data>
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/item_day_layout"
             android:layout_width="match_parent"
-            android:gravity="center_horizontal"
             android:layout_height="50dp"
-            app:viewHeight="@{items.height}"
-            app:viewSize="@{items.size}"
-            android:orientation="vertical"
             android:background="@drawable/viewedge">
         <TextView
                 android:id="@+id/item_day_text"
@@ -24,6 +20,57 @@
                 android:textSize="12sp"
                 app:textCalenderColor="@{items.color}"
                 android:text="@{``+data.date.dayOfMonth}"
-                android:alpha="@{items.month != data.date.monthValue ? 0.4F : 1F}" android:layout_marginTop="5dp"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+                android:alpha="@{items.month != data.date.monthValue ? 0.4F : 1F}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="4dp"/>
+        <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp" app:srcCompat="@drawable/ic_baseline_circle_24"
+                android:id="@+id/scheduleOne"
+                app:layout_constraintTop_toBottomOf="@+id/item_day_text" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="1.0" app:layout_constraintEnd_toStartOf="@+id/scheduleTwo"
+                android:visibility="gone"/>
+        <ImageView
+                android:layout_width="10dp"
+                android:layout_height="15dp" app:srcCompat="@drawable/ic_baseline_circle_24"
+                android:id="@+id/scheduleTwo"
+                app:layout_constraintTop_toBottomOf="@+id/item_day_text" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"/>
+        <ImageView
+                android:layout_width="10dp"
+                android:layout_height="15dp" app:srcCompat="@drawable/ic_baseline_circle_24"
+                android:id="@+id/scheduleThree"
+                app:layout_constraintTop_toBottomOf="@+id/item_day_text"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/scheduleTwo" android:visibility="gone"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="18dp" android:id="@+id/ScheduleDetailOne"
+                android:text="@{data.list[0].detail ?? ``}"
+                app:layout_constraintTop_toBottomOf="@+id/scheduleTwo" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="4dp"
+                android:background="#2196F3" android:paddingStart="8dp" android:visibility="gone"
+                android:textColor="#FFFFFF"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="18dp" android:id="@+id/ScheduleDetailTwo"
+                android:text="@{data.list[1].detail ?? ``}"
+                app:layout_constraintTop_toBottomOf="@+id/ScheduleDetailOne" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="#FFFFFF"
+                android:background="#2196F3" android:paddingStart="8dp" app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="8dp" android:visibility="gone"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="18dp" android:id="@+id/ScheduleDetailThree"
+                android:text="@{data.list[2].detail ?? ``}"
+                app:layout_constraintTop_toBottomOf="@+id/ScheduleDetailTwo" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="#FFFFFF"
+                android:background="#2196F3" android:paddingStart="8dp" app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginTop="8dp" android:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

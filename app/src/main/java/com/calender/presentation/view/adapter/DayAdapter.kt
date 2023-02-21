@@ -46,6 +46,34 @@ class DayAdapter(
                     binding.itemDayLayout.setBackgroundResource(R.drawable.viewedge)
                 }
             }
+            parentHeight?.observeForever {
+                val params = binding.itemDayLayout.layoutParams
+                params.height = parentHeight?.value!! / (size/7)
+                if (params.height <= 200){
+                    binding.ScheduleDetailOne.visibility = View.GONE
+                    binding.ScheduleDetailTwo.visibility = View.GONE
+                    binding.ScheduleDetailThree.visibility = View.GONE
+                    item.list.forEachIndexed { index, _ ->
+                        when (index) {
+                            0 -> binding.scheduleOne.visibility = View.VISIBLE
+                            1 -> binding.scheduleTwo.visibility = View.VISIBLE
+                            2 -> binding.scheduleThree.visibility = View.VISIBLE
+                        }
+                    }
+                }else{
+                    binding.scheduleOne.visibility = View.GONE
+                    binding.scheduleTwo.visibility = View.GONE
+                    binding.scheduleThree.visibility = View.GONE
+                    item.list.forEachIndexed { index, _ ->
+                        when (index) {
+                            0 -> binding.ScheduleDetailOne.visibility = View.VISIBLE
+                            1 -> binding.ScheduleDetailTwo.visibility = View.VISIBLE
+                            2 -> binding.ScheduleDetailThree.visibility = View.VISIBLE
+                        }
+                    }
+                }
+                binding.itemDayLayout.layoutParams = params
+            }
         }
     }
 
@@ -70,7 +98,7 @@ class DayAdapter(
             }
 
             override fun areContentsTheSame(oldItem: Daily, newItem: Daily): Boolean {
-                return oldItem == newItem
+                return oldItem.date == newItem.date
             }
         }
     }

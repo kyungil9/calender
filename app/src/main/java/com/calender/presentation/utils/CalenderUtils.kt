@@ -1,11 +1,13 @@
 package com.calender.presentation.utils
 
+import androidx.lifecycle.createSavedStateHandle
 import com.calender.domain.model.Calender
 import com.calender.domain.model.Daily
 import com.calender.domain.model.Schedule
 import com.calender.presentation.view.adapter.DayAdapter
 import java.time.LocalDate
 import java.time.Month
+import java.time.temporal.ChronoUnit
 
 class CalenderUtils {
     var dailyList = ArrayList<Daily>()
@@ -90,7 +92,34 @@ class CalenderUtils {
                 size = 40
             val startDate = tempDate.minusDays((tempDate.dayOfWeek.value%7).toLong())
             val endDate = startDate.plusDays((size+1).toLong())
-            return MonthPeriod(startDate, endDate)
+            return MonthPeriod(startDate, endDate,size+2)
+        }
+        fun transCalender(data : Calender) : ArrayList<Daily>{
+            val monthPeriod = getMonthPeriod(data.month)
+            val dailyList = ArrayList<Daily>()
+            var startDate = monthPeriod.startDate
+            if (data.list.isNotEmpty()) {
+                var k = 0
+                val limit = data.list.size
+                for (i in 0 until monthPeriod.size) {
+                    if (startDate == data.list[k].date) {
+                        dailyList.add(data.list[k])
+                        k++
+                        if (k == limit){
+                            startDate = startDate.plusDays(1)
+                            for (j in 0 until ChronoUnit.DAYS.between(startDate,monthPeriod.endDate).toInt()){
+                                dailyList.add(Daily(startDate, arrayListOf()))
+                                startDate = startDate.plusDays(1)
+                            }
+                            break
+                        }
+                    }
+                    else
+                        dailyList.add(Daily(startDate, arrayListOf()))
+                    startDate = startDate.plusDays(1)
+                }
+            }
+            return dailyList
         }
     }
 
@@ -103,5 +132,6 @@ data class CalenderMonth(
 
 data class MonthPeriod(
     val startDate: LocalDate,
-    val endDate: LocalDate
+    val endDate: LocalDate,
+    val size : Int
 )

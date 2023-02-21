@@ -12,6 +12,7 @@ import android.widget.DatePicker
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -65,12 +66,12 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
                             //절반 상태
                             binding.customCalender.alpha = 1.0F
                             calenderViewModel.setViewHeight((calenderViewModel.parentHeight * 0.45).toInt())
-                            calenderAdapter.notifyDataSetChanged()
+                            //calenderAdapter.notifyDataSetChanged()
                         }
                         BottomSheetBehavior.STATE_HIDDEN -> {
                             //숨김상태
                             calenderViewModel.setViewHeight(calenderViewModel.parentHeight)
-                            calenderAdapter.notifyDataSetChanged()
+                            //calenderAdapter.notifyDataSetChanged()
                         }
                     }
                 }
@@ -90,6 +91,7 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
         }
         calenderAdapter.parentHeight = calenderViewModel.liveHeight
         calenderAdapter.selectDay = calenderViewModel.liveSelectDay
+        calenderAdapter.calenderData = calenderViewModel.liveMonthSchedule.asLiveData()
         val sanp = PagerSnapHelper()
         sanp.attachToRecyclerView(binding.customCalender)//달별로 페이지 넘기기
         val sanpListener = SnapPagerScrollListener(
