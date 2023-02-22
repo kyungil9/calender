@@ -2,11 +2,11 @@
 <layout xmlns:tools="http://schemas.android.com/tools"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".view.fragment.CalenderFragment">
+        tools:context=".view.calendar.CalenderFragment">
 <data>
-    <variable name="sAdapter" type="com.calender.presentation.view.adapter.ScheduleAdapter"/>
-    <variable name="cAdapter" type="com.calender.presentation.view.adapter.CalenderAdapter"/>
-    <variable name="vm" type="com.calender.presentation.data.viewmodels.CalenderViewModel"/>
+    <variable name="sAdapter" type="com.calender.presentation.view.calendar.ScheduleAdapter"/>
+    <variable name="cAdapter" type="com.calender.presentation.view.calendar.CalenderAdapter"/>
+    <variable name="vm" type="com.calender.presentation.view.calendar.CalenderViewModel"/>
 </data>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"

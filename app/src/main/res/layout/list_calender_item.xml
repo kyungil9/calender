@@ -5,7 +5,7 @@
     <data>
         <import type="android.view.View"/>
         <variable name="data" type="com.calender.domain.model.Daily"/>
-        <variable name="items" type="com.calender.presentation.view.adapter.CalenderItem"/>
+        <variable name="items" type="com.calender.presentation.view.calendar.CalenderItem"/>
 
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout

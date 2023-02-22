@@ -3,10 +3,10 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".view.activity.AddTag">
+        tools:context=".view.addtodo.AddTag">
     <data>
-        <variable name="vm" type="com.calender.presentation.data.viewmodels.TagViewModel"/>
-        <variable name="adapter" type="com.calender.presentation.view.adapter.TagAdapter"/>
+        <variable name="vm" type="com.calender.presentation.view.addtodo.TagViewModel"/>
+        <variable name="adapter" type="com.calender.presentation.view.addtodo.TagAdapter"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

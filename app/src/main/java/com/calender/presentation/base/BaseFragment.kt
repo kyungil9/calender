@@ -2,16 +2,13 @@ package com.calender.presentation.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import com.calender.presentation.view.activity.MainActivity
-import java.time.LocalDate
+import com.calender.presentation.view.main.MainActivity
 
 abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutRes: Int) : Fragment() {
     private var _binding : T ?= null

@@ -8,7 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.findNavController
 import com.calender.presentation.R
-import com.calender.presentation.view.activity.AddToDo
+import com.calender.presentation.view.addtodo.AddToDo
 
 abstract class BaseToDoFragment<T : ViewDataBinding>(@LayoutRes private val layoutRes: Int) : BaseFragment<T>(layoutRes) {
     var actionId = 0

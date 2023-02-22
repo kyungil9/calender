@@ -2,12 +2,12 @@
 <layout xmlns:tools="http://schemas.android.com/tools"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".view.fragment.ToDoFragment">
+        tools:context=".view.todo.ToDoFragment">
 
     <data>
-        <variable name="vmMode" type="com.calender.presentation.data.viewmodels.ToDoModeViewModel"/>
-        <variable name="vm" type="com.calender.presentation.data.viewmodels.ToDoViewModel"/>
-        <variable name="adapter" type="com.calender.presentation.view.adapter.ToDoAdapter"/>
+        <variable name="vmMode" type="com.calender.presentation.view.todo.ToDoModeViewModel"/>
+        <variable name="vm" type="com.calender.presentation.view.todo.ToDoViewModel"/>
+        <variable name="adapter" type="com.calender.presentation.view.todo.ToDoAdapter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

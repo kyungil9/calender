@@ -14,24 +14,24 @@
             android:theme="@style/Theme.Calender"
             android:usesCleartextTraffic="true">
         <activity
-                android:name=".view.activity.AddCalender"
+                android:name=".view.addcalendar.AddCalender"
                 android:exported="false"
                 android:screenOrientation="portrait"/>
         <activity
-                android:name=".view.activity.AddTag"
+                android:name=".view.addtodo.AddTag"
                 android:exported="false"
-                android:parentActivityName=".view.activity.AddToDo"
+                android:parentActivityName=".view.addtodo.AddToDo"
                 android:screenOrientation="portrait"/>
         <activity
-                android:name=".view.activity.AddToDo"
+                android:name=".view.addtodo.AddToDo"
                 android:exported="false"
                 android:screenOrientation="portrait"/>
         <activity
-                android:name=".view.activity.MainActivity"
+                android:name=".view.main.MainActivity"
                 android:exported="true"
                 android:screenOrientation="portrait"/>
         <activity
-                android:name=".view.activity.MainLogin"
+                android:name=".view.main.MainLogin"
                 android:exported="true"
                 android:screenOrientation="portrait">
             <intent-filter>

@@ -4,7 +4,7 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/main_nav_graph" app:startDestination="@id/HomeFragment">
 
-    <keep_state_fragment android:id="@+id/HomeFragment" android:name="com.calender.presentation.view.fragment.HomeFragment"
+    <keep_state_fragment android:id="@+id/HomeFragment" android:name="com.calender.presentation.view.home.HomeFragment"
               android:label="fragment_home" tools:layout="@layout/fragment_home">
         <action android:id="@+id/action_homeFragment_to_toDoFragment" app:destination="@id/ToDoFragment"/>
         <action android:id="@+id/action_homeFragment_to_memoFragment" app:destination="@id/MemoFragment"/>
@@ -12,14 +12,14 @@
         <action android:id="@+id/action_homeFragment_to_calenderFragment" app:destination="@id/CalenderFragment"/>
         <action android:id="@+id/action_HomeFragment_to_toDoModeFragment2" app:destination="@id/toDoModeFragment"/>
     </keep_state_fragment>
-    <keep_state_fragment android:id="@+id/CalenderFragment" android:name="com.calender.presentation.view.fragment.CalenderFragment"
+    <keep_state_fragment android:id="@+id/CalenderFragment" android:name="com.calender.presentation.view.calendar.CalenderFragment"
               android:label="fragment_calender" tools:layout="@layout/fragment_calender"/>
-    <keep_state_fragment android:id="@+id/MemoFragment" android:name="com.calender.presentation.view.fragment.MemoFragment"
+    <keep_state_fragment android:id="@+id/MemoFragment" android:name="com.calender.presentation.view.memo.MemoFragment"
               android:label="fragment_memo" tools:layout="@layout/fragment_memo"/>
-    <keep_state_fragment android:id="@+id/AnalysisFragment" android:name="com.calender.presentation.view.fragment.AnalysisFragment"
+    <keep_state_fragment android:id="@+id/AnalysisFragment" android:name="com.calender.presentation.view.analysis.AnalysisFragment"
               android:label="fragment_analysis" tools:layout="@layout/fragment_analysis"/>
-    <keep_state_fragment android:id="@+id/ToDoFragment" android:name="com.calender.presentation.view.fragment.ToDoFragment"
+    <keep_state_fragment android:id="@+id/ToDoFragment" android:name="com.calender.presentation.view.todo.ToDoFragment"
               android:label="fragment_to_do" tools:layout="@layout/fragment_to_do"/>
-    <keep_state_fragment android:id="@+id/toDoModeFragment" android:name="com.calender.presentation.view.fragment.ToDoModeFragment"
+    <keep_state_fragment android:id="@+id/toDoModeFragment" android:name="com.calender.presentation.view.todo.ToDoModeFragment"
               android:label="fragment_to_do_mode" tools:layout="@layout/fragment_to_do_mode"/>
 </navigation>

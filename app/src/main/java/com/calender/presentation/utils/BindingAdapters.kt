@@ -2,7 +2,6 @@ package com.calender.presentation.utils
 
 import android.graphics.Color
 import android.graphics.Paint
-import android.media.Image
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -10,16 +9,15 @@ import android.widget.NumberPicker
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.calender.domain.model.*
 import com.calender.presentation.R
-import com.calender.presentation.view.adapter.CalenderAdapter
-import com.calender.presentation.view.adapter.TagAdapter
-import com.calender.presentation.view.adapter.ToDoAdapter
-import com.calender.presentation.view.adapter.ToDoCheckAdapter
+import com.calender.presentation.view.calendar.CalenderAdapter
+import com.calender.presentation.view.addtodo.TagAdapter
+import com.calender.presentation.view.todo.ToDoAdapter
+import com.calender.presentation.view.todo.ToDoCheckAdapter
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import java.time.Duration
@@ -63,14 +61,6 @@ fun ChipGroup.bindRecordTags(tags : Result<List<String>>,selectTags : Result<Rec
 
 }
 
-@BindingAdapter("recordCheck")
-fun ChipGroup.bindRecordCheck(result : Result<*>){
-    if (result is Result.Success<*>){
-        val record = result.data as Record
-        check(get(0).id)
-    }
-}
-
 @BindingAdapter("show")
 fun ProgressBar.bindShow(uiState : Result<*>){
     visibility = if (uiState is Result.Loading) View.VISIBLE else View.GONE
@@ -108,7 +98,7 @@ fun RecyclerView.bindCalenderItems(data : Calender){
 @BindingAdapter(value = ["toDoCheckItems","toDoHomeItems"], requireAll = true)
 fun RecyclerView.bindToDoCheckItems(todo: ToDo, list: List<ToDoCheck>){
     val adapter = this.adapter
-    if(adapter is ToDoCheckAdapter ){
+    if(adapter is ToDoCheckAdapter){
         if (todo.title != "-1234567"){
             adapter.submitList(todo.list)
         }else{

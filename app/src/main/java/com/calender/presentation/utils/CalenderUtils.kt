@@ -1,19 +1,17 @@
 package com.calender.presentation.utils
 
-import androidx.lifecycle.createSavedStateHandle
 import com.calender.domain.model.Calender
 import com.calender.domain.model.Daily
 import com.calender.domain.model.Schedule
-import com.calender.presentation.view.adapter.DayAdapter
+import com.calender.presentation.view.calendar.DayAdapter
 import java.time.LocalDate
-import java.time.Month
 import java.time.temporal.ChronoUnit
 
 class CalenderUtils {
     var dailyList = ArrayList<Daily>()
     var calender : Calender? = null
 
-    fun createHomeWeek():DayAdapter{
+    fun createHomeWeek(): DayAdapter {
         dailyList.clear()
         var date = LocalDate.now()
         date = date.plusDays((-(date.dayOfWeek.value%7)).toLong())

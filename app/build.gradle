@@ -104,4 +104,7 @@ dependencies {
 
     //timepicker
     implementation 'com.borax12.materialdaterangepicker:library:2.0'
+
+    //mpchart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

@@ -9,9 +9,9 @@
         <import type="java.util.List"/>
         <import type="com.calender.domain.model.ToDoCheck"/>
         <variable name="dummy" type="List&lt;ToDoCheck>"/>
-        <variable name="homeVm" type="com.calender.presentation.data.viewmodels.RecordViewModel"/>
+        <variable name="homeVm" type="com.calender.presentation.view.home.RecordViewModel"/>
         <variable name="vm" type="com.calender.domain.model.ToDo"/>
-        <variable name="adapter" type="com.calender.presentation.view.adapter.ToDoCheckAdapter"/>
+        <variable name="adapter" type="com.calender.presentation.view.todo.ToDoCheckAdapter"/>
         <variable name="mode" type="Boolean"/>
     </data>
 

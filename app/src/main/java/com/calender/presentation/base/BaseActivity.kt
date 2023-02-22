@@ -1,16 +1,13 @@
 package com.calender.presentation.base
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.calender.presentation.R
-import com.calender.presentation.custom_toast
 import com.calender.presentation.security
-import com.calender.presentation.utils.ForceService
-
+import com.calender.presentation.utils.CustomToast
 
 abstract class BaseActivity<T : ViewDataBinding>(
     @LayoutRes val layoutId : Int,
@@ -35,7 +32,7 @@ abstract class BaseActivity<T : ViewDataBinding>(
     override fun onResume() {
         super.onResume()
         if(security.isRooting()){
-            custom_toast.shortToast(this, "루팅된 os는 실행이 불가합니다.")
+            CustomToast.shortToast(this, "루팅된 os는 실행이 불가합니다.")
             finish()
         }
     }
