@@ -25,13 +25,5 @@ class MemoViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = Result.Loading
         )
-    val memoInfo : StateFlow<List<Memo?>> = memoResult.mapLatest { state ->
-        state.successOrNull() ?: emptyList<Memo>()
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = emptyList<Memo>()
-    )
-
 
 }

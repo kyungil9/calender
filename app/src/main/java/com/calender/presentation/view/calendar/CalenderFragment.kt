@@ -24,6 +24,7 @@ import com.calender.presentation.utils.VerticalItemDecorator
 import com.calender.presentation.view.addcalendar.AddCalender
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -164,7 +165,7 @@ class CalenderFragment : BaseFragment<FragmentCalenderBinding>(R.layout.fragment
             }
         })
 
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 calenderViewModel.liveMonthSchedule.collectLatest {
                     var check = false

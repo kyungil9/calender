@@ -4,17 +4,18 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".view.memo.MemoFragment">
     <data>
-
+        <variable name="adapter" type="com.calender.presentation.view.memo.MemoAdapter"/>
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="memo"/>
-
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                app:adapter="@{adapter}"
+                android:id="@+id/memoRecyclerView"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
