@@ -5,17 +5,41 @@
         tools:context=".view.memo.MemoFragment">
     <data>
         <variable name="adapter" type="com.calender.presentation.view.memo.MemoAdapter"/>
+        <variable name="vm" type="com.calender.presentation.view.memo.MemoViewModel"/>
     </data>
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+        <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:show="@{vm.memoResult}"
+                android:id="@+id/memoProgressBar" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
                 app:adapter="@{adapter}"
-                android:id="@+id/memoRecyclerView"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+                app:memoItems="@{vm.memoResult}"
+                android:id="@+id/memoRecyclerView" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp" android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+                app:layout_constraintHorizontal_bias="0.0"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:src="@drawable/ic_baseline_add_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true" android:id="@+id/addMemo"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="1.0"
+                app:rippleColor="#AEA9A9" android:backgroundTint="#00BCD4" android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

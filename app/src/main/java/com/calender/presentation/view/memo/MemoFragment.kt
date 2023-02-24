@@ -1,14 +1,19 @@
 package com.calender.presentation.view.memo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import com.calender.domain.model.Memo
 import com.calender.presentation.R
 import com.calender.presentation.base.BaseFragment
 import com.calender.presentation.databinding.FragmentMemoBinding
+import com.calender.presentation.listener.RecyclerViewMemoClickListener
+import com.calender.presentation.utils.VerticalItemDecorator
+import com.calender.presentation.view.addMemo.AddMemo
 
 
 class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {
@@ -21,8 +26,22 @@ class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             adapter = memoAdapter
+            vm = memoViewModel
+            addMemo.setOnClickListener {
+                val intent = Intent(activity,AddMemo::class.java)
+                startActivity(intent)
+            }
         }
+        memoAdapter.setOnMemoClickListener(object :RecyclerViewMemoClickListener{
+            override fun onMemoClickListener(memo: Memo) {
+                val intent = Intent(activity,AddMemo::class.java)
+                intent.putExtra("selectMemo",memo)
+                startActivity(intent)
+            }
+        })
+
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         setActionBarTitle("메 모")

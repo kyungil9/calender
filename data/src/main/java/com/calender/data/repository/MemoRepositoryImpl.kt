@@ -17,4 +17,16 @@ class MemoRepositoryImpl @Inject constructor(
     override fun getAllMemo(): Flow<Result<List<Memo>>> {
         return memoLocalDataSource.getAllMemo()
     }
+
+    override fun insertMemo(memo: Memo) {
+        memoLocalDataSource.insertMemo(memo)
+    }
+
+    override fun updateMemo(memo: Memo) {
+        memoLocalDataSource.updateMemo(memo)
+    }
+
+    override fun delectMemo(memo: Memo) {
+        memoLocalDataSource.delectMemo(memo)
+    }
 }

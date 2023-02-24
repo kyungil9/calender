@@ -105,11 +105,21 @@ fun mapperToArrayToDo(todoLocals : List<ToDoCheckLocal>) : ArrayList<ToDoCheck>{
 fun mapperToMemo(memoLocals : List<MemoLocal>) : List<Memo>{
     return memoLocals.toList().map {
         Memo(
+            it.id,
             it.title,
             it.detail,
             it.tag
         )
     }
+}
+
+fun mapperToMemoLocal(memo: Memo) : MemoLocal {
+    return MemoLocal(
+        memo.id,
+        memo.title,
+        memo.detail,
+        memo.tag
+    )
 }
 
 fun mapperToRecord(recordLocals : List<RecordLocal>) : List<Record>{

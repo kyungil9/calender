@@ -58,7 +58,7 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>(R.layout.fragment
                         pieDataSet.apply {
                             sliceSpace = 3f
                             selectionShift = 5f
-                            colors = listOf(Color.BLUE,Color.CYAN,Color.GREEN,Color.LTGRAY,Color.MAGENTA,Color.RED,Color.TRANSPARENT,Color.YELLOW)
+                            colors = listOf(Color.BLUE,Color.CYAN,Color.GREEN,Color.LTGRAY,Color.MAGENTA,Color.RED,Color.YELLOW)
                         }
                         val data = PieData(pieDataSet)
                         data.setValueTextSize(10f)

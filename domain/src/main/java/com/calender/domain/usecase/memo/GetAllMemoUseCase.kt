@@ -1,4 +1,4 @@
-package com.calender.domain.usecase
+package com.calender.domain.usecase.memo
 
 import com.calender.domain.model.Memo
 import com.calender.domain.model.Result

@@ -8,4 +8,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface MemoLocalDataSource {
     fun getAllMemo(): Flow<Result<List<Memo>>>
+
+    fun insertMemo(memo: Memo)
+
+    fun updateMemo(memo: Memo)
+    fun delectMemo(memo: Memo)
 }

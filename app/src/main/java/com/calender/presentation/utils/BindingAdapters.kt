@@ -16,6 +16,7 @@ import com.calender.domain.model.*
 import com.calender.presentation.R
 import com.calender.presentation.view.calendar.CalenderAdapter
 import com.calender.presentation.view.addtodo.TagAdapter
+import com.calender.presentation.view.memo.MemoAdapter
 import com.calender.presentation.view.todo.ToDoAdapter
 import com.calender.presentation.view.todo.ToDoCheckAdapter
 import com.google.android.material.chip.Chip
@@ -93,6 +94,14 @@ fun RecyclerView.bindCalenderItems(data : Calender){
     val adapter = this.adapter
     if (adapter is CalenderAdapter)
         adapter.submitList(listOf(data))
+}
+
+@BindingAdapter("memoItems")
+fun RecyclerView.bindMemoItems(result: Result<*>){
+    val adapter = this.adapter
+    if (adapter is MemoAdapter && result is Result.Success<*>){
+        adapter.submitList(result.data as List<Memo>)
+    }
 }
 
 @BindingAdapter(value = ["toDoCheckItems","toDoHomeItems"], requireAll = true)

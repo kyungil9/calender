@@ -1,17 +1,13 @@
 package com.calender.presentation.view.memo
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.calender.domain.model.Memo
 import com.calender.domain.model.Result
-import com.calender.domain.model.successOrNull
-import com.calender.domain.usecase.GetAllMemoUseCase
+import com.calender.domain.usecase.memo.GetAllMemoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
