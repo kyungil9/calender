@@ -122,7 +122,7 @@ fun mapperToMemoLocal(memo: Memo) : MemoLocal {
     )
 }
 
-fun mapperToRecord(recordLocals : List<RecordLocal>) : List<Record>{
+fun mapperToRecordList(recordLocals : List<RecordLocal>) : List<Record>{
     return recordLocals.toList().map {
         Record(
             it.id,
@@ -133,6 +133,17 @@ fun mapperToRecord(recordLocals : List<RecordLocal>) : List<Record>{
             it.check
         )
     }
+}
+
+fun mapperToRecord(it : RecordLocal) : Record{
+    return Record(
+            it.id,
+            it.tag,
+            it.startTime,
+            it.endTime!!,
+            it.progressTime,
+            it.check
+        )
 }
 
 fun mapperToToDoLocal(todo : ToDoCheck) : ToDoCheckLocal{

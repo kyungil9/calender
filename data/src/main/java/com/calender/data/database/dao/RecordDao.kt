@@ -14,7 +14,7 @@ interface RecordDao {
     @Query("select * from record")
     fun getAllRecordInfo(): Flow<List<RecordLocal>>
 
-    @Query("select * from record where (startTime >= :startDateTime and endTime < :endDateTime)")//추후 수정 필요??,하루를 넘기는 데이터를 어찌 처리할지
+    @Query("select * from record where (startTime >= :startDateTime and endTime < :endDateTime) or (startTime >= :startDateTime and startTime <= :endDateTime) or (:startDateTime <= endTime and endTime <= :endDateTime) or (startTime < :startDateTime  and endTime is Null) or (startTime < :startDateTime and endTime > :endDateTime)")//추후 수정 필요??,하루를 넘기는 데이터를 어찌 처리할지
     fun getTodayRecordInfo(startDateTime: Long ,endDateTime: Long):Flow<List<RecordLocal>>
 
     @Insert

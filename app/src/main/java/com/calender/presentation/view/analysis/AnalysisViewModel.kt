@@ -1,5 +1,7 @@
 package com.calender.presentation.view.analysis
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.calender.domain.model.Record
@@ -24,8 +26,10 @@ class AnalysisViewModel @Inject constructor(
     private val getTodayRecordUseCase: GetTodayRecordUseCase
 ) : ViewModel() {
     private val mutableDayRecord = MutableStateFlow(listOf<Record>())
+    private val mutableToday = MutableLiveData<LocalDate>(LocalDate.now())
 
     val liveDayRecord = mutableDayRecord.asStateFlow()
+    val liveToday : LiveData<LocalDate> get() = mutableToday
     val description = Description()
     private val pastDate: LocalDateTime = LocalDateTime.now()
 
@@ -46,5 +50,9 @@ class AnalysisViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun setToday(date: LocalDate){
+        mutableToday.value = date
     }
 }

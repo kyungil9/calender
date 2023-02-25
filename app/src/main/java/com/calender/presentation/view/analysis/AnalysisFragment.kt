@@ -1,6 +1,7 @@
 package com.calender.presentation.view.analysis
 
 
+import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -12,6 +13,7 @@ import androidx.navigation.findNavController
 import com.calender.presentation.R
 import com.calender.presentation.base.BaseFragment
 import com.calender.presentation.databinding.FragmentAnalysisBinding
+import com.calender.presentation.utils.CalenderUtils
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.PieData
@@ -21,6 +23,8 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.ZoneId
 
 class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>(R.layout.fragment_analysis) {
     private val analysisViewModel : AnalysisViewModel by activityViewModels()
@@ -61,9 +65,13 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>(R.layout.fragment
                             colors = listOf(Color.BLUE,Color.CYAN,Color.GREEN,Color.LTGRAY,Color.MAGENTA,Color.RED,Color.YELLOW)
                         }
                         val data = PieData(pieDataSet)
-                        data.setValueTextSize(10f)
-                        data.setValueTextColor(Color.BLACK)
+                        data.setValueTextSize(15f)
+                        data.setValueTextColor(Color.GRAY)
                         binding.analysisPieChart.data = data
+                        binding.analysisPieChart.invalidate()
+                    }else{
+                        binding.analysisPieChart.data = null
+                        binding.analysisPieChart.invalidate()
                     }
                 }
             }
@@ -73,8 +81,21 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>(R.layout.fragment
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        setActionBarTitle("분 석")
-        setActionBarListener(null)
+        setActionBarTitle("${analysisViewModel.liveToday.value?.year}.${analysisViewModel.liveToday.value?.monthValue} v")
+        setActionBarListener {
+            val dateDialog = DatePickerDialog(requireContext(),
+                { _, year, month, dayOfMonth ->
+                    analysisViewModel.setToday(LocalDate.of(year, month+1, dayOfMonth))
+                    setActionBarTitle("${analysisViewModel.liveToday.value?.year}.${analysisViewModel.liveToday.value?.monthValue} v")
+                    analysisViewModel.getDayRecord(analysisViewModel.liveToday?.value?.atTime(0,0,0)!!)
+                },analysisViewModel.liveToday.value?.year!!,
+                analysisViewModel.liveToday.value?.monthValue!!-1,
+                analysisViewModel.liveToday.value?.dayOfMonth!!
+            )
+            dateDialog.datePicker.minDate = LocalDate.of(2000,1,1).atTime(0,0).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+            dateDialog.datePicker.maxDate = LocalDate.of(2049,12,31).atTime(0,0).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+            dateDialog.show()
+        }
         inflater.inflate(R.menu.regular_menu,menu)
     }
 

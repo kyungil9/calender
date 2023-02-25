@@ -47,7 +47,6 @@ class AddMemo : BaseActivity<ActivityAddMemoBinding>(R.layout.activity_add_memo,
                 true
             }
             R.id.register -> {
-                //입력된 데이터를 저장하는 코드와 함께 종료
                 viewModel.check = true
                 finish()
                 true

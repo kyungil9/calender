@@ -9,6 +9,7 @@ import com.calender.data.repository.local.interfaces.RecordLocalDataSource
 import com.calender.domain.model.Record
 import com.calender.domain.model.Result
 import kotlinx.coroutines.flow.*
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.inject.Inject
@@ -27,7 +28,28 @@ class RecordLocalDataSourceImpl @Inject constructor(
             if(record.isEmpty()){
                 send(Result.Empty)
             }else{
-                send(Result.Success(mapperToRecord(record)))
+                val recordList = arrayListOf<Record>()
+                for (item in record){
+                    if (item.endTime == null){
+                        item.endTime = endDateTime
+                        if (item.startTime < startDateTime)
+                            item.progressTime = Duration.between(startDateTime,item.endTime).toMinutes()
+                        else
+                            item.progressTime = Duration.between(item.startTime,item.endTime).toMinutes()
+                    }else{
+                        if (item.startTime < startDateTime && item.endTime!! > endDateTime){
+                            item.startTime = startDateTime
+                            item.endTime = endDateTime
+                            item.progressTime = Duration.between(item.startTime,item.endTime).toMinutes()
+                        }else if (item.endTime!! > endDateTime){
+                            item.endTime = endDateTime
+                            item.progressTime = Duration.between(item.startTime,item.endTime).toMinutes()
+                        }else if (item.startTime < startDateTime)
+                            item.progressTime = Duration.between(startDateTime,item.endTime).toMinutes()
+                    }
+                    recordList.add(mapperToRecord(item))
+                }
+                send(Result.Success(recordList))
             }
         }
     }.catch { e->
